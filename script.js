@@ -1,7 +1,7 @@
 document.addEventListener("click", function (event) {
     const clickedElement = event.target;
 
-    if (clickedElement.classList.contains("editable-square")) {
+    if (clickedElement.classList.contains("tier-name")) {
         changeColor(clickedElement);
     }
 });
@@ -18,11 +18,24 @@ function addRow() {
     const mainContainer = document.querySelector("main");
 
     const newRow = document.createElement("div");
-    newRow.className = "editable-square";
-    newRow.innerHTML = "<p contenteditable>New tier</p>";
-    mainContainer.appendChild(newRow);
+    newRow.className = "row";
 
-    const newDarkRow = document.createElement("div");
-    newDarkRow.className = "dark-row";
-    mainContainer.appendChild(newDarkRow);
+    const tierNameDiv = document.createElement("div");
+    tierNameDiv.className = "tier-name";
+    const paragraph = document.createElement("p");
+    paragraph.setAttribute("contenteditable", "");
+    paragraph.textContent = "New tier";
+    tierNameDiv.appendChild(paragraph);
+
+    const darkRowDiv = document.createElement("div");
+    darkRowDiv.className = "dark-row";
+
+    const settingsDiv = document.createElement("div");
+    settingsDiv.className = "tier-settings";
+
+    newRow.appendChild(tierNameDiv);
+    newRow.appendChild(darkRowDiv);
+    newRow.appendChild(settingsDiv);
+
+    mainContainer.appendChild(newRow);
 }
