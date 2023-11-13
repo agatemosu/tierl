@@ -47,3 +47,8 @@ button {
     height: 30px;
     margin: 10px;
 }
+
+.delete-button {
+    width: auto;
+    height: auto;
+}
