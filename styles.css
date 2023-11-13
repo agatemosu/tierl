@@ -35,13 +35,22 @@ p:focus-visible {
 
 .tier-settings {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     width: 80px;
     background-color: black;
 }
 
+.action-button.delete {
+    grid-row: span 2;
+    justify-content: right;
+}
+
 .action-button {
-    width: auto;
+    width: 40px;
     height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .button-container {
@@ -52,4 +61,8 @@ button {
     width: 100px;
     height: 30px;
     margin: 10px;
+}
+
+img {
+    cursor: pointer;
 }

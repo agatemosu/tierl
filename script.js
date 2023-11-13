@@ -36,28 +36,19 @@ function addRow() {
     const settingsDiv = document.createElement("div");
     settingsDiv.className = "tier-settings";
 
-    const deleteButton = document.createElement("button");
-    deleteButton.className = "action-button";
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = function () {
-        deleteRow(this);
-    };
+    const deleteButton = document.createElement("div");
+    deleteButton.className = "action-button delete";
+    deleteButton.innerHTML = "<img src='assets/trash.svg' alt='Delete' onclick='deleteRow(this)'>";
     settingsDiv.appendChild(deleteButton);
 
-    const upButton = document.createElement("button");
+    const upButton = document.createElement("div");
     upButton.className = "action-button";
-    upButton.textContent = "Up";
-    upButton.onclick = function () {
-        moveRow(this, -1);
-    };
+    upButton.innerHTML = "<img src='assets/chevron-up.svg' alt='Up' onclick='moveRow(this, -1)'>";
     settingsDiv.appendChild(upButton);
 
-    const downButton = document.createElement("button");
+    const downButton = document.createElement("div");
     downButton.className = "action-button";
-    downButton.textContent = "Down";
-    downButton.onclick = function () {
-        moveRow(this, 1);
-    };
+    downButton.innerHTML = "<img src='assets/chevron-down.svg' alt='Down' onclick='moveRow(this, 1)'>";
     settingsDiv.appendChild(downButton);
 
 
@@ -68,11 +59,11 @@ function addRow() {
 }
 
 function deleteRow(element) {
-    element.parentNode.parentNode.remove();
+    element.parentNode.parentNode.parentNode.remove();
 }
 
 function moveRow(button, direction) {
-    const row = button.parentNode.parentNode;
+    const row = button.parentNode.parentNode.parentNode;
 
     const currentIndex = Array.from(row.parentNode.children).indexOf(row);
     const newIndex = currentIndex + direction;
