@@ -34,8 +34,14 @@ p:focus-visible {
 }
 
 .tier-settings {
+    display: grid;
     width: 80px;
     background-color: black;
+}
+
+.action-button {
+    width: auto;
+    height: auto;
 }
 
 .button-container {
@@ -46,9 +52,4 @@ button {
     width: 100px;
     height: 30px;
     margin: 10px;
-}
-
-.action-button {
-    width: auto;
-    height: auto;
 }
