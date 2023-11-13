@@ -37,12 +37,28 @@ function addRow() {
     settingsDiv.className = "tier-settings";
 
     const deleteButton = document.createElement("button");
-    deleteButton.className = "delete-button";
+    deleteButton.className = "action-button";
     deleteButton.textContent = "Delete";
     deleteButton.onclick = function () {
         deleteRow(this);
     };
     settingsDiv.appendChild(deleteButton);
+
+    const upButton = document.createElement("button");
+    upButton.className = "action-button";
+    upButton.textContent = "Up";
+    upButton.onclick = function () {
+        moveRow(this, -1);
+    };
+    settingsDiv.appendChild(upButton);
+
+    const downButton = document.createElement("button");
+    downButton.className = "action-button";
+    downButton.textContent = "Down";
+    downButton.onclick = function () {
+        moveRow(this, 1);
+    };
+    settingsDiv.appendChild(downButton);
 
 
     newRow.appendChild(tierNameDiv);
@@ -53,4 +69,15 @@ function addRow() {
 
 function deleteRow(element) {
     element.parentNode.parentNode.remove();
+}
+
+function moveRow(button, direction) {
+    const row = button.parentNode.parentNode;
+
+    const currentIndex = Array.from(row.parentNode.children).indexOf(row);
+    const newIndex = currentIndex + direction;
+
+    if (newIndex >= 0) {
+        row.parentNode.insertBefore(row, row.parentNode.children[newIndex + (direction === 1 ? 1 : 0)]);
+    }
 }
