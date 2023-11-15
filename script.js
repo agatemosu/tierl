@@ -24,7 +24,7 @@ function addRow() {
     tierNameDiv.className = "tier-name";
 
     const paragraph = document.createElement("p");
-    paragraph.setAttribute("contenteditable", true);
+    paragraph.setAttribute("contenteditable", "");
     paragraph.textContent = "New tier";
     tierNameDiv.appendChild(paragraph);
 
