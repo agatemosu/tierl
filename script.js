@@ -30,7 +30,7 @@ function addRow() {
 
     // Tiers
     const tierDiv = document.createElement("div");
-    tierDiv.className = "tier";
+    tierDiv.className = "tier sort";
 
     // Options
     const optionsDiv = document.createElement("div");
