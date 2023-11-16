@@ -99,7 +99,7 @@ function uploadImages(files) {
 }
 
 function initializeDragula() {
-    const containers = [document.querySelector(".images-bar")];
+    const containers = Array.from(document.querySelectorAll(".sort"));
 
     if (window.dragulaInstances) {
         window.dragulaInstances.forEach(instance => instance.destroy());
