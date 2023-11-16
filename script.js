@@ -72,3 +72,26 @@ function moveRow(button, direction) {
         row.parentNode.insertBefore(row, row.parentNode.children[newIndex + (direction === 1 ? 1 : 0)]);
     }
 }
+
+function selectImages() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.multiple = true;
+
+    input.click();
+
+    input.addEventListener("change", () => uploadImages(input.files));
+}
+
+function uploadImages(files) {
+    const imagesBar = document.querySelector(".images-bar");
+
+    for (const file of files) {
+        const image = document.createElement("img");
+        image.src = URL.createObjectURL(file);
+        image.className = "images";
+
+        imagesBar.appendChild(image);
+    }
+}
