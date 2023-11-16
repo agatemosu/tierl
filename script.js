@@ -1,7 +1,7 @@
 document.addEventListener("click", function (event) {
     const clickedElement = event.target;
 
-    if (clickedElement.classList.contains("tier-name")) {
+    if (clickedElement.classList.contains("tier-label")) {
         changeColor(clickedElement);
     }
 });
@@ -19,42 +19,42 @@ function addRow() {
     const newRow = document.createElement("div");
     newRow.className = "row";
 
-
-    const tierNameDiv = document.createElement("div");
-    tierNameDiv.className = "tier-name";
+    // Labels and colors
+    const tierLabelDiv = document.createElement("div");
+    tierLabelDiv.className = "tier-label";
 
     const paragraph = document.createElement("p");
     paragraph.setAttribute("contenteditable", "");
     paragraph.textContent = "New tier";
-    tierNameDiv.appendChild(paragraph);
+    tierLabelDiv.appendChild(paragraph);
 
+    // Tiers
+    const tierDiv = document.createElement("div");
+    tierDiv.className = "tier";
 
-    const darkRowDiv = document.createElement("div");
-    darkRowDiv.className = "dark-row";
-
-
-    const settingsDiv = document.createElement("div");
-    settingsDiv.className = "tier-settings";
+    // Options
+    const optionsDiv = document.createElement("div");
+    optionsDiv.className = "tier-options";
 
     const deleteButton = document.createElement("div");
-    deleteButton.className = "action-button delete";
+    deleteButton.className = "option delete";
     deleteButton.innerHTML = "<img src='assets/trash.svg' alt='Delete' onclick='deleteRow(this)'>";
-    settingsDiv.appendChild(deleteButton);
+    optionsDiv.appendChild(deleteButton);
 
     const upButton = document.createElement("div");
-    upButton.className = "action-button";
+    upButton.className = "option";
     upButton.innerHTML = "<img src='assets/chevron-up.svg' alt='Up' onclick='moveRow(this, -1)'>";
-    settingsDiv.appendChild(upButton);
+    optionsDiv.appendChild(upButton);
 
     const downButton = document.createElement("div");
-    downButton.className = "action-button";
+    downButton.className = "option";
     downButton.innerHTML = "<img src='assets/chevron-down.svg' alt='Down' onclick='moveRow(this, 1)'>";
-    settingsDiv.appendChild(downButton);
+    optionsDiv.appendChild(downButton);
 
-
-    newRow.appendChild(tierNameDiv);
-    newRow.appendChild(darkRowDiv);
-    newRow.appendChild(settingsDiv);
+    // Add divs to the row / main container
+    newRow.appendChild(tierLabelDiv);
+    newRow.appendChild(tierDiv);
+    newRow.appendChild(optionsDiv);
     mainContainer.appendChild(newRow);
 }
 
@@ -90,7 +90,7 @@ function uploadImages(files) {
     for (const file of files) {
         const image = document.createElement("img");
         image.src = URL.createObjectURL(file);
-        image.className = "images";
+        image.className = "image";
 
         imagesBar.appendChild(image);
     }

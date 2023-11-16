@@ -7,7 +7,7 @@ body {
     display: flex;
 }
 
-.tier-name {
+.tier-label {
     width: 100px;
     min-height: 85px;
     display: flex;
@@ -26,26 +26,26 @@ p:focus-visible {
     outline: none;
 }
 
-.dark-row {
+.tier {
     flex-grow: 1;
     background-color: #222;
     border-top: 1px solid black;
     border-bottom: 1px solid black;
 }
 
-.tier-settings {
+.tier-options {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     width: 80px;
     background-color: black;
 }
 
-.action-button.delete {
+.option.delete {
     grid-row: span 2;
     justify-content: right;
 }
 
-.action-button {
+.option {
     width: 40px;
     height: auto;
     display: flex;
@@ -53,7 +53,7 @@ p:focus-visible {
     justify-content: center;
 }
 
-.button-container {
+.buttons-container {
     text-align: center;
 }
 
@@ -76,7 +76,7 @@ img {
     border-top: 1px solid #ccc;
 }
 
-.images {
+.image {
     max-height: 80px;
     margin-left: 2px;
 }
