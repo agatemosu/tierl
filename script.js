@@ -94,4 +94,16 @@ function uploadImages(files) {
 
         imagesBar.appendChild(image);
     }
+
+    initializeDragula();
+}
+
+function initializeDragula() {
+    const containers = [document.querySelector(".images-bar")];
+
+    if (window.dragulaInstances) {
+        window.dragulaInstances.forEach(instance => instance.destroy());
+    }
+
+    window.dragulaInstances = dragula(containers);
 }
