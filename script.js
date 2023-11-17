@@ -69,11 +69,11 @@ function addRow() {
 }
 
 function deleteRow(element) {
-    element.parentNode.parentNode.parentNode.parentNode.remove();
+    element.closest(".row").remove();
 }
 
 function moveRow(button, direction) {
-    const row = button.parentNode.parentNode.parentNode.parentNode;
+    const row = button.closest(".row");
 
     const currentIndex = Array.from(row.parentNode.children).indexOf(row);
     const newIndex = currentIndex + direction;
