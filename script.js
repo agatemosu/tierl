@@ -112,3 +112,19 @@ function initializeDragula() {
         window.dragulaInstance = dragula(containers);
     }
 }
+
+function dynamicStyle(id) {
+    const style = document.getElementById("dynamic-styles");
+    const checkbox = document.getElementById(id);
+
+    let content = style.innerHTML;
+
+    if (id === "img") {
+        if (checkbox.checked) {
+            content += ".image { height: 80px; width: 80px; }";
+        } else {
+            content = content.replace(".image { height: 80px; width: 80px; }", "");
+        }
+    }
+    style.innerHTML = content;
+}

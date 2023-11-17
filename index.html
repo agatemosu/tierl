@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
+    <style id="dynamic-styles"></style>
 </head>
 <body>
     <main>
@@ -86,6 +87,7 @@
     <div class="buttons-container">
         <button type="button" onclick="addRow()">New tier</button>
         <button type="button" onclick="selectImages()">Select images</button>
+        <input type="checkbox" id="img" onchange="dynamicStyle('img')"><label for="img">Square images</label>
     </div>
 
     <div class="images-bar sort"></div>

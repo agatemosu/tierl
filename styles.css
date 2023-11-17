@@ -69,8 +69,6 @@ img {
 
 .images-bar {
     min-height: 90px;
-    display: flex;
-    overflow-x: auto;
     padding: 10px;
     background-color: #f0f0f0;
     border-top: 1px solid #ccc;
@@ -79,4 +77,5 @@ img {
 .image {
     max-height: 80px;
     margin-left: 2px;
+    object-fit: cover;
 }
