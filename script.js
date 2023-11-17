@@ -26,7 +26,6 @@ function addRow() {
     const paragraph = document.createElement("p");
     paragraph.setAttribute("contenteditable", "");
     paragraph.textContent = "New tier";
-    tierLabelDiv.appendChild(paragraph);
 
     // Tiers
     const tierDiv = document.createElement("div");
@@ -36,36 +35,45 @@ function addRow() {
     const optionsDiv = document.createElement("div");
     optionsDiv.className = "tier-options";
 
+    const optionsContainer = document.createElement("div");
+    optionsContainer.className = "options-container";
+
     const deleteButton = document.createElement("div");
     deleteButton.className = "option delete";
     deleteButton.innerHTML = "<img src='assets/trash.svg' alt='Delete' onclick='deleteRow(this)'>";
-    optionsDiv.appendChild(deleteButton);
 
     const upButton = document.createElement("div");
     upButton.className = "option";
     upButton.innerHTML = "<img src='assets/chevron-up.svg' alt='Up' onclick='moveRow(this, -1)'>";
-    optionsDiv.appendChild(upButton);
 
     const downButton = document.createElement("div");
     downButton.className = "option";
     downButton.innerHTML = "<img src='assets/chevron-down.svg' alt='Down' onclick='moveRow(this, 1)'>";
-    optionsDiv.appendChild(downButton);
 
     // Add divs to the row / main container
+    tierLabelDiv.appendChild(paragraph);
+
+    optionsContainer.appendChild(deleteButton);
+    optionsContainer.appendChild(upButton);
+    optionsContainer.appendChild(downButton);
+
+    optionsDiv.appendChild(optionsContainer);
+
     newRow.appendChild(tierLabelDiv);
     newRow.appendChild(tierDiv);
     newRow.appendChild(optionsDiv);
+
     mainContainer.appendChild(newRow);
 
     initializeDragula();
 }
 
 function deleteRow(element) {
-    element.parentNode.parentNode.parentNode.remove();
+    element.parentNode.parentNode.parentNode.parentNode.remove();
 }
 
 function moveRow(button, direction) {
-    const row = button.parentNode.parentNode.parentNode;
+    const row = button.parentNode.parentNode.parentNode.parentNode;
 
     const currentIndex = Array.from(row.parentNode.children).indexOf(row);
     const newIndex = currentIndex + direction;

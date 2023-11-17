@@ -34,15 +34,19 @@ p:focus-visible {
 }
 
 .tier-options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
     width: 80px;
+    align-items: center;
     background-color: black;
+    border-top: 1px solid #111;
+    border-bottom: 1px solid #111;
 }
 
-.option.delete {
-    grid-row: span 2;
-    justify-content: right;
+.options-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    height: 80px;
+    width: 80px;
 }
 
 .option {
@@ -51,6 +55,11 @@ p:focus-visible {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.option.delete {
+    grid-row: span 2;
+    justify-content: right;
 }
 
 .buttons-container {
