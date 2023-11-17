@@ -71,7 +71,10 @@ function moveRow(button, direction) {
     const newIndex = currentIndex + direction;
 
     if (newIndex >= 0) {
-        row.parentNode.insertBefore(row, row.parentNode.children[newIndex + (direction === 1 ? 1 : 0)]);
+        row.parentNode.insertBefore(
+            row,
+            row.parentNode.children[newIndex + (direction === 1 ? 1 : 0)]
+        );
     }
 }
 
