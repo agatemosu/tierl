@@ -65,6 +65,8 @@ button {
 
 img {
     cursor: pointer;
+    max-height: 80px;
+    margin-left: 2px;
 }
 
 .images-bar {
@@ -74,9 +76,4 @@ img {
     padding: 10px;
     background-color: #f0f0f0;
     border-top: 1px solid #ccc;
-}
-
-.image {
-    max-height: 80px;
-    margin-left: 2px;
 }

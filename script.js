@@ -95,7 +95,6 @@ function uploadImages(files) {
     for (const file of files) {
         const image = document.createElement("img");
         image.src = URL.createObjectURL(file);
-        image.className = "image";
 
         imagesBar.appendChild(image);
     }
