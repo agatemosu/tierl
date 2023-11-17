@@ -56,6 +56,8 @@ function addRow() {
     newRow.appendChild(tierDiv);
     newRow.appendChild(optionsDiv);
     mainContainer.appendChild(newRow);
+
+    initializeDragula();
 }
 
 function deleteRow(element) {
@@ -101,9 +103,9 @@ function uploadImages(files) {
 function initializeDragula() {
     const containers = Array.from(document.querySelectorAll(".sort"));
 
-    if (window.dragulaInstances) {
-        window.dragulaInstances.forEach(instance => instance.destroy());
+    if (window.dragulaInstance) {
+        window.dragulaInstance.containers.push(...containers);
+    } else {
+        window.dragulaInstance = dragula(containers);
     }
-
-    window.dragulaInstances = dragula(containers);
 }
