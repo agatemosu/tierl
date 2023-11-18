@@ -16,14 +16,15 @@ body {
     border: 1px solid black;
 }
 
+.tier-label:focus-visible {
+    outline: none;
+    border: 1px solid white;
+}
+
 p {
     width: 100px;
     margin: 0;
     text-align: center;
-}
-
-p:focus-visible {
-    outline: none;
 }
 
 .tier {

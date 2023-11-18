@@ -1,19 +1,3 @@
-document.addEventListener("click", function (event) {
-    const clickedElement = event.target;
-
-    if (clickedElement.classList.contains("tier-label")) {
-        changeColor(clickedElement);
-    }
-});
-
-function changeColor(element) {
-    const color = prompt("Choose a color:", "#ff7ffe");
-
-    if (color !== null) {
-        element.style.backgroundColor = color;
-    }
-}
-
 function addRow() {
     const mainContainer = document.querySelector("main");
     const newRow = document.createElement("div");
@@ -22,9 +6,9 @@ function addRow() {
     // Labels and colors
     const tierLabelDiv = document.createElement("div");
     tierLabelDiv.className = "tier-label";
+    tierLabelDiv.setAttribute("contenteditable", "");
 
     const paragraph = document.createElement("p");
-    paragraph.setAttribute("contenteditable", "");
     paragraph.textContent = "New tier";
 
     // Tiers
