@@ -6,10 +6,15 @@ function addRow() {
     // Labels and colors
     const tierLabelDiv = document.createElement("div");
     tierLabelDiv.className = "tier-label";
-    tierLabelDiv.setAttribute("contenteditable", "");
+    tierLabelDiv.setAttribute("contenteditable", true);
 
     const paragraph = document.createElement("p");
     paragraph.textContent = "New tier";
+    paragraph.setAttribute("spellcheck", false);
+
+    const tooltip = document.createElement("div");
+    tooltip.className = "tooltip";
+    tooltip.setAttribute("contenteditable", false);
 
     // Tiers
     const tierDiv = document.createElement("div");
@@ -36,6 +41,7 @@ function addRow() {
 
     // Add divs to the row / main container
     tierLabelDiv.appendChild(paragraph);
+    tierLabelDiv.appendChild(tooltip);
 
     optionsContainer.appendChild(deleteButton);
     optionsContainer.appendChild(upButton);

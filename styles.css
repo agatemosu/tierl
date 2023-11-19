@@ -1,7 +1,7 @@
 body {
     overscroll-behavior-y: contain;
-    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
 }
 
 .row {
@@ -9,11 +9,12 @@ body {
 }
 
 .tier-label {
-    width: 100px;
+    position: relative;
     min-height: 84px;
+    width: 100px;
     display: flex;
     align-items: center;
-    background-color: #e0e0e0;
+    background-color: lightslategray;
     border: 1px solid black;
 }
 
@@ -22,9 +23,40 @@ body {
     border: 1px solid white;
 }
 
+.tier-label:focus-visible .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip {
+    visibility: hidden;
+    position: absolute;
+    top: 50%;
+    left: 110%;
+    transform: translate(0, -50%);
+    height: 40px;
+    width: 60px;
+    padding: 5px;
+    background-color: aliceblue;
+    border-radius: 6px;
+    opacity: 0;
+    transition: opacity 300ms;
+}
+
+.tooltip:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent aliceblue transparent transparent;
+}
+
 p {
-    width: 100px;
-    margin: 0;
+    width: 96px;
+    margin: 6px 2px;
     text-align: center;
 }
 
@@ -52,8 +84,8 @@ p {
 }
 
 .option {
-    width: 40px;
     height: auto;
+    width: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -69,8 +101,8 @@ p {
 }
 
 button {
-    min-width: 100px;
     height: 30px;
+    min-width: 100px;
     margin: 10px;
 }
 
