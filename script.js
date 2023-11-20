@@ -1,3 +1,40 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const tooltips = document.querySelectorAll(".tooltip");
+    const defaultColors = ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff"];
+
+    tooltips.forEach((tooltip, index) => {
+        const defaultColor = defaultColors[index];
+        const colorPicker = tooltip.querySelector(".color-picker");
+
+        createColorPicker(colorPicker, (color) => { 
+            tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
+        }, defaultColor);
+    });
+});
+
+function createColorPicker(colorPicker, onChange, defaultColor = "lightslategray") {
+    const pickr = Pickr.create({
+        el: colorPicker,
+        theme: "monolith",
+        default: defaultColor,
+        swatches: ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff", "#ff7ffe"],
+        components: {
+            preview: true,
+            hue: true,
+            interaction: {
+                input: true,
+                clear: true,
+                save: true,
+            },
+        },
+    });
+
+    pickr.on("save", (color) => {
+        onChange(color);
+        pickr.hide();
+    });
+}
+
 function addRow() {
     const mainContainer = document.querySelector("main");
     const newRow = document.createElement("div");
@@ -15,6 +52,9 @@ function addRow() {
     const tooltip = document.createElement("div");
     tooltip.className = "tooltip";
     tooltip.setAttribute("contenteditable", false);
+
+    const colorPicker = document.createElement("div");
+    colorPicker.className = "color-picker";
 
     // Tiers
     const tierDiv = document.createElement("div");
@@ -40,6 +80,12 @@ function addRow() {
     downButton.innerHTML = "<img src='assets/chevron-down.svg' alt='Down' onclick='moveRow(this, 1)'>";
 
     // Add divs to the row / main container
+    tooltip.appendChild(colorPicker);
+
+    createColorPicker(colorPicker, (color) => {
+        tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
+    });
+
     tierLabelDiv.appendChild(paragraph);
     tierLabelDiv.appendChild(tooltip);
 
