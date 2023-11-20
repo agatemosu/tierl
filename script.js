@@ -150,10 +150,10 @@ function uploadImages(files) {
 function initializeDragula() {
     const containers = Array.from(document.querySelectorAll(".sort"));
 
-    if (window.dragulaInstance) {
-        window.dragulaInstance.containers.push(...containers);
+    if (window.drake) {
+        window.drake.containers.push(...containers);
     } else {
-        window.dragulaInstance = dragula(containers);
+        window.drake = dragula(containers);
     }
 }
 
