@@ -12,6 +12,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+document.addEventListener("touchmove", function (event) {
+    if (!scrollable) {
+        event.preventDefault();
+    }
+}, {
+    passive: false,
+});
+
 function createColorPicker(colorPicker, onChange, defaultColor = "lightslategray") {
     const pickr = Pickr.create({
         el: colorPicker,
@@ -155,6 +163,10 @@ function initializeDragula() {
     } else {
         window.drake = dragula(containers);
     }
+
+    window.drake.on("drag", () => { scrollable = false; })
+                .on("drop", () => { scrollable = true; })
+                .on("cancel", () => { scrollable = true; });
 }
 
 function dynamicStyle(id) {
