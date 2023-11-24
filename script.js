@@ -6,10 +6,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const defaultColor = defaultColors[index];
         const colorPicker = tooltip.querySelector(".color-picker");
 
-        createColorPicker(colorPicker, (color) => { 
+        createColorPicker(colorPicker, (color) => {
             tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
         }, defaultColor);
     });
+
+    scrollable = true;
 });
 
 document.addEventListener("touchmove", function (event) {
