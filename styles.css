@@ -1,6 +1,21 @@
+:root {
+    --black: #000;
+    --white: #fff;
+    --background: #231f20;
+    --default-color: #778899;
+    --tooltip: #f0f8ff;
+    --tier-background: #2d292a;
+    --option-borders: #111;
+    --button-text: #ebe0e3;
+    --button-background: #4e3239;
+    --button-hover: #9c5e6d;
+    --images-bar-background: #20181a;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
+    background-color: var(--background);
 }
 
 .row {
@@ -9,17 +24,17 @@ body {
 
 .tier-label {
     position: relative;
-    min-height: 84px;
+    min-height: 85px;
     width: 100px;
     display: flex;
     align-items: center;
-    background-color: lightslategray;
-    border: 1px solid black;
+    background-color: var(--default-color);
+    border: 1px solid var(--black);
 }
 
 .tier-label:focus-visible {
     outline: none;
-    border: 1px solid white;
+    border: 1px solid var(--white);
 }
 
 .tooltip:focus-within,
@@ -36,7 +51,7 @@ body {
     transform: translate(0, -50%);
     height: 50px;
     width: 80px;
-    background-color: aliceblue;
+    background-color: var(--tooltip);
     border-radius: 6px;
     opacity: 0;
     transition: opacity 300ms;
@@ -50,23 +65,23 @@ body {
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent aliceblue transparent transparent;
+    border-color: transparent var(--tooltip) transparent transparent;
 }
 
 .pcr-app {
-    max-width: 200px!important;
+    max-width: 200px !important;
 }
 
 .pcr-button {
-    margin: 10px!important;
-    background: lightslategray!important;
+    margin: 10px !important;
+    background: var(--default-color) !important;
 }
 
 .pcr-button,
 .pcr-button::before,
 .pcr-button::after {
-    height: 30px!important;
-    width: 60px!important;
+    height: 30px !important;
+    width: 60px !important;
 }
 
 p {
@@ -77,18 +92,18 @@ p {
 
 .tier {
     flex-grow: 1;
-    background-color: #222;
-    border-top: 1px solid black;
-    border-bottom: 1px solid black;
+    background-color: var(--tier-background);
+    border-top: 1px solid var(--black);
+    border-bottom: 1px solid var(--black);
 }
 
 .tier-options {
     display: flex;
     width: 80px;
     align-items: center;
-    background-color: black;
-    border-top: 1px solid #111;
-    border-bottom: 1px solid #111;
+    background-color: var(--black);
+    border-top: 1px solid var(--option-borders);
+    border-bottom: 1px solid var(--option-borders);
 }
 
 .options-container {
@@ -111,29 +126,72 @@ p {
     justify-content: right;
 }
 
+.option-hover {
+    transition: ease 100ms;
+}
+
+.option-hover:hover {
+    filter: contrast(0%);
+}
+
 .buttons-container {
     text-align: center;
 }
 
 .buttons-container button {
+    border: none;
+    border-radius: 3px;
     height: 30px;
     min-width: 100px;
     margin: 10px;
+    color: var(--button-text);
+    background-color: var(--button-background);
+    transition: ease 200ms;
+}
+
+.buttons-container button:hover {
+    background-color: var(--button-hover);
+    cursor: pointer;
+}
+
+input[type="checkbox"] {
+    display: none;
+}
+
+input[type="checkbox"]:checked + label::before {
+    background-color: var(--button-hover);
+    background-image: url(assets/check.svg);
+}
+
+label {
+    color: var(--button-text);
+    cursor: pointer;
+}
+
+label::before {
+    content: "";
+    display: inline-block;
+    width: 11.6px;
+    height: 11.6px;
+    background-color: var(--button-text);
+    border-radius: 1px;
+    margin-right: 5px;
 }
 
 img {
     cursor: pointer;
 }
 
-.images-bar {
-    min-height: 90px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-top: 1px solid #ccc;
-}
-
 .image {
     max-height: 80px;
     margin-left: 2px;
     object-fit: cover;
+}
+
+.images-bar {
+    height: auto;
+    min-height: 85px;
+    padding: 10px;
+    background-color: var(--images-bar-background);
+    border-top: 1px solid var(--button-background);
 }
