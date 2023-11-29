@@ -134,11 +134,11 @@ p {
     filter: contrast(0%);
 }
 
-.buttons-container {
+#buttons-container {
     text-align: center;
 }
 
-.buttons-container button {
+#buttons-container button {
     border: none;
     border-radius: 3px;
     height: 30px;
@@ -149,7 +149,7 @@ p {
     transition: ease 200ms;
 }
 
-.buttons-container button:hover {
+#buttons-container button:hover {
     background-color: var(--button-hover);
     cursor: pointer;
 }
@@ -188,7 +188,7 @@ img {
     object-fit: cover;
 }
 
-.images-bar {
+#images-bar {
     height: auto;
     min-height: 85px;
     padding: 10px;
