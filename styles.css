@@ -4,12 +4,12 @@
     --background: #231f20;
     --default-color: #778899;
     --tooltip: #f0f8ff;
-    --tier-background: #2d292a;
+    --tier-bg: #2d292a;
     --option-borders: #111;
     --button-text: #ebe0e3;
-    --button-background: #4e3239;
+    --button-bg: #4e3239;
     --button-hover: #9c5e6d;
-    --images-bar-background: #20181a;
+    --buttons-container-bg: #20181a;
 }
 
 body {
@@ -92,7 +92,7 @@ p {
 
 .tier {
     flex-grow: 1;
-    background-color: var(--tier-background);
+    background-color: var(--tier-bg);
     border-top: 1px solid var(--black);
     border-bottom: 1px solid var(--black);
 }
@@ -136,6 +136,8 @@ p {
 
 #buttons-container {
     text-align: center;
+    background-color: var(--buttons-container-bg);
+    border-bottom: 1px solid var(--button-bg);
 }
 
 #buttons-container button {
@@ -145,7 +147,7 @@ p {
     min-width: 100px;
     margin: 10px;
     color: var(--button-text);
-    background-color: var(--button-background);
+    background-color: var(--button-bg);
     transition: ease 200ms;
 }
 
@@ -189,9 +191,5 @@ img {
 }
 
 #images-bar {
-    height: auto;
-    min-height: 85px;
     padding: 10px;
-    background-color: var(--images-bar-background);
-    border-top: 1px solid var(--button-background);
 }
