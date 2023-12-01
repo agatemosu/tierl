@@ -7,15 +7,17 @@
     --tier-bg: #2d292a;
     --option-borders: #111;
     --button-text: #ebe0e3;
-    --button-bg: #4e3239;
+    --buttons-color: #4e3239;
     --button-hover: #9c5e6d;
-    --buttons-container-bg: #20181a;
+    --buttons-bg: #20181a;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     background-color: var(--background);
+    -webkit-user-select: none;
+            user-select: none;
 }
 
 .row {
@@ -136,8 +138,8 @@ p {
 
 #buttons-container {
     text-align: center;
-    background-color: var(--buttons-container-bg);
-    border-bottom: 1px solid var(--button-bg);
+    background-color: var(--buttons-bg);
+    border-bottom: 1px solid var(--buttons-color);
 }
 
 #buttons-container button {
@@ -147,7 +149,7 @@ p {
     min-width: 100px;
     margin: 10px;
     color: var(--button-text);
-    background-color: var(--button-bg);
+    background-color: var(--buttons-color);
     transition: ease 200ms;
 }
 

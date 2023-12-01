@@ -144,7 +144,7 @@ function selectImages() {
 }
 
 function uploadImages(files) {
-    const imagesBar = document.querySelector("#images-bar");
+    const imagesBar = document.getElementById("images-bar");
 
     for (const file of files) {
         const image = document.createElement("img");
