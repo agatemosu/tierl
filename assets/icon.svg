@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+  <rect x="0" y="0" width="50" height="50" fill="#ffb6c1"></rect>
+  <rect x="50" y="0" width="50" height="50" fill="#f08080"></rect>
+  <rect x="100" y="0" width="50" height="50" fill="#afeeee"></rect>
+  <rect x="150" y="0" width="50" height="50" fill="#ffd700"></rect>
+
+  <rect x="0" y="50" width="50" height="50" fill="#dda0dd"></rect>
+  <rect x="50" y="50" width="50" height="50" fill="#ffdab9"></rect>
+  <rect x="100" y="50" width="50" height="50" fill="#f0f8ff"></rect>
+  <rect x="150" y="50" width="50" height="50" fill="#6495ed"></rect>
+
+  <rect x="0" y="100" width="50" height="50" fill="#db7093"></rect>
+  <rect x="50" y="100" width="50" height="50" fill="#ffc0cb"></rect>
+  <rect x="100" y="100" width="50" height="50" fill="#20b2aa"></rect>
+  <rect x="150" y="100" width="50" height="50" fill="#add8e6"></rect>
+
+  <rect x="0" y="150" width="50" height="50" fill="#ba55d3"></rect>
+  <rect x="50" y="150" width="50" height="50" fill="#b0c4de"></rect>
+  <rect x="100" y="150" width="50" height="50" fill="#ff6f61"></rect>
+  <rect x="150" y="150" width="50" height="50" fill="#98fb98"></rect>
+</svg>
