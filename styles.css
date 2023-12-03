@@ -168,6 +168,8 @@ input[type="checkbox"]:checked + label::before {
 }
 
 label {
+    padding-block: 6px;
+    display: inline-block;
     color: var(--button-text);
     cursor: pointer;
 }
