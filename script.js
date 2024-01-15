@@ -247,6 +247,8 @@ function share() {
 
         console.log(`Sharing with${checkbox.checked ? "" : "out"} positions...`);
 
+        const MAX_IMG_SIZE = 500
+
         for (const img in betterTier.images) {
             const betterImage = {
                 index: img,
