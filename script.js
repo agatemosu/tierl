@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     scrollable = true;
 
-    load()
+    load();
 });
 
 document.addEventListener("touchmove", function (event) {
@@ -168,9 +168,10 @@ function initializeDragula() {
         window.drake = dragula(containers);
     }
 
-    window.drake.on("drag", () => { scrollable = false; })
-                .on("drop", () => { scrollable = true; })
-                .on("cancel", () => { scrollable = true; });
+    window.drake
+        .on("drag", () => { scrollable = false; })
+        .on("drop", () => { scrollable = true; })
+        .on("cancel", () => { scrollable = true; });
 }
 
 function dynamicStyle(id) {
@@ -192,36 +193,39 @@ function dynamicStyle(id) {
 // Helper function to encode non UTF-8 characters to Base64
 function encodeUnicode(str) {
     return btoa(
-        encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function toSolidBytes(match, p1) {
-            return String.fromCharCode('0x' + p1)
-        })
-    )
+        encodeURIComponent(str).replace(
+            /%([0-9A-F]{2})/g,
+            function toSolidBytes(match, p1) {
+                return String.fromCharCode("0x" + p1);
+            }
+        )
+    );
 }
 
 // Helper function to decode non UTF-8 characters from Base64
 function decodeUnicode(str) {
     return decodeURIComponent(
         atob(str)
-            .split('')
+            .split("")
             .map(function (c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
             })
-            .join('')
-    )
+            .join("")
+    );
 }
 
 function share() {
-    const shareButton = document.getElementById("share")
-    shareButton.innerText = "..."
+    const shareButton = document.getElementById("share");
+    shareButton.innerText = "...";
 
     let shareJSON = {
         images: [],
-        tiers: []
-    }
+        tiers: [],
+    };
 
-    const tiers = document.getElementsByClassName("row")
+    const tiers = document.getElementsByClassName("row");
     const imagesBar = document.getElementById("images-bar");
-    const barImages = Array.prototype.slice.call(imagesBar.children)
+    const barImages = Array.prototype.slice.call(imagesBar.children);
 
     for (const tier in Array.prototype.slice.call(tiers)) {
         const betterTier = {
@@ -229,54 +233,54 @@ function share() {
             el: tiers[tier],
             name: tiers[tier].children[0].children[0].textContent,
             color: tiers[tier].children[0].style.backgroundColor,
-            images: Array.prototype.slice.call(tiers[tier].children[1].children)            
-        }
+            images: Array.prototype.slice.call(tiers[tier].children[1].children),
+        };
 
         shareJSON.tiers.push({
             index: betterTier.index,
             name: betterTier.name,
-            color: betterTier.color
-        })
-            
-        console.log(betterTier)
-        const checkbox = document.getElementById("includepositions")
+            color: betterTier.color,
+        });
 
-        console.log(`Sharing with${checkbox.checked ? '' : 'out'} positions...`)
+        console.log(betterTier);
+        const checkbox = document.getElementById("includepositions");
+
+        console.log(`Sharing with${checkbox.checked ? "" : "out"} positions...`);
 
         for (const img in betterTier.images) {
             const betterImage = {
                 index: img,
                 el: betterTier.images[img],
-                src: betterTier.images[img].src
-            }
-            
+                src: betterTier.images[img].src,
+            };
+
             // Convert image to DataURL
-            const c = document.createElement('canvas');
-            const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth
+            const c = document.createElement("canvas");
+            const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth;
 
             if (ratio > 1) {
                 // Height beats width
-                c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight)
-                c.width = Math.round(MAX_IMG_SIZE / ratio)
+                c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight);
+                c.width = Math.round(MAX_IMG_SIZE / ratio);
             } else if (ratio < 1) {
                 // Width beats height
-                c.height = Math.round(MAX_IMG_SIZE * ratio)
-                c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth)
+                c.height = Math.round(MAX_IMG_SIZE * ratio);
+                c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth);
             } else {
                 // Width and height match (1:1 aspect ratio)
-                c.width = MAX_IMG_SIZE
-                c.height = MAX_IMG_SIZE
+                c.width = MAX_IMG_SIZE;
+                c.height = MAX_IMG_SIZE;
             }
 
-            const ctx = c.getContext('2d');
+            const ctx = c.getContext("2d");
             ctx.drawImage(betterImage.el, 0, 0, c.width, c.height);
             const base64String = c.toDataURL();
-            c.remove()
+            c.remove();
 
             shareJSON.images.push({
                 img: base64String,
-                tier: checkbox.checked ? betterTier.index : -1
-            })
+                tier: checkbox.checked ? betterTier.index : -1,
+            });
         }
     }
 
@@ -284,117 +288,130 @@ function share() {
         const betterImage = {
             index: img,
             el: barImages[img],
-            src: barImages[img].src
-        }
+            src: barImages[img].src,
+        };
 
-        const MAX_IMG_SIZE = 500
-        
+        const MAX_IMG_SIZE = 500;
+
         // Convert image to DataURL
-        const c = document.createElement('canvas');
-        const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth
+        const c = document.createElement("canvas");
+        const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth;
 
         if (ratio > 1) {
             // Height beats width
-            c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight)
-            c.width = Math.round(MAX_IMG_SIZE / ratio)
+            c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight);
+            c.width = Math.round(MAX_IMG_SIZE / ratio);
         } else if (ratio < 1) {
             // Width beats height
-            c.height = Math.round(MAX_IMG_SIZE * ratio)
-            c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth)
+            c.height = Math.round(MAX_IMG_SIZE * ratio);
+            c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth);
         } else {
             // Width and height match (1:1 aspect ratio)
-            c.width = MAX_IMG_SIZE
-            c.height = MAX_IMG_SIZE
+            c.width = MAX_IMG_SIZE;
+            c.height = MAX_IMG_SIZE;
         }
 
-        const ctx = c.getContext('2d');
+        const ctx = c.getContext("2d");
         ctx.drawImage(betterImage.el, 0, 0, c.width, c.height);
         const base64String = c.toDataURL();
-        c.remove()
+        c.remove();
 
         shareJSON.images.push({
             img: base64String,
-            tier: -1
-        })
+            tier: -1,
+        });
     }
 
-    const c64 = encodeUnicode(JSON.stringify(shareJSON))
-    const chunks = c64.match(/.{1,10000}/g)
+    const c64 = encodeUnicode(JSON.stringify(shareJSON));
+    const chunks = c64.match(/.{1,10000}/g);
 
-    Promise.all(chunks.map((chunk, idx) => {
-        return axios.post("https://corsproxy.org/?https://hastebin.skyra.pw/documents", chunk)
-    })).then((values) => {
-        const strings = values.map((v) => v.data.key)
-        axios.post("https://corsproxy.org/?https://hastebin.skyra.pw/documents", encodeUnicode(JSON.stringify(strings))).then((res) => {
-            console.dir(res)
-
-            navigator.clipboard.writeText("https://agatem.art/tier-list-creator/#" + res.data.key).then(() => {
-            shareButton.innerText = "Copied!"
-
-                setTimeout(() => {
-                    shareButton.innerText = "Share"
-                }, 10000)
-            })
+    Promise.all(
+        chunks.map((chunk, idx) => {
+            return axios.post("https://corsproxy.org/?https://hastebin.skyra.pw/documents", chunk);
         })
-    })
+    ).then((values) => {
+        const strings = values.map((v) => v.data.key);
+        axios
+            .post(
+                "https://corsproxy.org/?https://hastebin.skyra.pw/documents",
+                encodeUnicode(JSON.stringify(strings))
+            )
+            .then((res) => {
+                console.dir(res);
+
+                navigator.clipboard
+                    .writeText(`https://agatem.art/tier-list-creator/#${res.data.key}`)
+                    .then(() => {
+                        shareButton.innerText = "Copied!";
+
+                        setTimeout(() => {
+                            shareButton.innerText = "Share";
+                        }, 10000);
+                    });
+            });
+    });
 }
 
 function load() {
     const hash = window.location.hash.substring(1);
-    console.log("Loading...")
+    console.log("Loading...");
 
     if (hash.length <= 0) {
-        console.log("Nothing to load!")
-        return
+        console.log("Nothing to load!");
+        return;
     }
 
-    console.log(hash)
-    axios.get("https://corsproxy.org/?https://hastebin.skyra.pw/raw/" + hash).then((res) => {
-        console.log(res.data)
-        const c = decodeUnicode(res.data)
-        console.log(c)
-        const data = JSON.parse(c)
-        console.dir(data)
+    console.log(hash);
+    axios
+        .get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${hash}`)
+        .then((res) => {
+            console.log(res.data);
+            const c = decodeUnicode(res.data);
+            console.log(c);
+            const data = JSON.parse(c);
+            console.dir(data);
 
-        Promise.all(data.map((code) => {
-            return axios.get("https://corsproxy.org/?https://hastebin.skyra.pw/raw/" + code)
-        })).then((values) => {
-            console.log(values)
-            const res = values.map((res) => {
-                return res.data
-            }).join("")
-            const c = decodeUnicode(res)
-            const data = JSON.parse(c)
+            Promise.all(
+                data.map((code) => {
+                    return axios.get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${code}`);
+                })
+            ).then((values) => {
+                console.log(values);
+                const res = values
+                    .map((res) => { return res.data; })
+                    .join("");
+                const c = decodeUnicode(res);
+                const data = JSON.parse(c);
 
-            for (const r of Array.prototype.slice.call(document.getElementsByClassName("row"))) {
-                deleteRow(r)
-            }
-            
-            data.tiers.forEach(() => {
-                addRow()
-            })
-
-
-    
-            for (const tier of data.tiers) {
-                const el = Array.prototype.slice.call(document.getElementsByClassName("row"))[tier.index]
-                el.children[0].children[0].textContent = tier.name
-                el.children[0].style.backgroundColor = tier.color
-            }
-            
-            const imagesBar = document.getElementById("images-bar")
-
-            for (const img of data.images) {
-                const image = document.createElement("img");
-                image.src = img.img;
-                image.className = "image";
-                
-                if (img.tier == -1) {
-                    imagesBar.appendChild(image);
-                } else {
-                    document.getElementsByClassName("row")[img.tier].children[1].appendChild(image)
+                for (const r of Array.prototype.slice.call(
+                    document.getElementsByClassName("row")
+                )) {
+                    deleteRow(r);
                 }
-            }
-        })
-    })
+
+                data.tiers.forEach(() => {
+                    addRow();
+                });
+
+                for (const tier of data.tiers) {
+                    const el = Array.prototype.slice.call(document.getElementsByClassName("row"))[tier.index];
+                    el.children[0].children[0].textContent = tier.name;
+                    el.children[0].style.backgroundColor = tier.color;
+                }
+
+                const imagesBar = document.getElementById("images-bar");
+
+                for (const img of data.images) {
+                    const image = document.createElement("img");
+                    image.src = img.img;
+                    image.className = "image";
+
+                    if (img.tier == -1) {
+                        imagesBar.appendChild(image);
+                    } else {
+                        document.getElementsByClassName("row")[img.tier].children[1].appendChild(image);
+                    }
+                }
+            });
+        });
 }
