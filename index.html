@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.5/dist/axios.min.js"></script>
 </head>
 <body>
     <main>
@@ -124,6 +125,9 @@
         <button type="button" onclick="selectImages()">Select images</button>
         <input type="checkbox" id="img" onchange="dynamicStyle('img')">
         <label for="img">Square images</label>
+        <button type="button" id="share" onclick="share()">Share</button>
+        <input type="checkbox" id="includepositions">
+        <label for="includepositions">Include current positions</label>
     </div>
 
     <div id="images-bar" class="sort"></div>
