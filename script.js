@@ -252,8 +252,22 @@ function share() {
             
             // Convert image to DataURL
             const c = document.createElement('canvas');
-            c.height = betterImage.el.naturalHeight;
-            c.width = betterImage.el.naturalWidth;
+            const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth
+
+            if (ratio > 1) {
+                // Height beats width
+                c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight)
+                c.width = Math.round(MAX_IMG_SIZE / ratio)
+            } else if (ratio < 1) {
+                // Width beats height
+                c.height = Math.round(MAX_IMG_SIZE * ratio)
+                c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth)
+            } else {
+                // Width and height match (1:1 aspect ratio)
+                c.width = MAX_IMG_SIZE
+                c.height = MAX_IMG_SIZE
+            }
+
             const ctx = c.getContext('2d');
             ctx.drawImage(betterImage.el, 0, 0, c.width, c.height);
             const base64String = c.toDataURL();
@@ -275,11 +289,24 @@ function share() {
 
         const MAX_IMG_SIZE = 500
         
-        // Compress image and convert to DataURL
+        // Convert image to DataURL
         const c = document.createElement('canvas');
         const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth
-        c.height = Math.min(ratio >= 1 ? MAX_IMG_SIZE : Math.round(MAX_IMG_SIZE * ratio), betterImage.el.naturalHeight);
-        c.width = Math.min(ratio <= 1 ? MAX_IMG_SIZE : Math.round(MAX_IMG_SIZE * ratio), betterImage.el.naturalWidth);
+
+        if (ratio > 1) {
+            // Height beats width
+            c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight)
+            c.width = Math.round(MAX_IMG_SIZE / ratio)
+        } else if (ratio < 1) {
+            // Width beats height
+            c.height = Math.round(MAX_IMG_SIZE * ratio)
+            c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth)
+        } else {
+            // Width and height match (1:1 aspect ratio)
+            c.width = MAX_IMG_SIZE
+            c.height = MAX_IMG_SIZE
+        }
+
         const ctx = c.getContext('2d');
         ctx.drawImage(betterImage.el, 0, 0, c.width, c.height);
         const base64String = c.toDataURL();
