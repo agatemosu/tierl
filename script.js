@@ -214,14 +214,12 @@ function decodeUnicode(str) {
     );
 }
 
-function share() {
-    const shareButton = document.getElementById("share");
-    const checkbox = document.getElementById("includepositions");
-
+function share(shareButton, sharePositions) {
     const tiers = document.getElementsByClassName("row");
     const imagesBar = document.getElementById("images-bar");
     const barImages = Array.from(imagesBar.children);
 
+    const oldButtonText = shareButton.innerText;
     shareButton.innerText = "...";
 
     let shareJSON = {
@@ -231,7 +229,7 @@ function share() {
 
     const MAX_IMG_SIZE = 500;
 
-    console.log(`Sharing with${checkbox.checked ? "" : "out"} positions...`);
+    console.log(`Sharing with${sharePositions ? "" : "out"} positions...`);
 
     for (const tier in Array.prototype.slice.call(tiers)) {
         const betterTier = {
@@ -282,7 +280,7 @@ function share() {
 
             shareJSON.images.push({
                 img: base64String,
-                tier: checkbox.checked ? betterTier.index : -1,
+                tier: sharePositions ? betterTier.index : -1,
             });
         }
     }
@@ -346,7 +344,7 @@ function share() {
                         shareButton.innerText = "Copied!";
 
                         setTimeout(() => {
-                            shareButton.innerText = "Share";
+                            shareButton.innerText = oldButtonText;
                         }, 5000);
                     });
             });

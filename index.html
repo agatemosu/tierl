@@ -123,11 +123,12 @@
     <div id="buttons-container">
         <button type="button" onclick="addRow()">New tier</button>
         <button type="button" onclick="selectImages()">Select images</button>
+
         <input type="checkbox" id="img" onchange="dynamicStyle('img')">
         <label for="img">Square images</label>
-        <button type="button" id="share" onclick="share()">Share</button>
-        <input type="checkbox" id="includepositions">
-        <label for="includepositions">Include current positions</label>
+
+        <button type="button" onclick="share(this, false)">Share</button>
+        <button type="button" onclick="share(this, true)">Share with positions</button>
     </div>
 
     <div id="images-bar" class="sort"></div>
