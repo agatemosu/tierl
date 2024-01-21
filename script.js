@@ -216,6 +216,12 @@ function decodeUnicode(str) {
 
 function share() {
     const shareButton = document.getElementById("share");
+    const checkbox = document.getElementById("includepositions");
+
+    const tiers = document.getElementsByClassName("row");
+    const imagesBar = document.getElementById("images-bar");
+    const barImages = Array.from(imagesBar.children);
+
     shareButton.innerText = "...";
 
     let shareJSON = {
@@ -223,9 +229,9 @@ function share() {
         tiers: [],
     };
 
-    const tiers = document.getElementsByClassName("row");
-    const imagesBar = document.getElementById("images-bar");
-    const barImages = Array.prototype.slice.call(imagesBar.children);
+    const MAX_IMG_SIZE = 500;
+
+    console.log(`Sharing with${checkbox.checked ? "" : "out"} positions...`);
 
     for (const tier in Array.prototype.slice.call(tiers)) {
         const betterTier = {
@@ -233,7 +239,7 @@ function share() {
             el: tiers[tier],
             name: tiers[tier].children[0].children[0].textContent,
             color: tiers[tier].children[0].style.backgroundColor,
-            images: Array.prototype.slice.call(tiers[tier].children[1].children),
+            images: Array.from(tiers[tier].children[1].children),
         };
 
         shareJSON.tiers.push({
@@ -243,11 +249,6 @@ function share() {
         });
 
         console.log(betterTier);
-        const checkbox = document.getElementById("includepositions");
-
-        console.log(`Sharing with${checkbox.checked ? "" : "out"} positions...`);
-
-        const MAX_IMG_SIZE = 500
 
         for (const img in betterTier.images) {
             const betterImage = {
@@ -292,8 +293,6 @@ function share() {
             el: barImages[img],
             src: barImages[img].src,
         };
-
-        const MAX_IMG_SIZE = 500;
 
         // Convert image to DataURL
         const c = document.createElement("canvas");
@@ -348,7 +347,7 @@ function share() {
 
                         setTimeout(() => {
                             shareButton.innerText = "Share";
-                        }, 10000);
+                        }, 5000);
                     });
             });
     });
@@ -356,21 +355,19 @@ function share() {
 
 function load() {
     const hash = window.location.hash.substring(1);
-    console.log("Loading...");
 
     if (hash.length <= 0) {
-        console.log("Nothing to load!");
+        console.log("Nothing to load.");
         return;
     }
 
-    console.log(hash);
+    console.log(`Loading with the id "${hash}"...`);
+
     axios
         .get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${hash}`)
         .then((res) => {
             console.log(res.data);
-            const c = decodeUnicode(res.data);
-            console.log(c);
-            const data = JSON.parse(c);
+            const data = JSON.parse(decodeUnicode(res.data));
             console.dir(data);
 
             Promise.all(
@@ -382,13 +379,12 @@ function load() {
                 const res = values
                     .map((res) => { return res.data; })
                     .join("");
-                const c = decodeUnicode(res);
-                const data = JSON.parse(c);
+                const data = JSON.parse(decodeUnicode(res));
 
-                for (const r of Array.prototype.slice.call(
+                for (const row of Array.from(
                     document.getElementsByClassName("row")
                 )) {
-                    deleteRow(r);
+                    deleteRow(row);
                 }
 
                 data.tiers.forEach(() => {
@@ -396,7 +392,7 @@ function load() {
                 });
 
                 for (const tier of data.tiers) {
-                    const el = Array.prototype.slice.call(document.getElementsByClassName("row"))[tier.index];
+                    const el = Array.from(document.getElementsByClassName("row"))[tier.index];
                     el.children[0].children[0].textContent = tier.name;
                     el.children[0].style.backgroundColor = tier.color;
                 }
@@ -408,7 +404,7 @@ function load() {
                     image.src = img.img;
                     image.className = "image";
 
-                    if (img.tier == -1) {
+                    if (img.tier === -1) {
                         imagesBar.appendChild(image);
                     } else {
                         document.getElementsByClassName("row")[img.tier].children[1].appendChild(image);
