@@ -221,6 +221,7 @@ function share(shareButton, sharePositions) {
 
     const oldButtonText = shareButton.innerText;
     shareButton.innerText = "...";
+    shareButton.disabled = true;
 
     let shareJSON = {
         images: [],
@@ -345,6 +346,7 @@ function share(shareButton, sharePositions) {
 
                         setTimeout(() => {
                             shareButton.innerText = oldButtonText;
+                            shareButton.disabled = false;
                         }, 5000);
                     });
             });
