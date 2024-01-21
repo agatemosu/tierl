@@ -381,9 +381,7 @@ function load() {
                     .join("");
                 const data = JSON.parse(decodeUnicode(res));
 
-                for (const row of Array.from(
-                    document.getElementsByClassName("row")
-                )) {
+                for (const row of Array.from(document.getElementsByClassName("row"))) {
                     deleteRow(row);
                 }
 
