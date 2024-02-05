@@ -326,7 +326,7 @@ function share(shareButton, sharePositions) {
   const chunks = c64.match(/.{1,10000}/g);
 
   Promise.all(
-    chunks.map((chunk, idx) => {
+    chunks.map((chunk) => {
       return axios.post("https://corsproxy.org/?https://hastebin.skyra.pw/documents", chunk);
     })
   ).then((values) => {
