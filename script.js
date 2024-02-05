@@ -214,6 +214,30 @@ function decodeUnicode(str) {
   );
 }
 
+function convertImageToDataURL(imageElement) {
+  const MAX_IMG_SIZE = 500;
+  const c = document.createElement("canvas");
+  const ratio = imageElement.naturalHeight / imageElement.naturalWidth;
+
+  if (ratio > 1) {
+    c.height = Math.min(MAX_IMG_SIZE, imageElement.naturalHeight);
+    c.width = Math.round(MAX_IMG_SIZE / ratio);
+  } else if (ratio < 1) {
+    c.height = Math.round(MAX_IMG_SIZE * ratio);
+    c.width = Math.min(MAX_IMG_SIZE, imageElement.naturalWidth);
+  } else {
+    c.width = MAX_IMG_SIZE;
+    c.height = MAX_IMG_SIZE;
+  }
+
+  const ctx = c.getContext("2d");
+  ctx.drawImage(imageElement, 0, 0, c.width, c.height);
+  const base64String = c.toDataURL();
+  c.remove();
+
+  return base64String;
+}
+
 function share(shareButton, sharePositions) {
   const tiers = document.getElementsByClassName("row");
   const imagesBar = document.getElementById("images-bar");
@@ -254,29 +278,8 @@ function share(shareButton, sharePositions) {
         src: betterTier.images[img].src,
       };
 
-      // Convert image to DataURL
-      const c = document.createElement("canvas");
-      const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth;
-
-      if (ratio > 1) {
-        // Height > Width
-        c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight);
-        c.width = Math.round(MAX_IMG_SIZE / ratio);
-      } else if (ratio < 1) {
-        // Height < Width
-        c.height = Math.round(MAX_IMG_SIZE * ratio);
-        c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth);
-      } else {
-        // Height = Width (1:1 aspect ratio)
-        c.width = MAX_IMG_SIZE;
-        c.height = MAX_IMG_SIZE;
-      }
-
-      const ctx = c.getContext("2d");
-      ctx.drawImage(betterImage.el, 0, 0, c.width, c.height);
-      const base64String = c.toDataURL();
-      c.remove();
-
+      const base64String = convertImageToDataURL(betterImage.el);
+      
       shareJSON.images.push({
         img: base64String,
         tier: sharePositions ? betterTier.index : -1,
@@ -293,28 +296,7 @@ function share(shareButton, sharePositions) {
       src: barImages[img].src,
     };
 
-    // Convert image to DataURL
-    const c = document.createElement("canvas");
-    const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth;
-
-    if (ratio > 1) {
-      // Height > Width
-      c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight);
-      c.width = Math.round(MAX_IMG_SIZE / ratio);
-    } else if (ratio < 1) {
-      // Height < Width
-      c.height = Math.round(MAX_IMG_SIZE * ratio);
-      c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth);
-    } else {
-      // Height = Width (1:1 aspect ratio)
-      c.width = MAX_IMG_SIZE;
-      c.height = MAX_IMG_SIZE;
-    }
-
-    const ctx = c.getContext("2d");
-    ctx.drawImage(betterImage.el, 0, 0, c.width, c.height);
-    const base64String = c.toDataURL();
-    c.remove();
+    const base64String = convertImageToDataURL(betterImage.el);
 
     shareJSON.images.push({
       img: base64String,
