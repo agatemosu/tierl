@@ -340,7 +340,7 @@ function share(shareButton, sharePositions) {
                 console.dir(res);
 
                 navigator.clipboard
-                    .writeText(`https://agatem.art/tier-list-creator/#${res.data.key}`)
+                    .writeText(`${window.location.origin}${window.location.pathname}#${res.data.key}`)
                     .then(() => {
                         shareButton.innerText = "Copied!";
 
