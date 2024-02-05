@@ -252,8 +252,6 @@ function share(shareButton, sharePositions) {
     tiers: [],
   };
 
-  const MAX_IMG_SIZE = 500;
-
   console.log(`Sharing with${sharePositions ? "" : "out"} positions...`);
 
   for (const tier in Array.prototype.slice.call(tiers)) {
