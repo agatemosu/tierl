@@ -333,7 +333,7 @@ function share(shareButton, sharePositions) {
   });
 }
 
-function load() {
+async function load() {
   const hash = window.location.hash.substring(1);
 
   if (hash.length <= 0) {
@@ -343,50 +343,46 @@ function load() {
 
   console.log(`Loading with the id "${hash}"...`);
 
-  axios
-    .get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${hash}`)
-    .then((res) => {
-      const chunks = JSON.parse(decodeUnicode(res.data));
+  // Get the chunks
+  const response = await fetch(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${hash}`);
+  const text = await response.text();
+  const chunks = JSON.parse(decodeUnicode(text));
 
-      Promise.all(
-        chunks.map((chunk) => {
-          return axios.get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${chunk}`);
-        })
-      ).then((chunksData) => {
-        const res = chunksData
-          .map((res) => { return res.data; })
-          .join(""); // Merge all chunks
+  // Get the content of the chunks
+  const chunksData = await Promise.all(chunks.map(async (chunk) => {
+    const chunkResponse = await fetch(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${chunk}`);
+    return chunkResponse.text();
+  }));
 
-        const data = JSON.parse(decodeUnicode(res));
-        console.log(data); // Print readable data
+  const res = chunksData.join(""); // Merge all chunks
+  const data = JSON.parse(decodeUnicode(res));
+  console.log(data); // Print readable data
 
-        for (const row of Array.from(document.getElementsByClassName("row"))) {
-          deleteRow(row);
-        }
+  Array.from(document.getElementsByClassName("row")).forEach((row) => {
+    deleteRow(row);
+  });
 
-        data.tiers.forEach(() => {
-          addRow();
-        });
+  data.tiers.forEach(() => {
+    addRow();
+  });
 
-        for (const tier of data.tiers) {
-          const el = Array.from(document.getElementsByClassName("row"))[tier.index];
-          el.children[0].children[0].textContent = tier.name;
-          el.children[0].style.backgroundColor = tier.color;
-        }
+  for (const tier of data.tiers) {
+    const el = document.getElementsByClassName("row")[tier.index];
+    el.children[0].children[0].textContent = tier.name;
+    el.children[0].style.backgroundColor = tier.color;
+  }
 
-        const imagesBar = document.getElementById("images-bar");
+  const imagesBar = document.getElementById("images-bar");
 
-        for (const img of data.images) {
-          const image = document.createElement("img");
-          image.src = img.img;
-          image.className = "image";
+  for (const img of data.images) {
+    const image = document.createElement("img");
+    image.src = img.img;
+    image.className = "image";
 
-          if (img.tier === -1) {
-            imagesBar.appendChild(image);
-          } else {
-            document.getElementsByClassName("row")[img.tier].children[1].appendChild(image);
-          }
-        }
-      });
-    });
+    if (img.tier === -1) {
+      imagesBar.appendChild(image);
+    } else {
+      document.getElementsByClassName("row")[img.tier].children[1].appendChild(image);
+    }
+  }
 }
