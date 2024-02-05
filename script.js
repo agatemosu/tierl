@@ -220,8 +220,8 @@ function share(shareButton, sharePositions) {
     const barImages = Array.from(imagesBar.children);
 
     const oldButtonText = shareButton.innerText;
-    shareButton.innerText = "...";
     shareButton.disabled = true;
+    shareButton.innerText = "...";
 
     let shareJSON = {
         images: [],
@@ -247,8 +247,6 @@ function share(shareButton, sharePositions) {
             color: betterTier.color,
         });
 
-        console.log(betterTier);
-
         for (const img in betterTier.images) {
             const betterImage = {
                 index: img,
@@ -261,15 +259,15 @@ function share(shareButton, sharePositions) {
             const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth;
 
             if (ratio > 1) {
-                // Height beats width
+                // Height > Width
                 c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight);
                 c.width = Math.round(MAX_IMG_SIZE / ratio);
             } else if (ratio < 1) {
-                // Width beats height
+                // Height < Width
                 c.height = Math.round(MAX_IMG_SIZE * ratio);
                 c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth);
             } else {
-                // Width and height match (1:1 aspect ratio)
+                // Height = Width (1:1 aspect ratio)
                 c.width = MAX_IMG_SIZE;
                 c.height = MAX_IMG_SIZE;
             }
@@ -286,6 +284,8 @@ function share(shareButton, sharePositions) {
         }
     }
 
+    console.log(shareJSON);
+
     for (const img in Array.prototype.slice.call(imagesBar.children)) {
         const betterImage = {
             index: img,
@@ -298,15 +298,15 @@ function share(shareButton, sharePositions) {
         const ratio = betterImage.el.naturalHeight / betterImage.el.naturalWidth;
 
         if (ratio > 1) {
-            // Height beats width
+            // Height > Width
             c.height = Math.min(MAX_IMG_SIZE, betterImage.el.naturalHeight);
             c.width = Math.round(MAX_IMG_SIZE / ratio);
         } else if (ratio < 1) {
-            // Width beats height
+            // Height < Width
             c.height = Math.round(MAX_IMG_SIZE * ratio);
             c.width = Math.min(MAX_IMG_SIZE, betterImage.el.naturalWidth);
         } else {
-            // Width and height match (1:1 aspect ratio)
+            // Height = Width (1:1 aspect ratio)
             c.width = MAX_IMG_SIZE;
             c.height = MAX_IMG_SIZE;
         }
@@ -337,7 +337,7 @@ function share(shareButton, sharePositions) {
                 encodeUnicode(JSON.stringify(strings))
             )
             .then((res) => {
-                console.dir(res);
+                console.log(res);
 
                 navigator.clipboard
                     .writeText(`${window.location.origin}${window.location.pathname}#${res.data.key}`)
@@ -366,20 +366,19 @@ function load() {
     axios
         .get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${hash}`)
         .then((res) => {
-            console.log(res.data);
-            const data = JSON.parse(decodeUnicode(res.data));
-            console.dir(data);
+            const chunks = JSON.parse(decodeUnicode(res.data));
 
             Promise.all(
-                data.map((code) => {
-                    return axios.get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${code}`);
+                chunks.map((chunk) => {
+                    return axios.get(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${chunk}`);
                 })
-            ).then((values) => {
-                console.log(values);
-                const res = values
+            ).then((chunksData) => {
+                const res = chunksData
                     .map((res) => { return res.data; })
-                    .join("");
+                    .join(""); // Merge all chunks
+
                 const data = JSON.parse(decodeUnicode(res));
+                console.log(data); // Print readable data
 
                 for (const row of Array.from(document.getElementsByClassName("row"))) {
                     deleteRow(row);
