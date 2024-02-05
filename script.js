@@ -238,7 +238,7 @@ function convertImageToDataURL(imageElement) {
   return base64String;
 }
 
-function share(shareButton, sharePositions) {
+async function share(shareButton, sharePositions) {
   const tiers = document.getElementsByClassName("row");
   const imagesBar = document.getElementById("images-bar");
   const barImages = Array.from(imagesBar.children);
@@ -254,13 +254,12 @@ function share(shareButton, sharePositions) {
 
   console.log(`Sharing with${sharePositions ? "" : "out"} positions...`);
 
-  for (const tier in Array.prototype.slice.call(tiers)) {
+  Array.from(tiers).forEach((tier, tierIndex) => {
     const betterTier = {
-      index: tier,
-      el: tiers[tier],
-      name: tiers[tier].children[0].children[0].textContent,
-      color: tiers[tier].children[0].style.backgroundColor,
-      images: Array.from(tiers[tier].children[1].children),
+      index: tierIndex,
+      name: tier.children[0].children[0].textContent,
+      color: tier.children[0].style.backgroundColor,
+      images: Array.from(tier.children[1].children),
     };
 
     shareJSON.tiers.push({
@@ -269,68 +268,82 @@ function share(shareButton, sharePositions) {
       color: betterTier.color,
     });
 
-    for (const img in betterTier.images) {
+    betterTier.images.forEach((img, imgIndex) => {
       const betterImage = {
-        index: img,
-        el: betterTier.images[img],
-        src: betterTier.images[img].src,
+        index: imgIndex,
+        element: img,
+        src: img.src,
       };
 
-      const base64String = convertImageToDataURL(betterImage.el);
-      
+      const base64String = convertImageToDataURL(betterImage.element);
+
       shareJSON.images.push({
         img: base64String,
         tier: sharePositions ? betterTier.index : -1,
       });
-    }
-  }
+    });
+  });
 
   console.log(shareJSON);
 
-  for (const img in Array.prototype.slice.call(imagesBar.children)) {
+  barImages.forEach((img, imgIndex) => {
     const betterImage = {
-      index: img,
-      el: barImages[img],
-      src: barImages[img].src,
+      index: imgIndex,
+      element: img,
+      src: img.src,
     };
 
-    const base64String = convertImageToDataURL(betterImage.el);
+    const base64String = convertImageToDataURL(betterImage.element);
 
     shareJSON.images.push({
       img: base64String,
       tier: -1,
     });
-  }
+  });
 
   const c64 = encodeUnicode(JSON.stringify(shareJSON));
   const chunks = c64.match(/.{1,10000}/g);
 
-  Promise.all(
-    chunks.map((chunk) => {
-      return axios.post("https://corsproxy.org/?https://hastebin.skyra.pw/documents", chunk);
-    })
-  ).then((values) => {
-    const strings = values.map((v) => v.data.key);
-    axios
-      .post(
-        "https://corsproxy.org/?https://hastebin.skyra.pw/documents",
-        encodeUnicode(JSON.stringify(strings))
-      )
-      .then((res) => {
-        console.log(res);
-
-        navigator.clipboard
-          .writeText(`${window.location.origin}${window.location.pathname}#${res.data.key}`)
-          .then(() => {
-            shareButton.innerText = "Copied!";
-
-            setTimeout(() => {
-              shareButton.innerText = oldButtonText;
-              shareButton.disabled = false;
-            }, 5000);
-          });
+  const values = await Promise.all(
+    chunks.map(async (chunk) => {
+      const response = await fetch("https://corsproxy.org/?https://hastebin.skyra.pw/documents", {
+        method: "POST",
+        body: chunk,
       });
+      return await response.json();
+    })
+  );
+
+  const strings = values.map((v) => v.key);
+  const res = await fetch("https://corsproxy.org/?https://hastebin.skyra.pw/documents", {
+    method: "POST",
+    body: encodeUnicode(JSON.stringify(strings)),
   });
+  const hastebinResponse = await res.json();
+
+  console.log(hastebinResponse);
+
+  try {
+    await navigator.share({
+      title: "Share tier list!",
+      text: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
+      url: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
+    });
+
+    shareButton.innerText = "Shared!";
+    setTimeout(() => {
+      shareButton.innerText = oldButtonText;
+      shareButton.disabled = false;
+    }, 5000);
+  } catch {
+    await navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`);
+
+    shareButton.innerText = "Copied!";
+    setTimeout(() => {
+      shareButton.innerText = oldButtonText;
+      shareButton.disabled = false;
+    }, 5000);
+  }
 }
 
 async function load() {
