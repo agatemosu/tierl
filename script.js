@@ -317,20 +317,24 @@ async function share(shareButton, sharePositions) {
 
   console.log(hastebinResponse);
 
-  try {
-    await navigator.share({
-      title: "Share tier list!",
-      text: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
-      url: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
-    });
+  const shareData = {
+    title: "Share tier list!",
+    text: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
+    url: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
+  };
 
-    shareButton.innerText = "Shared!";
-    setTimeout(() => {
-      shareButton.innerText = oldButtonText;
-      shareButton.disabled = false;
-    }, 5000);
-  } catch {
-    await navigator.clipboard.writeText(`${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`);
+  if (navigator.canShare(shareData)) {
+    try {
+      await navigator.share(shareData);
+    } finally {
+      shareButton.innerText = "Shared!";
+      setTimeout(() => {
+        shareButton.innerText = oldButtonText;
+        shareButton.disabled = false;
+      }, 5000);
+    }
+  } else {
+    await navigator.clipboard.writeText(shareData["url"]);
 
     shareButton.innerText = "Copied!";
     setTimeout(() => {
