@@ -174,20 +174,14 @@ function initializeDragula() {
     .on("cancel", () => { scrollable = true; });
 }
 
-function dynamicStyle(id) {
+function dynamicStyle(checkbox, css) {
   const style = document.getElementById("dynamic-styles");
-  const checkbox = document.getElementById(id);
 
-  let content = style.innerHTML;
-
-  if (id === "img") {
-    if (checkbox.checked) {
-      content += ".image { height: 80px; width: 80px; }";
-    } else {
-      content = content.replace(".image { height: 80px; width: 80px; }", "");
-    }
+  if (checkbox.checked) {
+    style.innerHTML += css;
+  } else {
+    style.innerHTML = style.innerHTML.replace(css, "");
   }
-  style.innerHTML = content;
 }
 
 // Helper function to encode non UTF-8 characters to Base64

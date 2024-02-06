@@ -159,8 +159,8 @@
       <button type="button" onclick="addRow()">New tier</button>
       <button type="button" onclick="selectImages()">Select images</button>
 
-      <input type="checkbox" id="img" onchange="dynamicStyle('img')" />
-      <label for="img">Square images</label>
+      <input type="checkbox" id="square-img" onchange="dynamicStyle(this, '.image { height: 80px; width: 80px; }')" />
+      <label for="square-img">Square images</label>
 
       <button type="button" onclick="share(this, false)">Share</button>
       <button type="button" onclick="share(this, true)">Share with positions</button>
