@@ -325,13 +325,13 @@ async function share(shareButton, sharePositions) {
 
   if (navigator.canShare(shareData)) {
     try {
-      await navigator.share(shareData);
+      navigator.share(shareData);
     } finally {
       shareButton.innerText = "Shared!";
       setTimeout(() => {
         shareButton.innerText = oldButtonText;
         shareButton.disabled = false;
-      }, 5000);
+      }, 3000);
     }
   } else {
     await navigator.clipboard.writeText(shareData["url"]);
