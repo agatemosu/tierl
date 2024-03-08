@@ -1,20 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const tooltips = document.querySelectorAll(".tooltip");
-  const defaultColors = ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff"];
+const hash = location.hash.substring(1);
+const tooltips = document.querySelectorAll(".tooltip");
+const defaultColors = ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff", "#ff7ffe"];
 
-  tooltips.forEach((tooltip, index) => {
-    const defaultColor = defaultColors[index];
-    const colorPicker = tooltip.querySelector(".color-picker");
+let scrollable = true;
+let drake;
 
-    createColorPicker(colorPicker, (color) => {
-      tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
-    }, defaultColor);
-  });
+tooltips.forEach((tooltip, index) => {
+  const defaultColor = defaultColors[index];
+  const colorPicker = tooltip.querySelector(".color-picker");
 
-  scrollable = true;
-
-  load();
+  createColorPicker(colorPicker, (color) => {
+    tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
+  }, defaultColor);
 });
+
+if (hash.length <= 0) {
+  console.log("Nothing to load.");
+} else {
+  load();
+}
 
 document.addEventListener("touchmove", (event) => {
   if (!scrollable) {
@@ -29,7 +33,7 @@ function createColorPicker(colorPicker, onChange, defaultColor = "lightslategray
     el: colorPicker,
     theme: "monolith",
     default: defaultColor,
-    swatches: ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff", "#ff7ffe"],
+    swatches: defaultColors,
     components: {
       preview: true,
       hue: true,
@@ -162,13 +166,13 @@ function uploadImages(files) {
 function initializeDragula() {
   const containers = Array.from(document.querySelectorAll(".sort"));
 
-  if (window.drake) {
-    window.drake.containers.push(...containers);
+  if (drake) {
+    drake.containers.push(...containers);
   } else {
-    window.drake = dragula(containers);
+    drake = dragula(containers);
   }
 
-  window.drake
+  drake
     .on("drag", () => { scrollable = false; })
     .on("drop", () => { scrollable = true; })
     .on("cancel", () => { scrollable = true; });
@@ -319,8 +323,8 @@ async function share(shareButton, sharePositions) {
 
   const shareData = {
     title: "Share tier list!",
-    text: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
-    url: `${window.location.origin}${window.location.pathname}#${hastebinResponse.key}`,
+    text: `${location.origin}${location.pathname}#${hastebinResponse.key}`,
+    url: `${location.origin}${location.pathname}#${hastebinResponse.key}`,
   };
 
   if (navigator.canShare(shareData)) {
@@ -345,13 +349,6 @@ async function share(shareButton, sharePositions) {
 }
 
 async function load() {
-  const hash = window.location.hash.substring(1);
-
-  if (hash.length <= 0) {
-    console.log("Nothing to load.");
-    return;
-  }
-
   console.log(`Loading with the id "${hash}"...`);
 
   // Get the chunks
@@ -369,16 +366,13 @@ async function load() {
   const data = JSON.parse(decodeUnicode(res));
   console.log(data); // Print readable data
 
-  for (row of Array.from(document.getElementsByClassName("row"))) {
+  for (const row of Array.from(document.getElementsByClassName("row"))) {
     deleteRow(row);
   }
 
-  for (tier of data.tiers) {
-    addRow();
-  }
-
   for (const tier of data.tiers) {
-    const el = document.getElementsByClassName("row")[tier.index];
+    addRow();
+    const el = document.querySelector(".row:last-child");
     el.children[0].children[0].textContent = tier.name;
     el.children[0].style.backgroundColor = tier.color;
   }
