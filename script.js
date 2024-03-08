@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const tooltips = document.querySelectorAll(".tooltip");
   const defaultColors = ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff"];
 
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   load();
 });
 
-document.addEventListener("touchmove", function (event) {
+document.addEventListener("touchmove", (event) => {
   if (!scrollable) {
     event.preventDefault();
   }
@@ -190,7 +190,7 @@ function encodeUnicode(str) {
     encodeURIComponent(str).replace(
       /%([0-9A-F]{2})/g,
       function toSolidBytes(match, p1) {
-        return String.fromCharCode("0x" + p1);
+        return String.fromCharCode(`0x${p1}`);
       }
     )
   );
@@ -201,8 +201,8 @@ function decodeUnicode(str) {
   return decodeURIComponent(
     atob(str)
       .split("")
-      .map(function (c) {
-        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      .map((c) => {
+        return `%${c.charCodeAt(0).toString(16).padStart(2, "0")}`;
       })
       .join("")
   );
@@ -241,7 +241,7 @@ async function share(shareButton, sharePositions) {
   shareButton.disabled = true;
   shareButton.innerText = "...";
 
-  let shareJSON = {
+  const shareJSON = {
     images: [],
     tiers: [],
   };
@@ -334,7 +334,7 @@ async function share(shareButton, sharePositions) {
       }, 3000);
     }
   } else {
-    await navigator.clipboard.writeText(shareData["url"]);
+    await navigator.clipboard.writeText(shareData.url);
 
     shareButton.innerText = "Copied!";
     setTimeout(() => {
@@ -369,13 +369,13 @@ async function load() {
   const data = JSON.parse(decodeUnicode(res));
   console.log(data); // Print readable data
 
-  Array.from(document.getElementsByClassName("row")).forEach((row) => {
+  for (row of Array.from(document.getElementsByClassName("row"))) {
     deleteRow(row);
-  });
+  }
 
-  data.tiers.forEach(() => {
+  for (tier of data.tiers) {
     addRow();
-  });
+  }
 
   for (const tier of data.tiers) {
     const el = document.getElementsByClassName("row")[tier.index];
