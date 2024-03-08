@@ -85,15 +85,15 @@ function addRow() {
 
   const deleteButton = document.createElement("div");
   deleteButton.className = "option delete";
-  deleteButton.innerHTML = '<img src="assets/trash.svg" alt="Delete" onclick="deleteRow(this)">';
+  deleteButton.innerHTML = '<img class="option-hover" src="assets/trash.svg" alt="Delete" onclick="deleteRow(this)">';
 
   const upButton = document.createElement("div");
   upButton.className = "option";
-  upButton.innerHTML = '<img src="assets/chevron-up.svg" alt="Up" onclick="moveRow(this, -1)">';
+  upButton.innerHTML = '<img class="option-hover" src="assets/chevron-up.svg" alt="Up" onclick="moveRow(this, -1)">';
 
   const downButton = document.createElement("div");
   downButton.className = "option";
-  downButton.innerHTML = '<img src="assets/chevron-down.svg" alt="Down" onclick="moveRow(this, 1)">';
+  downButton.innerHTML = '<img class="option-hover" src="assets/chevron-down.svg" alt="Down" onclick="moveRow(this, 1)">';
 
   // Add divs to the row / main container
   tooltip.appendChild(colorPicker);
