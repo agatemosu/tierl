@@ -56,7 +56,7 @@ function addRow() {
   const newRow = document.createElement("div");
   newRow.className = "row";
 
-  // Labels and colors
+  // Labels and colors (i.e. left)
   const tierLabelDiv = document.createElement("div");
   tierLabelDiv.className = "tier-label";
   tierLabelDiv.setAttribute("contenteditable", true);
@@ -72,11 +72,11 @@ function addRow() {
   const colorPicker = document.createElement("div");
   colorPicker.className = "color-picker";
 
-  // Tiers
+  // Tiers (i.e. center)
   const tierDiv = document.createElement("div");
   tierDiv.className = "tier sort";
 
-  // Options
+  // Options (i.e. right)
   const optionsDiv = document.createElement("div");
   optionsDiv.className = "tier-options";
 
@@ -85,15 +85,30 @@ function addRow() {
 
   const deleteButton = document.createElement("div");
   deleteButton.className = "option delete";
-  deleteButton.innerHTML = '<img class="option-hover" src="assets/trash.svg" alt="Delete" onclick="deleteRow(this)">';
+
+  const deleteImage = document.createElement("img");
+  deleteImage.className = "option-hover";
+  deleteImage.src = "assets/trash.svg";
+  deleteImage.alt = "Delete";
+  deleteImage.setAttribute("onclick", "deleteRow(this)");
 
   const upButton = document.createElement("div");
   upButton.className = "option";
-  upButton.innerHTML = '<img class="option-hover" src="assets/chevron-up.svg" alt="Up" onclick="moveRow(this, -1)">';
+
+  const upImage = document.createElement("img");
+  upImage.className = "option-hover";
+  upImage.src = "assets/chevron-up.svg";
+  upImage.alt = "Up";
+  upImage.setAttribute("onclick", "moveRow(this, -1)");
 
   const downButton = document.createElement("div");
   downButton.className = "option";
-  downButton.innerHTML = '<img class="option-hover" src="assets/chevron-down.svg" alt="Down" onclick="moveRow(this, 1)">';
+
+  const downImage = document.createElement("img");
+  downImage.className = "option-hover";
+  downImage.src = "assets/chevron-down.svg";
+  downImage.alt = "Down";
+  downImage.setAttribute("onclick", "moveRow(this, 1)");
 
   // Add divs to the row / main container
   tooltip.appendChild(colorPicker);
@@ -104,6 +119,10 @@ function addRow() {
 
   tierLabelDiv.appendChild(paragraph);
   tierLabelDiv.appendChild(tooltip);
+
+  deleteButton.appendChild(deleteImage);
+  upButton.appendChild(upImage);
+  downButton.appendChild(downImage);
 
   optionsContainer.appendChild(deleteButton);
   optionsContainer.appendChild(upButton);
