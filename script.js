@@ -1,11 +1,16 @@
 const hash = location.hash.substring(1);
-const tooltips = document.querySelectorAll(".tooltip");
 const defaultColors = ["#ff7f7e", "#ffbf7f", "#feff7f", "#7eff80", "#7fffff", "#807fff", "#ff7ffe"];
 
 let scrollable = true;
 let drake;
 
-tooltips.forEach((tooltip, index) => {
+if (hash.length <= 0) {
+  console.log("Nothing to load.");
+} else {
+  load();
+}
+
+document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
   const defaultColor = defaultColors[index];
   const colorPicker = tooltip.querySelector(".color-picker");
 
@@ -13,12 +18,6 @@ tooltips.forEach((tooltip, index) => {
     tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
   }, defaultColor);
 });
-
-if (hash.length <= 0) {
-  console.log("Nothing to load.");
-} else {
-  load();
-}
 
 document.addEventListener("touchmove", (event) => {
   if (!scrollable) {
@@ -28,7 +27,7 @@ document.addEventListener("touchmove", (event) => {
   passive: false,
 });
 
-function createColorPicker(colorPicker, onChange, defaultColor = "lightslategray") {
+function createColorPicker(colorPicker, onChange, defaultColor) {
   const pickr = Pickr.create({
     el: colorPicker,
     theme: "monolith",
@@ -51,7 +50,7 @@ function createColorPicker(colorPicker, onChange, defaultColor = "lightslategray
   });
 }
 
-function addRow() {
+function addRow(tierName = "New tier", defaultColor = "lightslategray") {
   const mainContainer = document.querySelector("main");
   const newRow = document.createElement("div");
   newRow.className = "row";
@@ -59,10 +58,11 @@ function addRow() {
   // Labels and colors (i.e. left)
   const tierLabelDiv = document.createElement("div");
   tierLabelDiv.className = "tier-label";
+  tierLabelDiv.style.backgroundColor = defaultColor;
   tierLabelDiv.setAttribute("contenteditable", true);
 
   const paragraph = document.createElement("p");
-  paragraph.textContent = "New tier";
+  paragraph.textContent = tierName;
   paragraph.setAttribute("spellcheck", false);
 
   const tooltip = document.createElement("div");
@@ -115,7 +115,7 @@ function addRow() {
 
   createColorPicker(colorPicker, (color) => {
     tooltip.parentNode.style.backgroundColor = color ? color.toHEXA().toString() : "";
-  });
+  }, defaultColor);
 
   tierLabelDiv.appendChild(paragraph);
   tierLabelDiv.appendChild(tooltip);
@@ -169,7 +169,7 @@ function selectImages() {
 }
 
 function uploadImages(files) {
-  const imagesBar = document.getElementById("images-bar");
+  const imagesBar = document.querySelector("#images-bar");
 
   for (const file of files) {
     const image = document.createElement("img");
@@ -198,7 +198,7 @@ function initializeDragula() {
 }
 
 function dynamicStyle(checkbox, css) {
-  const style = document.getElementById("dynamic-styles");
+  const style = document.querySelector("#dynamic-styles");
 
   if (checkbox.checked) {
     style.innerHTML += css;
@@ -256,8 +256,8 @@ function convertImageToDataURL(imageElement) {
 }
 
 async function share(shareButton, sharePositions) {
-  const tiers = document.getElementsByClassName("row");
-  const imagesBar = document.getElementById("images-bar");
+  const tiers = document.querySelectorAll(".row");
+  const imagesBar = document.querySelector("#images-bar");
   const barImages = Array.from(imagesBar.children);
 
   const oldButtonText = shareButton.innerText;
@@ -271,7 +271,7 @@ async function share(shareButton, sharePositions) {
 
   console.log(`Sharing with${sharePositions ? "" : "out"} positions...`);
 
-  Array.from(tiers).forEach((tier, tierIndex) => {
+  tiers.forEach((tier, tierIndex) => {
     const betterTier = {
       index: tierIndex,
       name: tier.children[0].children[0].textContent,
@@ -323,7 +323,7 @@ async function share(shareButton, sharePositions) {
 
   const values = await Promise.all(
     chunks.map(async (chunk) => {
-      const response = await fetch("https://corsproxy.org/?https://hastebin.skyra.pw/documents", {
+      const response = await fetch("https://hastebin.skyra.pw/documents", {
         method: "POST",
         body: chunk,
       });
@@ -332,7 +332,7 @@ async function share(shareButton, sharePositions) {
   );
 
   const strings = values.map((v) => v.key);
-  const res = await fetch("https://corsproxy.org/?https://hastebin.skyra.pw/documents", {
+  const res = await fetch("https://hastebin.skyra.pw/documents", {
     method: "POST",
     body: encodeUnicode(JSON.stringify(strings)),
   });
@@ -371,13 +371,13 @@ async function load() {
   console.log(`Loading with the id "${hash}"...`);
 
   // Get the chunks
-  const response = await fetch(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${hash}`);
+  const response = await fetch(`https://hastebin.skyra.pw/raw/${hash}`);
   const text = await response.text();
   const chunks = JSON.parse(decodeUnicode(text));
 
   // Get the content of the chunks
   const chunksData = await Promise.all(chunks.map(async (chunk) => {
-    const chunkResponse = await fetch(`https://corsproxy.org/?https://hastebin.skyra.pw/raw/${chunk}`);
+    const chunkResponse = await fetch(`https://hastebin.skyra.pw/raw/${chunk}`);
     return chunkResponse.text();
   }));
 
@@ -385,18 +385,16 @@ async function load() {
   const data = JSON.parse(decodeUnicode(res));
   console.log(data); // Print readable data
 
-  for (const row of Array.from(document.getElementsByClassName("row"))) {
+  for (const row of document.querySelectorAll(".row")) {
     deleteRow(row);
   }
 
   for (const tier of data.tiers) {
-    addRow();
-    const el = document.querySelector(".row:last-child");
-    el.children[0].children[0].textContent = tier.name;
-    el.children[0].style.backgroundColor = tier.color;
+    addRow(tier.name, tier.color || "lightslategray");
   }
 
-  const imagesBar = document.getElementById("images-bar");
+  const imagesBar = document.querySelector("#images-bar");
+  const rows = document.querySelectorAll(".row");
 
   for (const img of data.images) {
     const image = document.createElement("img");
@@ -406,7 +404,7 @@ async function load() {
     if (img.tier === -1) {
       imagesBar.appendChild(image);
     } else {
-      document.getElementsByClassName("row")[img.tier].children[1].appendChild(image);
+      rows[img.tier].children[1].appendChild(image);
     }
   }
 }
