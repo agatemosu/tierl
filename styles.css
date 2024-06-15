@@ -1,199 +1,199 @@
 :root {
-    --black: #000;
-    --white: #fff;
-    --background: #231f20;
-    --default-color: #778899;
-    --tooltip: #f0f8ff;
-    --tier-bg: #2d292a;
-    --option-borders: #111;
-    --button-text: #ebe0e3;
-    --buttons-color: #4e3239;
-    --button-hover: #9c5e6d;
-    --buttons-bg: #20181a;
+	--black: #000;
+	--white: #fff;
+	--background: #231f20;
+	--default-color: #778899;
+	--tooltip: #f0f8ff;
+	--tier-bg: #2d292a;
+	--option-borders: #111;
+	--button-text: #ebe0e3;
+	--buttons-color: #4e3239;
+	--button-hover: #9c5e6d;
+	--buttons-bg: #20181a;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    background-color: var(--background);
-    -webkit-user-select: none;
-            user-select: none;
+	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+	background-color: var(--background);
+	-webkit-user-select: none;
+	user-select: none;
 }
 
 .row {
-    display: flex;
+	display: flex;
 }
 
 .tier-label {
-    position: relative;
-    min-height: 85px;
-    width: 100px;
-    display: flex;
-    align-items: center;
-    background-color: var(--default-color);
-    border: 1px solid var(--black);
+	position: relative;
+	min-height: 85px;
+	width: 100px;
+	display: flex;
+	align-items: center;
+	background-color: var(--default-color);
+	border: 1px solid var(--black);
 }
 
 .tier-label:focus-visible {
-    outline: none;
-    border: 1px solid var(--white);
+	outline: none;
+	border: 1px solid var(--white);
 }
 
 .tooltip:focus-within,
 .tier-label:focus-visible .tooltip {
-    visibility: visible;
-    opacity: 1;
+	visibility: visible;
+	opacity: 1;
 }
 
 .tooltip {
-    visibility: hidden;
-    position: absolute;
-    top: 50%;
-    left: 110%;
-    transform: translate(0, -50%);
-    height: 50px;
-    width: 80px;
-    background-color: var(--tooltip);
-    border-radius: 6px;
-    opacity: 0;
-    transition: opacity 300ms;
+	visibility: hidden;
+	position: absolute;
+	top: 50%;
+	left: 110%;
+	transform: translate(0, -50%);
+	height: 50px;
+	width: 80px;
+	background-color: var(--tooltip);
+	border-radius: 6px;
+	opacity: 0;
+	transition: opacity 300ms;
 }
 
 .tooltip::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 100%;
-    margin-top: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent var(--tooltip) transparent transparent;
+	content: "";
+	position: absolute;
+	top: 50%;
+	right: 100%;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent var(--tooltip) transparent transparent;
 }
 
 .pcr-app {
-    max-width: 200px !important;
+	max-width: 200px !important;
 }
 
 .pcr-button {
-    margin: 10px !important;
-    background: var(--default-color) !important;
+	margin: 10px !important;
+	background: var(--default-color) !important;
 }
 
 .pcr-button,
 .pcr-button::before,
 .pcr-button::after {
-    height: 30px !important;
-    width: 60px !important;
+	height: 30px !important;
+	width: 60px !important;
 }
 
 p {
-    width: 96px;
-    margin: 6px 2px;
-    text-align: center;
+	width: 96px;
+	margin: 6px 2px;
+	text-align: center;
 }
 
 .tier {
-    flex-grow: 1;
-    background-color: var(--tier-bg);
-    border-top: 1px solid var(--black);
-    border-bottom: 1px solid var(--black);
+	flex-grow: 1;
+	background-color: var(--tier-bg);
+	border-top: 1px solid var(--black);
+	border-bottom: 1px solid var(--black);
 }
 
 .tier-options {
-    display: flex;
-    width: 80px;
-    align-items: center;
-    background-color: var(--black);
-    border-top: 1px solid var(--option-borders);
-    border-bottom: 1px solid var(--option-borders);
+	display: flex;
+	width: 80px;
+	align-items: center;
+	background-color: var(--black);
+	border-top: 1px solid var(--option-borders);
+	border-bottom: 1px solid var(--option-borders);
 }
 
 .options-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    height: 80px;
-    width: 80px;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	height: 80px;
+	width: 80px;
 }
 
 .option {
-    height: auto;
-    width: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+	height: auto;
+	width: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .option.delete {
-    grid-row: span 2;
-    justify-content: right;
+	grid-row: span 2;
+	justify-content: right;
 }
 
 .option-hover {
-    transition: ease 100ms;
+	transition: ease 100ms;
 }
 
 .option-hover:hover {
-    filter: contrast(0%);
+	filter: contrast(0%);
 }
 
 #buttons-container {
-    text-align: center;
-    background-color: var(--buttons-bg);
-    border-bottom: 1px solid var(--buttons-color);
+	text-align: center;
+	background-color: var(--buttons-bg);
+	border-bottom: 1px solid var(--buttons-color);
 }
 
 #buttons-container button {
-    border: none;
-    border-radius: 3px;
-    height: 30px;
-    min-width: 100px;
-    margin: 10px;
-    color: var(--button-text);
-    background-color: var(--buttons-color);
-    transition: ease 200ms;
+	border: none;
+	border-radius: 3px;
+	height: 30px;
+	min-width: 100px;
+	margin: 10px;
+	color: var(--button-text);
+	background-color: var(--buttons-color);
+	transition: ease 200ms;
 }
 
 #buttons-container button:hover {
-    background-color: var(--button-hover);
-    cursor: pointer;
+	background-color: var(--button-hover);
+	cursor: pointer;
 }
 
 input[type="checkbox"] {
-    display: none;
+	display: none;
 }
 
 input[type="checkbox"]:checked + label::before {
-    background-color: var(--button-hover);
-    background-image: url(assets/check.svg);
+	background-color: var(--button-hover);
+	background-image: url(assets/check.svg);
 }
 
 label {
-    padding-block: 6px;
-    display: inline-block;
-    color: var(--button-text);
-    cursor: pointer;
+	padding-block: 6px;
+	display: inline-block;
+	color: var(--button-text);
+	cursor: pointer;
 }
 
 label::before {
-    content: "";
-    display: inline-block;
-    width: 11.6px;
-    height: 11.6px;
-    background-color: var(--button-text);
-    border-radius: 1px;
-    margin-right: 5px;
+	content: "";
+	display: inline-block;
+	width: 11.6px;
+	height: 11.6px;
+	background-color: var(--button-text);
+	border-radius: 1px;
+	margin-right: 5px;
 }
 
 img {
-    cursor: pointer;
+	cursor: pointer;
 }
 
 .image {
-    max-height: 80px;
-    margin-left: 2px;
-    object-fit: cover;
+	max-height: 80px;
+	margin-left: 2px;
+	object-fit: cover;
 }
 
 #images-bar {
-    padding: 10px;
+	padding: 10px;
 }
