@@ -1,30 +1,30 @@
-document.addEventListener("DOMContentLoaded", () => {
-	const tooltips = document.querySelectorAll(".tooltip");
-	const defaultColors = [
-		"#ff7f7e",
-		"#ffbf7f",
-		"#feff7f",
-		"#7eff80",
-		"#7fffff",
-		"#807fff",
-	];
+const hash = location.hash.substring(1);
+const defaultColors = [
+	"#ff7f7e",
+	"#ffbf7f",
+	"#feff7f",
+	"#7eff80",
+	"#7fffff",
+	"#807fff",
+	"#ff7ffe",
+];
 
-	tooltips.forEach((tooltip, index) => {
-		const defaultColor = defaultColors[index];
-		const colorPicker = tooltip.querySelector(".color-picker");
+let scrollable = true;
+let drake;
 
-		createColorPicker(
-			colorPicker,
-			(color) => {
-				tooltip.parentNode.style.backgroundColor = color
-					? color.toHEXA().toString()
-					: "";
-			},
-			defaultColor,
-		);
-	});
+document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
+	const defaultColor = defaultColors[index];
+	const colorPicker = tooltip.querySelector(".color-picker");
 
-	scrollable = true;
+	createColorPicker(
+		colorPicker,
+		(color) => {
+			tooltip.parentNode.style.backgroundColor = color
+				? color.toHEXA().toString()
+				: "";
+		},
+		defaultColor,
+	);
 });
 
 document.addEventListener(
@@ -39,24 +39,12 @@ document.addEventListener(
 	},
 );
 
-function createColorPicker(
-	colorPicker,
-	onChange,
-	defaultColor = "lightslategray",
-) {
+function createColorPicker(colorPicker, onChange, defaultColor) {
 	const pickr = Pickr.create({
 		el: colorPicker,
 		theme: "monolith",
 		default: defaultColor,
-		swatches: [
-			"#ff7f7e",
-			"#ffbf7f",
-			"#feff7f",
-			"#7eff80",
-			"#7fffff",
-			"#807fff",
-			"#ff7ffe",
-		],
+		swatches: defaultColors,
 		components: {
 			preview: true,
 			hue: true,
@@ -74,18 +62,19 @@ function createColorPicker(
 	});
 }
 
-function addRow() {
+function addRow(tierName = "New tier", defaultColor = "#778899") {
 	const mainContainer = document.querySelector("main");
 	const newRow = document.createElement("div");
 	newRow.className = "row";
 
-	// Labels and colors
+	// Labels and colors (i.e. left)
 	const tierLabelDiv = document.createElement("div");
 	tierLabelDiv.className = "tier-label";
+	tierLabelDiv.style.backgroundColor = defaultColor;
 	tierLabelDiv.setAttribute("contenteditable", true);
 
 	const paragraph = document.createElement("p");
-	paragraph.textContent = "New tier";
+	paragraph.textContent = tierName;
 	paragraph.setAttribute("spellcheck", false);
 
 	const tooltip = document.createElement("div");
@@ -95,11 +84,11 @@ function addRow() {
 	const colorPicker = document.createElement("div");
 	colorPicker.className = "color-picker";
 
-	// Tiers
+	// Tiers (i.e. center)
 	const tierDiv = document.createElement("div");
 	tierDiv.className = "tier sort";
 
-	// Options
+	// Options (i.e. right)
 	const optionsDiv = document.createElement("div");
 	optionsDiv.className = "tier-options";
 
@@ -108,30 +97,50 @@ function addRow() {
 
 	const deleteButton = document.createElement("div");
 	deleteButton.className = "option delete";
-	deleteButton.innerHTML =
-		"<img src='assets/trash.svg' alt='Delete' onclick='deleteRow(this)'>";
+
+	const deleteImage = document.createElement("img");
+	deleteImage.className = "option-hover";
+	deleteImage.src = "assets/trash.svg";
+	deleteImage.alt = "Delete";
+	deleteImage.setAttribute("onclick", "deleteRow(this)");
 
 	const upButton = document.createElement("div");
 	upButton.className = "option";
-	upButton.innerHTML =
-		"<img src='assets/chevron-up.svg' alt='Up' onclick='moveRow(this, -1)'>";
+
+	const upImage = document.createElement("img");
+	upImage.className = "option-hover";
+	upImage.src = "assets/chevron-up.svg";
+	upImage.alt = "Up";
+	upImage.setAttribute("onclick", "moveRow(this, -1)");
 
 	const downButton = document.createElement("div");
 	downButton.className = "option";
-	downButton.innerHTML =
-		"<img src='assets/chevron-down.svg' alt='Down' onclick='moveRow(this, 1)'>";
+
+	const downImage = document.createElement("img");
+	downImage.className = "option-hover";
+	downImage.src = "assets/chevron-down.svg";
+	downImage.alt = "Down";
+	downImage.setAttribute("onclick", "moveRow(this, 1)");
 
 	// Add divs to the row / main container
 	tooltip.appendChild(colorPicker);
 
-	createColorPicker(colorPicker, (color) => {
-		tooltip.parentNode.style.backgroundColor = color
-			? color.toHEXA().toString()
-			: "";
-	});
+	createColorPicker(
+		colorPicker,
+		(color) => {
+			tooltip.parentNode.style.backgroundColor = color
+				? color.toHEXA().toString()
+				: "";
+		},
+		defaultColor,
+	);
 
 	tierLabelDiv.appendChild(paragraph);
 	tierLabelDiv.appendChild(tooltip);
+
+	deleteButton.appendChild(deleteImage);
+	upButton.appendChild(upImage);
+	downButton.appendChild(downImage);
 
 	optionsContainer.appendChild(deleteButton);
 	optionsContainer.appendChild(upButton);
@@ -178,7 +187,7 @@ function selectImages() {
 }
 
 function uploadImages(files) {
-	const imagesBar = document.getElementById("images-bar");
+	const imagesBar = document.querySelector("#images-bar");
 
 	for (const file of files) {
 		const image = document.createElement("img");
@@ -194,13 +203,13 @@ function uploadImages(files) {
 function initializeDragula() {
 	const containers = Array.from(document.querySelectorAll(".sort"));
 
-	if (window.drake) {
-		window.drake.containers.push(...containers);
+	if (drake) {
+		drake.containers.push(...containers);
 	} else {
-		window.drake = dragula(containers);
+		drake = dragula(containers);
 	}
 
-	window.drake
+	drake
 		.on("drag", () => {
 			scrollable = false;
 		})
@@ -212,18 +221,12 @@ function initializeDragula() {
 		});
 }
 
-function dynamicStyle(id) {
-	const style = document.getElementById("dynamic-styles");
-	const checkbox = document.getElementById(id);
+function dynamicStyle(checkbox, css) {
+	const style = document.querySelector("#dynamic-styles");
 
-	let content = style.innerHTML;
-
-	if (id === "img") {
-		if (checkbox.checked) {
-			content += ".image { height: 80px; width: 80px; }";
-		} else {
-			content = content.replace(".image { height: 80px; width: 80px; }", "");
-		}
+	if (checkbox.checked) {
+		style.innerHTML += css;
+	} else {
+		style.innerHTML = style.innerHTML.replace(css, "");
 	}
-	style.innerHTML = content;
 }

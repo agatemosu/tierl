@@ -6,7 +6,9 @@
 		<title>Tier list creator</title>
 		<link rel="icon" href="assets/icon.svg" />
 		<link rel="stylesheet" href="styles.css" />
-		<script src="script.js"></script>
+		<script defer src="script.js"></script>
+
+		<link rel="preload" href="assets/check.svg" as="image" />
 		<style id="dynamic-styles"></style>
 
 		<link
@@ -278,8 +280,12 @@
 		<div id="buttons-container">
 			<button type="button" onclick="addRow()">New tier</button>
 			<button type="button" onclick="selectImages()">Select images</button>
-			<input type="checkbox" id="img" onchange="dynamicStyle('img')" />
-			<label for="img">Square images</label>
+			<input
+				type="checkbox"
+				id="square-img"
+				onchange="dynamicStyle(this, '.image { height: 80px; width: 80px; }')"
+			/>
+			<label for="square-img">Square images</label>
 		</div>
 
 		<div id="images-bar" class="sort"></div>
