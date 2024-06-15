@@ -12,6 +12,12 @@ const defaultColors = [
 let scrollable = true;
 let drake;
 
+if (hash.length <= 0) {
+	console.log("Nothing to load.");
+} else {
+	load();
+}
+
 document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
 	const defaultColor = defaultColors[index];
 	const colorPicker = tooltip.querySelector(".color-picker");
@@ -228,5 +234,211 @@ function dynamicStyle(checkbox, css) {
 		style.innerHTML += css;
 	} else {
 		style.innerHTML = style.innerHTML.replace(css, "");
+	}
+}
+
+// Helper function to encode non UTF-8 characters to Base64
+function encodeUnicode(str) {
+	return btoa(
+		encodeURIComponent(str).replace(
+			/%([0-9A-F]{2})/g,
+			function toSolidBytes(match, p1) {
+				return String.fromCharCode(`0x${p1}`);
+			},
+		),
+	);
+}
+
+// Helper function to decode non UTF-8 characters from Base64
+function decodeUnicode(str) {
+	return decodeURIComponent(
+		atob(str)
+			.split("")
+			.map((c) => {
+				return `%${c.charCodeAt(0).toString(16).padStart(2, "0")}`;
+			})
+			.join(""),
+	);
+}
+
+function convertImageToDataURL(imageElement) {
+	const MAX_IMG_SIZE = 500;
+	const c = document.createElement("canvas");
+	const ratio = imageElement.naturalHeight / imageElement.naturalWidth;
+
+	if (ratio > 1) {
+		c.height = Math.min(MAX_IMG_SIZE, imageElement.naturalHeight);
+		c.width = Math.round(MAX_IMG_SIZE / ratio);
+	} else if (ratio < 1) {
+		c.height = Math.round(MAX_IMG_SIZE * ratio);
+		c.width = Math.min(MAX_IMG_SIZE, imageElement.naturalWidth);
+	} else {
+		c.width = MAX_IMG_SIZE;
+		c.height = MAX_IMG_SIZE;
+	}
+
+	const ctx = c.getContext("2d");
+	ctx.drawImage(imageElement, 0, 0, c.width, c.height);
+	const base64String = c.toDataURL();
+	c.remove();
+
+	return base64String;
+}
+
+async function share(shareButton, sharePositions) {
+	const tiers = document.querySelectorAll(".row");
+	const imagesBar = document.querySelector("#images-bar");
+	const barImages = Array.from(imagesBar.children);
+
+	const oldButtonText = shareButton.innerText;
+	shareButton.disabled = true;
+	shareButton.innerText = "...";
+
+	const shareJSON = {
+		images: [],
+		tiers: [],
+	};
+
+	console.log(`Sharing with${sharePositions ? "" : "out"} positions...`);
+
+	tiers.forEach((tier, tierIndex) => {
+		const betterTier = {
+			index: tierIndex,
+			name: tier.children[0].children[0].textContent,
+			color: tier.children[0].style.backgroundColor,
+			images: Array.from(tier.children[1].children),
+		};
+
+		shareJSON.tiers.push({
+			index: betterTier.index,
+			name: betterTier.name,
+			color: betterTier.color,
+		});
+
+		betterTier.images.forEach((img, imgIndex) => {
+			const betterImage = {
+				index: imgIndex,
+				element: img,
+				src: img.src,
+			};
+
+			const base64String = convertImageToDataURL(betterImage.element);
+
+			shareJSON.images.push({
+				img: base64String,
+				tier: sharePositions ? betterTier.index : -1,
+			});
+		});
+	});
+
+	console.log(shareJSON);
+
+	barImages.forEach((img, imgIndex) => {
+		const betterImage = {
+			index: imgIndex,
+			element: img,
+			src: img.src,
+		};
+
+		const base64String = convertImageToDataURL(betterImage.element);
+
+		shareJSON.images.push({
+			img: base64String,
+			tier: -1,
+		});
+	});
+
+	const c64 = encodeUnicode(JSON.stringify(shareJSON));
+	const chunks = c64.match(/.{1,10000}/g);
+
+	const values = await Promise.all(
+		chunks.map(async (chunk) => {
+			const response = await fetch("https://hastebin.skyra.pw/documents", {
+				method: "POST",
+				body: chunk,
+			});
+			return await response.json();
+		}),
+	);
+
+	const strings = values.map((v) => v.key);
+	const res = await fetch("https://hastebin.skyra.pw/documents", {
+		method: "POST",
+		body: encodeUnicode(JSON.stringify(strings)),
+	});
+	const hastebinResponse = await res.json();
+
+	console.log(hastebinResponse);
+
+	const shareData = {
+		title: "Share tier list!",
+		text: `${location.origin}${location.pathname}#${hastebinResponse.key}`,
+		url: `${location.origin}${location.pathname}#${hastebinResponse.key}`,
+	};
+
+	if (navigator.canShare(shareData)) {
+		try {
+			navigator.share(shareData);
+		} finally {
+			shareButton.innerText = "Shared!";
+			setTimeout(() => {
+				shareButton.innerText = oldButtonText;
+				shareButton.disabled = false;
+			}, 3000);
+		}
+	} else {
+		await navigator.clipboard.writeText(shareData.url);
+
+		shareButton.innerText = "Copied!";
+		setTimeout(() => {
+			shareButton.innerText = oldButtonText;
+			shareButton.disabled = false;
+		}, 5000);
+	}
+}
+
+async function load() {
+	console.log(`Loading with the id "${hash}"...`);
+
+	// Get the chunks
+	const response = await fetch(`https://hastebin.skyra.pw/raw/${hash}`);
+	const text = await response.text();
+	const chunks = JSON.parse(decodeUnicode(text));
+
+	// Get the content of the chunks
+	const chunksData = await Promise.all(
+		chunks.map(async (chunk) => {
+			const chunkResponse = await fetch(
+				`https://hastebin.skyra.pw/raw/${chunk}`,
+			);
+			return chunkResponse.text();
+		}),
+	);
+
+	const res = chunksData.join(""); // Merge all chunks
+	const data = JSON.parse(decodeUnicode(res));
+	console.log(data); // Print readable data
+
+	for (const row of document.querySelectorAll(".row")) {
+		deleteRow(row);
+	}
+
+	for (const tier of data.tiers) {
+		addRow(tier.name, tier.color);
+	}
+
+	const imagesBar = document.querySelector("#images-bar");
+	const rows = document.querySelectorAll(".row");
+
+	for (const img of data.images) {
+		const image = document.createElement("img");
+		image.src = img.img;
+		image.className = "image";
+
+		if (img.tier === -1) {
+			imagesBar.appendChild(image);
+		} else {
+			rows[img.tier].children[1].appendChild(image);
+		}
 	}
 }
