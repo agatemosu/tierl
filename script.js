@@ -12,6 +12,10 @@ const defaultColors = [
 let scrollable = true;
 let drake;
 
+const mainContainer = document.querySelector("main");
+const imagesBar = document.querySelector("#images-bar");
+const dynamicStyles = document.querySelector("#dynamic-styles");
+
 document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
 	const defaultColor = defaultColors[index];
 	const colorPicker = tooltip.querySelector(".color-picker");
@@ -63,7 +67,6 @@ function createColorPicker(colorPicker, onChange, defaultColor) {
 }
 
 function addRow(tierName = "New tier", defaultColor = "#778899") {
-	const mainContainer = document.querySelector("main");
 	const newRow = document.createElement("div");
 	newRow.className = "row";
 
@@ -184,8 +187,6 @@ function selectImages() {
 }
 
 function uploadImages(files) {
-	const imagesBar = document.querySelector("#images-bar");
-
 	for (const file of files) {
 		const image = document.createElement("img");
 		image.src = URL.createObjectURL(file);
@@ -219,11 +220,9 @@ function initializeDragula() {
 }
 
 function dynamicStyle(checkbox, css) {
-	const style = document.querySelector("#dynamic-styles");
-
 	if (checkbox.checked) {
-		style.innerHTML += css;
+		dynamicStyles.innerHTML += css;
 	} else {
-		style.innerHTML = style.innerHTML.replace(css, "");
+		dynamicStyles.innerHTML = dynamicStyles.innerHTML.replace(css, "");
 	}
 }
