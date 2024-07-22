@@ -1,5 +1,5 @@
-@import "./styles/blackout.css";
-@import "./styles/export.css";
+@import "./blackout.css";
+@import "./export.css";
 
 :root {
 	--black: #000;
@@ -190,7 +190,7 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked + label::before {
-	background-image: url("./assets/check.svg");
+	background-image: url("/assets/check.svg");
 	background-color: var(--button-hover);
 }
 
