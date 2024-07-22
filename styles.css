@@ -2,7 +2,7 @@
 	--black: #000;
 	--white: #fff;
 	--background: #231f20;
-	--default-color: #778899;
+	--default-color: #789;
 	--tooltip: #f0f8ff;
 	--tier-bg: #2d292a;
 	--option-borders: #111;
@@ -22,27 +22,6 @@ body {
 
 .row {
 	display: flex;
-}
-
-.tier-label {
-	position: relative;
-	min-height: 80px;
-	width: 100px;
-	display: flex;
-	align-items: center;
-	background-color: var(--default-color);
-	border: 1px solid var(--black);
-}
-
-.tier-label:focus-visible {
-	outline: none;
-	border: 1px solid var(--white);
-}
-
-.tooltip:focus-within,
-.tier-label:focus-visible .tooltip {
-	visibility: visible;
-	opacity: 1;
 }
 
 .tooltip {
@@ -68,6 +47,27 @@ body {
 	border-width: 5px;
 	border-style: solid;
 	border-color: transparent var(--tooltip) transparent transparent;
+}
+
+.tier-label {
+	position: relative;
+	min-height: 80px;
+	width: 100px;
+	display: flex;
+	align-items: center;
+	background-color: var(--default-color);
+	border: 1px solid var(--black);
+}
+
+.tier-label:focus-visible {
+	outline: none;
+	border: 1px solid var(--white);
+}
+
+.tooltip:focus-within,
+.tier-label:focus-visible .tooltip {
+	visibility: visible;
+	opacity: 1;
 }
 
 .pcr-app {
@@ -165,15 +165,6 @@ p {
 	cursor: pointer;
 }
 
-input[type="checkbox"] {
-	display: none;
-}
-
-input[type="checkbox"]:checked + label::before {
-	background-color: var(--button-hover);
-	background-image: url(assets/check.svg);
-}
-
 label {
 	padding-block: 6px;
 	display: inline-block;
@@ -189,6 +180,15 @@ label::before {
 	background-color: var(--button-text);
 	border-radius: 1px;
 	margin-right: 5px;
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+input[type="checkbox"]:checked + label::before {
+	background-color: var(--button-hover);
+	background-image: url("./assets/check.svg");
 }
 
 .image {
