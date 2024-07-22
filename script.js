@@ -188,11 +188,18 @@ function selectImages() {
 
 function uploadImages(files) {
 	for (const file of files) {
-		const image = document.createElement("img");
+		const image = new Image();
 		image.src = URL.createObjectURL(file);
-		image.className = "image";
 
-		imagesBar.appendChild(image);
+		const imageEl = document.createElement("div");
+		imageEl.classList.add("image");
+		imagesBar.appendChild(imageEl);
+
+		image.onload = () => {
+			imageEl.style.aspectRatio = `${image.width} / ${image.height}`;
+			imageEl.style.backgroundImage = `url("${image.src}")`;
+			imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
+		};
 	}
 
 	initializeDragula();

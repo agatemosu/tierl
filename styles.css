@@ -26,7 +26,7 @@ body {
 
 .tier-label {
 	position: relative;
-	min-height: 85px;
+	min-height: 80px;
 	width: 100px;
 	display: flex;
 	align-items: center;
@@ -92,6 +92,12 @@ p {
 	text-align: center;
 }
 
+.sort {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 2px;
+}
+
 .tier {
 	flex-grow: 1;
 	background-color: var(--tier-bg);
@@ -130,6 +136,7 @@ p {
 
 .option img {
 	transition: ease 100ms;
+	cursor: pointer;
 }
 
 .option img:hover {
@@ -184,14 +191,13 @@ label::before {
 	margin-right: 5px;
 }
 
-img {
-	cursor: pointer;
-}
-
 .image {
+	display: inline-flex;
+	vertical-align: top;
+	cursor: pointer;
+	background-size: contain;
+	background-repeat: no-repeat;
 	max-height: 80px;
-	margin-left: 2px;
-	object-fit: cover;
 }
 
 #images-bar {
