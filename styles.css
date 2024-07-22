@@ -16,9 +16,9 @@
 }
 
 body {
-	font-family: Arial, Helvetica, sans-serif;
 	margin: 0;
 	background-color: var(--background);
+	font-family: Arial, Helvetica, sans-serif;
 	-webkit-user-select: none;
 	user-select: none;
 }
@@ -28,21 +28,20 @@ body {
 }
 
 .tooltip {
-	visibility: hidden;
 	position: absolute;
 	top: 50%;
 	left: 110%;
 	transform: translate(0, -50%);
-	height: 50px;
-	width: 80px;
-	background-color: var(--tooltip);
-	border-radius: 6px;
+	visibility: hidden;
 	opacity: 0;
 	transition: opacity 300ms;
+	border-radius: 6px;
+	background-color: var(--tooltip);
+	width: 80px;
+	height: 50px;
 }
 
 .tooltip::before {
-	content: "";
 	position: absolute;
 	top: 50%;
 	right: 100%;
@@ -50,16 +49,17 @@ body {
 	border-width: 5px;
 	border-style: solid;
 	border-color: transparent var(--tooltip) transparent transparent;
+	content: "";
 }
 
 .tier-label {
-	position: relative;
-	min-height: 80px;
-	width: 100px;
 	display: flex;
+	position: relative;
 	align-items: center;
-	background-color: var(--default-color);
 	border: 1px solid var(--black);
+	background-color: var(--default-color);
+	width: 100px;
+	min-height: 80px;
 }
 
 .tier-label:focus-visible {
@@ -85,13 +85,13 @@ body {
 .pcr-button,
 .pcr-button::before,
 .pcr-button::after {
-	height: 30px !important;
 	width: 60px !important;
+	height: 30px !important;
 }
 
 p {
-	width: 96px;
 	margin: 6px 2px;
+	width: 96px;
 	text-align: center;
 }
 
@@ -103,33 +103,33 @@ p {
 
 .tier {
 	flex-grow: 1;
-	background-color: var(--tier-bg);
 	border-top: 1px solid var(--black);
 	border-bottom: 1px solid var(--black);
+	background-color: var(--tier-bg);
 }
 
 .tier-options {
 	display: flex;
-	width: 80px;
 	align-items: center;
-	background-color: var(--black);
 	border-top: 1px solid var(--option-borders);
 	border-bottom: 1px solid var(--option-borders);
+	background-color: var(--black);
+	width: 80px;
 }
 
 .options-container {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	height: 80px;
 	width: 80px;
+	height: 80px;
 }
 
 .option {
-	height: auto;
-	width: 40px;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: auto;
 }
 
 .option.delete {
@@ -147,42 +147,42 @@ p {
 }
 
 #buttons-container {
-	text-align: center;
-	background-color: var(--buttons-bg);
 	border-bottom: 1px solid var(--buttons-color);
+	background-color: var(--buttons-bg);
+	text-align: center;
 }
 
 .button {
+	transition: ease 200ms;
+	margin: 10px;
 	border: none;
 	border-radius: 3px;
-	min-height: 30px;
-	min-width: 100px;
-	margin: 10px;
-	color: var(--button-text);
 	background-color: var(--buttons-color);
-	transition: ease 200ms;
+	min-width: 100px;
+	min-height: 30px;
+	color: var(--button-text);
 }
 
 .button:hover {
-	background-color: var(--button-hover);
 	cursor: pointer;
+	background-color: var(--button-hover);
 }
 
 label {
-	padding-block: 6px;
 	display: inline-block;
-	color: var(--button-text);
 	cursor: pointer;
+	padding-block: 6px;
+	color: var(--button-text);
 }
 
 label::before {
-	content: "";
 	display: inline-block;
+	margin-right: 5px;
+	border-radius: 1px;
+	background-color: var(--button-text);
 	width: 11.6px;
 	height: 11.6px;
-	background-color: var(--button-text);
-	border-radius: 1px;
-	margin-right: 5px;
+	content: "";
 }
 
 input[type="checkbox"] {
@@ -190,8 +190,8 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked + label::before {
-	background-color: var(--button-hover);
 	background-image: url("./assets/check.svg");
+	background-color: var(--button-hover);
 }
 
 .image {
