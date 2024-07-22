@@ -21,8 +21,11 @@
 		/>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
+		<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 	</head>
 	<body>
+		<div id="blackout" data-visibility="hidden" onclick="hideBlackout()"></div>
+
 		<main>
 			<div class="row">
 				<div
@@ -36,7 +39,7 @@
 					</div>
 				</div>
 				<div class="tier sort"></div>
-				<div class="tier-options">
+				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
 							<img
@@ -75,7 +78,7 @@
 					</div>
 				</div>
 				<div class="tier sort"></div>
-				<div class="tier-options">
+				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
 							<img
@@ -114,7 +117,7 @@
 					</div>
 				</div>
 				<div class="tier sort"></div>
-				<div class="tier-options">
+				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
 							<img
@@ -153,7 +156,7 @@
 					</div>
 				</div>
 				<div class="tier sort"></div>
-				<div class="tier-options">
+				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
 							<img
@@ -192,7 +195,7 @@
 					</div>
 				</div>
 				<div class="tier sort"></div>
-				<div class="tier-options">
+				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
 							<img
@@ -231,7 +234,7 @@
 					</div>
 				</div>
 				<div class="tier sort"></div>
-				<div class="tier-options">
+				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
 							<img
@@ -260,12 +263,36 @@
 		</main>
 
 		<div id="buttons-container">
-			<button type="button" onclick="addRow()">New tier</button>
-			<button type="button" onclick="selectImages()">Select images</button>
+			<button class="button" type="button" onclick="addRow()">New tier</button>
+
+			<button class="button" type="button" onclick="selectImages()">
+				Select images
+			</button>
+
 			<input type="checkbox" id="square-img" onchange="dynamicStyle(this)" />
 			<label for="square-img">Square images</label>
+
+			<button class="button" type="button" onclick="exportImage()">
+				Export image
+			</button>
 		</div>
 
 		<div id="images-bar" class="sort"></div>
+
+		<div
+			id="export-container"
+			class="export-container"
+			data-visibility="hidden"
+		>
+			<div class="exported-image-container">
+				<img id="exported-image" alt="Exported image" />
+			</div>
+
+			<div class="export-button-container">
+				<button class="button" type="button" onclick="saveImage()">
+					Save image
+				</button>
+			</div>
+		</div>
 	</body>
 </html>

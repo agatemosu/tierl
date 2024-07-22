@@ -1,0 +1,47 @@
+.export-container {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 0;
+	z-index: 2;
+	transition: opacity 300ms;
+	box-sizing: border-box;
+	border-radius: 10px;
+	background-color: var(--white);
+	padding: 20px;
+	width: 100%;
+	pointer-events: none;
+}
+
+.export-container[data-visibility="visible"] {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.exported-image-container {
+	max-height: 512px;
+	overflow-y: auto;
+}
+
+.exported-image-container img {
+	vertical-align: top;
+	width: 100%;
+}
+
+.export-button-container {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+.export-button-container button {
+	margin: 0;
+	padding: 10px 15px;
+}
+
+@media (width >= 786px) {
+	.export-container {
+		max-width: 786px;
+	}
+}

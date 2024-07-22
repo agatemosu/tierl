@@ -15,6 +15,9 @@ let drake;
 const mainContainer = document.querySelector("main");
 const imagesBar = document.querySelector("#images-bar");
 const dynamicStyles = document.querySelector("#dynamic-styles");
+const exportContainer = document.querySelector("#export-container");
+const exportedImage = document.querySelector("#exported-image");
+const blackout = document.querySelector("#blackout");
 
 document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
 	const defaultColor = defaultColors[index];
@@ -94,6 +97,7 @@ function addRow(tierName = "New tier", defaultColor = "#778899") {
 	// Options (i.e. right)
 	const optionsDiv = document.createElement("div");
 	optionsDiv.className = "tier-options";
+	optionsDiv.dataset.html2canvasIgnore = "";
 
 	const optionsContainer = document.createElement("div");
 	optionsContainer.className = "options-container";
@@ -234,4 +238,28 @@ function dynamicStyle(checkbox) {
 	} else {
 		dynamicStyles.innerHTML = dynamicStyles.innerHTML.replace(importText, "");
 	}
+}
+
+async function exportImage() {
+	const canvas = await html2canvas(mainContainer, {
+		scale: 1.5,
+		windowWidth: 1080,
+	});
+	exportedImage.src = canvas.toDataURL();
+
+	exportContainer.dataset.visibility = "visible";
+	blackout.dataset.visibility = "visible";
+}
+
+function saveImage() {
+	const downloadLink = document.createElement("a");
+	downloadLink.href = exportedImage.src;
+	downloadLink.download = "image.png";
+
+	downloadLink.click();
+}
+
+function hideBlackout() {
+	blackout.dataset.visibility = "hidden";
+	exportContainer.dataset.visibility = "hidden";
 }

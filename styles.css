@@ -1,3 +1,6 @@
+@import "./styles/blackout.css";
+@import "./styles/export.css";
+
 :root {
 	--black: #000;
 	--white: #fff;
@@ -149,10 +152,10 @@ p {
 	border-bottom: 1px solid var(--buttons-color);
 }
 
-#buttons-container button {
+.button {
 	border: none;
 	border-radius: 3px;
-	height: 30px;
+	min-height: 30px;
 	min-width: 100px;
 	margin: 10px;
 	color: var(--button-text);
@@ -160,7 +163,7 @@ p {
 	transition: ease 200ms;
 }
 
-#buttons-container button:hover {
+.button:hover {
 	background-color: var(--button-hover);
 	cursor: pointer;
 }
