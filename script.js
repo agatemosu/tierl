@@ -219,10 +219,12 @@ function initializeDragula() {
 		});
 }
 
-function dynamicStyle(checkbox, css) {
+function dynamicStyle(checkbox) {
+	const importText = `@import "./styles/${checkbox.id}.css";`;
+
 	if (checkbox.checked) {
-		dynamicStyles.innerHTML += css;
+		dynamicStyles.innerHTML += importText;
 	} else {
-		dynamicStyles.innerHTML = dynamicStyles.innerHTML.replace(css, "");
+		dynamicStyles.innerHTML = dynamicStyles.innerHTML.replace(importText, "");
 	}
 }
