@@ -128,11 +128,11 @@ p {
 	justify-content: right;
 }
 
-.option-hover {
+.option img {
 	transition: ease 100ms;
 }
 
-.option-hover:hover {
+.option img:hover {
 	filter: contrast(0%);
 }
 

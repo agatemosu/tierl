@@ -99,7 +99,6 @@ function addRow(tierName = "New tier", defaultColor = "#778899") {
 	deleteButton.className = "option delete";
 
 	const deleteImage = document.createElement("img");
-	deleteImage.className = "option-hover";
 	deleteImage.src = "assets/trash.svg";
 	deleteImage.alt = "Delete";
 	deleteImage.setAttribute("onclick", "deleteRow(this)");
@@ -108,7 +107,6 @@ function addRow(tierName = "New tier", defaultColor = "#778899") {
 	upButton.className = "option";
 
 	const upImage = document.createElement("img");
-	upImage.className = "option-hover";
 	upImage.src = "assets/chevron-up.svg";
 	upImage.alt = "Up";
 	upImage.setAttribute("onclick", "moveRow(this, -1)");
@@ -117,7 +115,6 @@ function addRow(tierName = "New tier", defaultColor = "#778899") {
 	downButton.className = "option";
 
 	const downImage = document.createElement("img");
-	downImage.className = "option-hover";
 	downImage.src = "assets/chevron-down.svg";
 	downImage.alt = "Down";
 	downImage.setAttribute("onclick", "moveRow(this, 1)");
