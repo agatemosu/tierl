@@ -190,7 +190,7 @@ function uploadImages(files) {
 		image.src = URL.createObjectURL(file);
 
 		const imageEl = document.createElement("div");
-		imageEl.classList.add("image");
+		imageEl.classList.add("tier-element");
 		imagesBar.appendChild(imageEl);
 
 		image.onload = () => {

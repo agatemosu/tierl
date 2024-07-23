@@ -146,7 +146,7 @@ p {
 	filter: contrast(0%);
 }
 
-#buttons-container {
+.buttons-container {
 	border-bottom: 1px solid var(--buttons-color);
 	background-color: var(--buttons-bg);
 	text-align: center;
@@ -194,7 +194,7 @@ input[type="checkbox"]:checked + label::before {
 	background-color: var(--button-hover);
 }
 
-.image {
+.tier-element {
 	display: inline-flex;
 	vertical-align: top;
 	cursor: pointer;
