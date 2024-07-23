@@ -1,0 +1,31 @@
+.tooltip {
+	position: absolute;
+	top: 50%;
+	left: 110%;
+	transform: translate(0, -50%);
+	visibility: hidden;
+	opacity: 0;
+	transition: opacity 300ms, visibility 0s 300ms;
+	border-radius: 6px;
+	background-color: var(--tooltip);
+	width: 80px;
+	height: 50px;
+}
+
+.tooltip::before {
+	position: absolute;
+	top: 50%;
+	right: 100%;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent var(--tooltip) transparent transparent;
+	content: "";
+}
+
+.tooltip:focus-within,
+.tier-label:focus-visible .tooltip {
+	visibility: visible;
+	opacity: 1;
+	transition: opacity 300ms;
+}

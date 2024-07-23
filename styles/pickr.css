@@ -1,0 +1,15 @@
+.pcr-button {
+	margin: 10px !important;
+}
+
+.pcr-button,
+.pcr-button::before,
+.pcr-button::after {
+	width: 60px !important;
+	height: 30px !important;
+}
+
+.pcr-swatches {
+	display: flex !important;
+	margin-inline: auto;
+}

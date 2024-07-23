@@ -1,0 +1,47 @@
+.buttons-container {
+	border-bottom: 1px solid var(--buttons-color);
+	background-color: var(--buttons-bg);
+	text-align: center;
+}
+
+.button {
+	transition: background-color 300ms;
+	margin: 10px;
+	border: none;
+	border-radius: 3px;
+	background-color: var(--buttons-color);
+	min-width: 100px;
+	min-height: 30px;
+	color: var(--button-text);
+}
+
+.button:hover {
+	cursor: pointer;
+	background-color: var(--button-hover);
+}
+
+label {
+	display: inline-block;
+	cursor: pointer;
+	padding-block: 6px;
+	color: var(--button-text);
+}
+
+label::before {
+	display: inline-block;
+	margin-right: 5px;
+	border-radius: 1px;
+	background-color: var(--button-text);
+	width: 11.6px;
+	height: 11.6px;
+	content: "";
+}
+
+input[type="checkbox"] {
+	display: none;
+}
+
+input[type="checkbox"]:checked + label::before {
+	background-image: url("/assets/check.svg");
+	background-color: var(--button-hover);
+}

@@ -1,5 +1,10 @@
 @import "./blackout.css";
+@import "./buttons.css";
 @import "./export.css";
+@import "./pickr.css";
+@import "./tier-label.css";
+@import "./tier-options.css";
+@import "./tooltip.css";
 
 :root {
 	--black: #000;
@@ -26,75 +31,6 @@ body {
 	display: flex;
 }
 
-.tooltip {
-	position: absolute;
-	top: 50%;
-	left: 110%;
-	transform: translate(0, -50%);
-	visibility: hidden;
-	opacity: 0;
-	transition: opacity 300ms, visibility 0s 300ms;
-	border-radius: 6px;
-	background-color: var(--tooltip);
-	width: 80px;
-	height: 50px;
-}
-
-.tooltip::before {
-	position: absolute;
-	top: 50%;
-	right: 100%;
-	margin-top: -5px;
-	border-width: 5px;
-	border-style: solid;
-	border-color: transparent var(--tooltip) transparent transparent;
-	content: "";
-}
-
-.tier-label {
-	display: flex;
-	position: relative;
-	align-items: center;
-	transition: background-color 300ms;
-	border: 1px solid var(--black);
-	width: 100px;
-	min-height: 80px;
-}
-
-.tier-label:focus-visible {
-	outline: none;
-	border: 1px solid var(--white);
-}
-
-.tooltip:focus-within,
-.tier-label:focus-visible .tooltip {
-	visibility: visible;
-	opacity: 1;
-	transition: opacity 300ms;
-}
-
-.pcr-button {
-	margin: 10px !important;
-}
-
-.pcr-button,
-.pcr-button::before,
-.pcr-button::after {
-	width: 60px !important;
-	height: 30px !important;
-}
-
-.pcr-swatches {
-	display: flex !important;
-	margin-inline: auto;
-}
-
-p {
-	margin: 6px 2px;
-	width: 96px;
-	text-align: center;
-}
-
 .sort {
 	display: flex;
 	flex-flow: row wrap;
@@ -108,90 +44,8 @@ p {
 	background-color: var(--tier-bg);
 }
 
-.tier-options {
-	display: flex;
-	align-items: center;
-	border-top: 1px solid var(--option-borders);
-	border-bottom: 1px solid var(--option-borders);
-	background-color: var(--black);
-	width: 80px;
-}
-
-.options-container {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	width: 80px;
-	height: 80px;
-}
-
-.option {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 40px;
-	height: auto;
-}
-
-.option.delete {
-	grid-row: span 2;
-	justify-content: right;
-}
-
-.option img {
-	transition: filter 200ms;
-	cursor: pointer;
-}
-
-.option img:hover {
-	filter: contrast(0%);
-}
-
-.buttons-container {
-	border-bottom: 1px solid var(--buttons-color);
-	background-color: var(--buttons-bg);
-	text-align: center;
-}
-
-.button {
-	transition: background-color 300ms;
-	margin: 10px;
-	border: none;
-	border-radius: 3px;
-	background-color: var(--buttons-color);
-	min-width: 100px;
-	min-height: 30px;
-	color: var(--button-text);
-}
-
-.button:hover {
-	cursor: pointer;
-	background-color: var(--button-hover);
-}
-
-label {
-	display: inline-block;
-	cursor: pointer;
-	padding-block: 6px;
-	color: var(--button-text);
-}
-
-label::before {
-	display: inline-block;
-	margin-right: 5px;
-	border-radius: 1px;
-	background-color: var(--button-text);
-	width: 11.6px;
-	height: 11.6px;
-	content: "";
-}
-
-input[type="checkbox"] {
-	display: none;
-}
-
-input[type="checkbox"]:checked + label::before {
-	background-image: url("/assets/check.svg");
-	background-color: var(--button-hover);
+.images-bar {
+	padding: 10px;
 }
 
 .tier-element {
@@ -201,8 +55,4 @@ input[type="checkbox"]:checked + label::before {
 	background-size: contain;
 	background-repeat: no-repeat;
 	max-height: 80px;
-}
-
-.images-bar {
-	padding: 10px;
 }

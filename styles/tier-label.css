@@ -1,0 +1,20 @@
+.tier-label {
+	display: flex;
+	position: relative;
+	align-items: center;
+	transition: background-color 300ms;
+	border: 1px solid var(--black);
+	width: 100px;
+	min-height: 80px;
+}
+
+.tier-label:focus-visible {
+	outline: none;
+	border: 1px solid var(--white);
+}
+
+p {
+	margin: 6px 2px;
+	width: 96px;
+	text-align: center;
+}
