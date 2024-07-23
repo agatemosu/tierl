@@ -5,7 +5,6 @@
 	--black: #000;
 	--white: #fff;
 	--background: #231f20;
-	--default-color: #789;
 	--tooltip: #f0f8ff;
 	--tier-bg: #2d292a;
 	--option-borders: #111;
@@ -58,7 +57,6 @@ body {
 	align-items: center;
 	transition: background-color 300ms;
 	border: 1px solid var(--black);
-	background-color: var(--default-color);
 	width: 100px;
 	min-height: 80px;
 }
@@ -75,13 +73,8 @@ body {
 	transition: opacity 300ms;
 }
 
-.pcr-app {
-	max-width: 200px !important;
-}
-
 .pcr-button {
 	margin: 10px !important;
-	background: var(--default-color) !important;
 }
 
 .pcr-button,
@@ -89,6 +82,11 @@ body {
 .pcr-button::after {
 	width: 60px !important;
 	height: 30px !important;
+}
+
+.pcr-swatches {
+	display: flex !important;
+	margin-inline: auto;
 }
 
 p {

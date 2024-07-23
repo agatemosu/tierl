@@ -8,6 +8,7 @@ const defaultColors = [
 	"#807fff",
 	"#ff7ffe",
 ];
+const clearColor = "#778899";
 
 let scrollable = true;
 let drake;
@@ -23,15 +24,7 @@ document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
 	const defaultColor = defaultColors[index];
 	const colorPicker = tooltip.querySelector(".color-picker");
 
-	createColorPicker(
-		colorPicker,
-		(color) => {
-			tooltip.parentNode.style.backgroundColor = color
-				? color.toHEXA().toString()
-				: "";
-		},
-		defaultColor,
-	);
+	createColorPicker(colorPicker, tooltip.parentNode, defaultColor);
 });
 
 document.addEventListener(
@@ -46,7 +39,7 @@ document.addEventListener(
 	},
 );
 
-function createColorPicker(colorPicker, onChange, defaultColor) {
+function createColorPicker(colorPicker, tierLabel, defaultColor) {
 	const pickr = Pickr.create({
 		el: colorPicker,
 		theme: "monolith",
@@ -64,12 +57,21 @@ function createColorPicker(colorPicker, onChange, defaultColor) {
 	});
 
 	pickr.on("save", (color) => {
-		onChange(color);
+		let selectedColor;
+
+		if (color === null) {
+			pickr.setColor(clearColor);
+			selectedColor = clearColor;
+		} else {
+			selectedColor = color.toHEXA().toString();
+		}
+
+		tierLabel.style.backgroundColor = selectedColor;
 		pickr.hide();
 	});
 }
 
-function addRow(tierName = "New tier", defaultColor = "#778899") {
+function addRow(tierName = "New tier", defaultColor = clearColor) {
 	const newRow = document.createElement("div");
 	newRow.className = "row";
 
@@ -129,15 +131,7 @@ function addRow(tierName = "New tier", defaultColor = "#778899") {
 	// Add divs to the row / main container
 	tooltip.appendChild(colorPicker);
 
-	createColorPicker(
-		colorPicker,
-		(color) => {
-			tooltip.parentNode.style.backgroundColor = color
-				? color.toHEXA().toString()
-				: "";
-		},
-		defaultColor,
-	);
+	createColorPicker(colorPicker, tierLabelDiv, defaultColor);
 
 	tierLabelDiv.appendChild(paragraph);
 	tierLabelDiv.appendChild(tooltip);
