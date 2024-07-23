@@ -34,7 +34,7 @@ body {
 	transform: translate(0, -50%);
 	visibility: hidden;
 	opacity: 0;
-	transition: opacity 300ms;
+	transition: opacity 300ms, visibility 0s 300ms;
 	border-radius: 6px;
 	background-color: var(--tooltip);
 	width: 80px;
@@ -56,6 +56,7 @@ body {
 	display: flex;
 	position: relative;
 	align-items: center;
+	transition: background-color 300ms;
 	border: 1px solid var(--black);
 	background-color: var(--default-color);
 	width: 100px;
@@ -71,6 +72,7 @@ body {
 .tier-label:focus-visible .tooltip {
 	visibility: visible;
 	opacity: 1;
+	transition: opacity 300ms;
 }
 
 .pcr-app {
@@ -138,7 +140,7 @@ p {
 }
 
 .option img {
-	transition: ease 100ms;
+	transition: filter 200ms;
 	cursor: pointer;
 }
 
@@ -153,7 +155,7 @@ p {
 }
 
 .button {
-	transition: ease 200ms;
+	transition: background-color 300ms;
 	margin: 10px;
 	border: none;
 	border-radius: 3px;
