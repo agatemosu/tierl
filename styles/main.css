@@ -203,6 +203,6 @@ input[type="checkbox"]:checked + label::before {
 	max-height: 80px;
 }
 
-#images-bar {
+.images-bar {
 	padding: 10px;
 }
