@@ -79,15 +79,15 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 	const tierLabelDiv = document.createElement("div");
 	tierLabelDiv.className = "tier-label";
 	tierLabelDiv.style.backgroundColor = defaultColor;
-	tierLabelDiv.setAttribute("contenteditable", true);
+	tierLabelDiv.contentEditable = "true";
 
 	const paragraph = document.createElement("p");
 	paragraph.textContent = tierName;
-	paragraph.setAttribute("spellcheck", false);
+	paragraph.spellcheck = false;
 
 	const tooltip = document.createElement("div");
 	tooltip.className = "tooltip";
-	tooltip.setAttribute("contenteditable", false);
+	tooltip.contentEditable = "false";
 
 	const colorPicker = document.createElement("div");
 	colorPicker.className = "color-picker";
