@@ -56,11 +56,12 @@ document.addEventListener("dragover", (e) => {
 });
 
 document.addEventListener("mousedown", (e) => {
-	if (e.target.closest(".pcr-app")) {
-		return;
-	}
+	const ignoreSelectors = [".pcr-app", ".export-container"];
+	const ignoreClick = ignoreSelectors.some((selector) =>
+		e.target.closest(selector),
+	);
 
-	if (e.target.closest(".export-container")) {
+	if (ignoreClick) {
 		return;
 	}
 
