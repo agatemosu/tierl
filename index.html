@@ -6,7 +6,7 @@
 		<title>Tier list creator</title>
 		<link rel="icon" href="./assets/icon.svg" />
 		<link rel="stylesheet" href="./styles/main.css" />
-		<script defer src="./script.js"></script>
+		<script src="./script.js" type="module"></script>
 
 		<link rel="preload" href="./assets/check.svg" as="image" />
 		<style id="dynamic-styles"></style>
@@ -24,7 +24,7 @@
 		<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 	</head>
 	<body>
-		<div id="blackout" data-visibility="hidden" onclick="hideBlackout()"></div>
+		<div id="blackout" data-visibility="hidden"></div>
 
 		<main>
 			<div class="row">
@@ -42,25 +42,13 @@
 				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
-							<img
-								src="./assets/trash.svg"
-								alt="Delete"
-								onclick="deleteRow(this)"
-							/>
+							<img src="./assets/trash.svg" alt="Delete" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-up.svg"
-								alt="Up"
-								onclick="moveRow(this, -1)"
-							/>
+						<div class="option up">
+							<img src="./assets/chevron-up.svg" alt="Up" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-down.svg"
-								alt="Down"
-								onclick="moveRow(this, 1)"
-							/>
+						<div class="option down">
+							<img src="./assets/chevron-down.svg" alt="Down" />
 						</div>
 					</div>
 				</div>
@@ -81,25 +69,13 @@
 				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
-							<img
-								src="./assets/trash.svg"
-								alt="Delete"
-								onclick="deleteRow(this)"
-							/>
+							<img src="./assets/trash.svg" alt="Delete" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-up.svg"
-								alt="Up"
-								onclick="moveRow(this, -1)"
-							/>
+						<div class="option up">
+							<img src="./assets/chevron-up.svg" alt="Up" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-down.svg"
-								alt="Down"
-								onclick="moveRow(this, 1)"
-							/>
+						<div class="option down">
+							<img src="./assets/chevron-down.svg" alt="Down" />
 						</div>
 					</div>
 				</div>
@@ -120,25 +96,13 @@
 				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
-							<img
-								src="./assets/trash.svg"
-								alt="Delete"
-								onclick="deleteRow(this)"
-							/>
+							<img src="./assets/trash.svg" alt="Delete" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-up.svg"
-								alt="Up"
-								onclick="moveRow(this, -1)"
-							/>
+						<div class="option up">
+							<img src="./assets/chevron-up.svg" alt="Up" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-down.svg"
-								alt="Down"
-								onclick="moveRow(this, 1)"
-							/>
+						<div class="option down">
+							<img src="./assets/chevron-down.svg" alt="Down" />
 						</div>
 					</div>
 				</div>
@@ -159,25 +123,13 @@
 				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
-							<img
-								src="./assets/trash.svg"
-								alt="Delete"
-								onclick="deleteRow(this)"
-							/>
+							<img src="./assets/trash.svg" alt="Delete" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-up.svg"
-								alt="Up"
-								onclick="moveRow(this, -1)"
-							/>
+						<div class="option up">
+							<img src="./assets/chevron-up.svg" alt="Up" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-down.svg"
-								alt="Down"
-								onclick="moveRow(this, 1)"
-							/>
+						<div class="option down">
+							<img src="./assets/chevron-down.svg" alt="Down" />
 						</div>
 					</div>
 				</div>
@@ -198,25 +150,13 @@
 				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
-							<img
-								src="./assets/trash.svg"
-								alt="Delete"
-								onclick="deleteRow(this)"
-							/>
+							<img src="./assets/trash.svg" alt="Delete" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-up.svg"
-								alt="Up"
-								onclick="moveRow(this, -1)"
-							/>
+						<div class="option up">
+							<img src="./assets/chevron-up.svg" alt="Up" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-down.svg"
-								alt="Down"
-								onclick="moveRow(this, 1)"
-							/>
+						<div class="option down">
+							<img src="./assets/chevron-down.svg" alt="Down" />
 						</div>
 					</div>
 				</div>
@@ -237,25 +177,13 @@
 				<div class="tier-options" data-html2canvas-ignore>
 					<div class="options-container">
 						<div class="option delete">
-							<img
-								src="./assets/trash.svg"
-								alt="Delete"
-								onclick="deleteRow(this)"
-							/>
+							<img src="./assets/trash.svg" alt="Delete" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-up.svg"
-								alt="Up"
-								onclick="moveRow(this, -1)"
-							/>
+						<div class="option up">
+							<img src="./assets/chevron-up.svg" alt="Up" />
 						</div>
-						<div class="option">
-							<img
-								src="./assets/chevron-down.svg"
-								alt="Down"
-								onclick="moveRow(this, 1)"
-							/>
+						<div class="option down">
+							<img src="./assets/chevron-down.svg" alt="Down" />
 						</div>
 					</div>
 				</div>
@@ -263,25 +191,25 @@
 		</main>
 
 		<div class="buttons-container">
-			<button class="button" type="button" onclick="addRow()">New tier</button>
+			<button type="button" class="button" id="new-tier">New tier</button>
 
-			<button class="button" type="button" onclick="selectImages()">
+			<button type="button" class="button" id="select-images">
 				Select images
 			</button>
 
-			<input type="checkbox" id="square-img" onchange="dynamicStyle(this)" />
+			<input type="checkbox" class="dynamic-style" id="square-img" />
 			<label for="square-img">Square images</label>
 
-			<button class="button" type="button" onclick="exportImage()">
+			<button type="button" class="button" id="export-image">
 				Export image
 			</button>
 		</div>
 
-		<div id="images-bar" class="images-bar sort"></div>
+		<div class="images-bar sort" id="images-bar"></div>
 
 		<div
-			id="export-container"
 			class="export-container"
+			id="export-container"
 			data-visibility="hidden"
 		>
 			<div class="exported-image-container">
@@ -289,9 +217,7 @@
 			</div>
 
 			<div class="export-button-container">
-				<button class="button" type="button" onclick="saveImage()">
-					Save image
-				</button>
+				<button type="button" class="button" id="save-image">Save image</button>
 			</div>
 		</div>
 	</body>

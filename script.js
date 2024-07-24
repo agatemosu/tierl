@@ -20,18 +20,25 @@ const exportContainer = document.querySelector("#export-container");
 const exportedImage = document.querySelector("#exported-image");
 const blackout = document.querySelector("#blackout");
 
-document.querySelectorAll(".tooltip").forEach((tooltip, index) => {
-	const defaultColor = defaultColors[index];
-	const colorPicker = tooltip.querySelector(".color-picker");
+document.querySelector("#new-tier").onclick = () => addRow();
+document.querySelector("#select-images").onclick = () => selectImages();
+document.querySelector("#export-image").onclick = () => exportImage();
+document.querySelector("#save-image").onclick = () => saveImage();
+blackout.onclick = () => hideBlackout();
 
-	createColorPicker(colorPicker, tooltip.parentNode, defaultColor);
+document.querySelectorAll(".row").forEach((row, index) => {
+	addRowListeners(row, defaultColors[index]);
 });
+
+for (const checkbox of document.querySelectorAll(".dynamic-style")) {
+	checkbox.addEventListener("change", () => dynamicStyle(checkbox));
+}
 
 document.addEventListener(
 	"touchmove",
-	(event) => {
+	(e) => {
 		if (!scrollable) {
-			event.preventDefault();
+			e.preventDefault();
 		}
 	},
 	{
@@ -79,6 +86,8 @@ function createColorPicker(colorPicker, tierLabel, defaultColor) {
 
 		pickr.hide();
 	});
+
+	return pickr;
 }
 
 function addRow(tierName = "New tier", defaultColor = clearColor) {
@@ -120,28 +129,23 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 	const deleteImage = document.createElement("img");
 	deleteImage.src = "assets/trash.svg";
 	deleteImage.alt = "Delete";
-	deleteImage.setAttribute("onclick", "deleteRow(this)");
 
 	const upButton = document.createElement("div");
-	upButton.className = "option";
+	upButton.className = "option up";
 
 	const upImage = document.createElement("img");
 	upImage.src = "assets/chevron-up.svg";
 	upImage.alt = "Up";
-	upImage.setAttribute("onclick", "moveRow(this, -1)");
 
 	const downButton = document.createElement("div");
-	downButton.className = "option";
+	downButton.className = "option down";
 
 	const downImage = document.createElement("img");
 	downImage.src = "assets/chevron-down.svg";
 	downImage.alt = "Down";
-	downImage.setAttribute("onclick", "moveRow(this, 1)");
 
 	// Add divs to the row / main container
 	tooltip.appendChild(colorPicker);
-
-	createColorPicker(colorPicker, tierLabelDiv, defaultColor);
 
 	tierLabelDiv.appendChild(paragraph);
 	tierLabelDiv.appendChild(tooltip);
@@ -162,25 +166,45 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 
 	mainContainer.appendChild(newRow);
 
+	addRowListeners(newRow, defaultColor);
+
 	initializeDragula();
 }
 
-function deleteRow(element) {
-	element.closest(".row").remove();
+function addRowListeners(row, defaultColor) {
+	const colorPicker = row.querySelector(".color-picker");
+	const tierLabel = row.querySelector(".tier-label");
+
+	const deleteButton = row.querySelector(".option.delete img");
+	const upButton = row.querySelector(".option.up img");
+	const downButton = row.querySelector(".option.down img");
+
+	const pickr = createColorPicker(colorPicker, tierLabel, defaultColor);
+
+	deleteButton.onclick = () => {
+		pickr.destroyAndRemove();
+		row.remove();
+	};
+	upButton.onclick = () => {
+		moveRow(row, -1);
+	};
+	downButton.onclick = () => {
+		moveRow(row, 1);
+	};
 }
 
-function moveRow(button, direction) {
-	const row = button.closest(".row");
-
-	const currentIndex = Array.from(row.parentNode.children).indexOf(row);
+function moveRow(row, direction) {
+	const rows = Array.from(mainContainer.children);
+	const currentIndex = rows.indexOf(row);
 	const newIndex = currentIndex + direction;
 
-	if (newIndex >= 0) {
-		row.parentNode.insertBefore(
-			row,
-			row.parentNode.children[newIndex + (direction === 1 ? 1 : 0)],
-		);
+	if (newIndex < 0 || newIndex >= rows.length) {
+		return;
 	}
+
+	const rowBefore = direction === -1 ? rows[newIndex] : rows[newIndex + 1];
+
+	mainContainer.insertBefore(row, rowBefore);
 }
 
 function selectImages() {
