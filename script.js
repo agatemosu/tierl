@@ -57,16 +57,17 @@ function createColorPicker(colorPicker, tierLabel, defaultColor) {
 	});
 
 	pickr.on("save", (color) => {
-		let selectedColor;
-
 		if (color === null) {
 			pickr.setColor(clearColor);
-			selectedColor = clearColor;
-		} else {
-			selectedColor = color.toHEXA().toString();
+			return;
 		}
 
-		tierLabel.style.backgroundColor = selectedColor;
+		const hsl = color.toHSLA();
+		const lightness = hsl[2];
+
+		tierLabel.style.backgroundColor = color.toHEXA().toString();
+		tierLabel.style.color = lightness < 50 ? "white" : "black";
+
 		pickr.hide();
 	});
 }
