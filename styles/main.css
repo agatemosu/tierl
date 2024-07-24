@@ -19,6 +19,12 @@
 	--buttons-bg: #20181a;
 }
 
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
 body {
 	margin: 0;
 	background-color: var(--background);

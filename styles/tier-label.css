@@ -1,7 +1,5 @@
 .tier-label {
-	display: flex;
 	position: relative;
-	align-items: center;
 	transition-duration: 300ms;
 	transition-property: background-color, color;
 	border: 1px solid var(--black);
@@ -9,13 +7,22 @@
 	min-height: 80px;
 }
 
-.tier-label:focus-visible {
-	outline: none;
+.tier-label:focus-within {
 	border: 1px solid var(--white);
 }
 
-.tier-label p {
-	margin: 6px 2px;
-	width: 96px;
+.label-text {
+	display: flex;
+	align-items: center;
+	padding: 6px 2px;
+	height: 100%;
+}
+
+.tier-label:focus-within .label-text {
+	outline: none;
+}
+
+.label-text span {
+	width: 100%;
 	text-align: center;
 }

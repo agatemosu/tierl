@@ -55,6 +55,34 @@ document.addEventListener("dragover", (e) => {
 	e.preventDefault();
 });
 
+document.addEventListener("mousedown", (e) => {
+	const pickrApp = e.target.closest(".pcr-app");
+
+	if (pickrApp) {
+		return;
+	}
+
+	const menuClicked = e.target.closest(".tier-label");
+	const visibleMenus = document.querySelectorAll('[data-visibility="visible"]');
+
+	if (menuClicked) {
+		const tooltip = menuClicked.querySelector(".tooltip");
+
+		for (const menu of visibleMenus) {
+			if (menu !== tooltip) {
+				menu.dataset.visibility = "hidden";
+			}
+		}
+
+		tooltip.dataset.visibility = "visible";
+		return;
+	}
+
+	for (const menu of visibleMenus) {
+		menu.dataset.visibility = "hidden";
+	}
+});
+
 function createColorPicker(colorPicker, tierLabel, defaultColor) {
 	const pickr = Pickr.create({
 		el: colorPicker,
@@ -94,13 +122,11 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 	const newRow = document.createElement("div");
 	newRow.className = "row";
 	newRow.innerHTML = `
-		<div
-			class="tier-label"
-			contenteditable="true"
-			style="background-color: ${defaultColor}"
-		>
-			<p spellcheck="false">${tierName}</p>
-			<div class="tooltip" contenteditable="false">
+		<div class="tier-label" style="background-color: ${defaultColor}">
+			<div class="label-text" contenteditable="true">
+				<span>${tierName}</span>
+			</div>
+			<div class="tooltip" data-visibility="hidden">
 				<div class="color-picker"></div>
 			</div>
 		</div>

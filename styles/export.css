@@ -8,7 +8,6 @@
 	opacity: 0;
 	z-index: 2;
 	transition: opacity 300ms;
-	box-sizing: border-box;
 	border-radius: 10px;
 	background-color: var(--white);
 	padding: 20px;

@@ -23,8 +23,7 @@
 	content: "";
 }
 
-.tooltip:focus-within,
-.tier-label:focus-visible .tooltip {
+.tooltip[data-visibility="visible"] {
 	visibility: visible;
 	opacity: 1;
 	transition: opacity 300ms;
