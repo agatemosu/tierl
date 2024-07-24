@@ -56,7 +56,7 @@ document.addEventListener("dragover", (e) => {
 });
 
 document.addEventListener("mousedown", (e) => {
-	const ignoreSelectors = [".pcr-app", ".export-container"];
+	const ignoreSelectors = [".pcr-app", ".export-container", "#blackout"];
 	const ignoreClick = ignoreSelectors.some((selector) =>
 		e.target.closest(selector),
 	);
