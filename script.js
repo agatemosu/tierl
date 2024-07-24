@@ -39,6 +39,15 @@ document.addEventListener(
 	},
 );
 
+document.addEventListener("drop", (e) => {
+	e.preventDefault();
+	uploadImages(e.dataTransfer.files);
+});
+
+document.addEventListener("dragover", (e) => {
+	e.preventDefault();
+});
+
 function createColorPicker(colorPicker, tierLabel, defaultColor) {
 	const pickr = Pickr.create({
 		el: colorPicker,
@@ -187,6 +196,10 @@ function selectImages() {
 
 function uploadImages(files) {
 	for (const file of files) {
+		if (file.type.split("/")[0] !== "image") {
+			continue;
+		}
+
 		const image = new Image();
 		image.src = URL.createObjectURL(file);
 
