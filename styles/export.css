@@ -1,7 +1,9 @@
 .export-container {
+	display: flex;
 	position: fixed;
 	top: 50%;
 	left: 50%;
+	flex-direction: column;
 	transform: translate(-50%, -50%);
 	opacity: 0;
 	z-index: 2;
@@ -11,6 +13,7 @@
 	background-color: var(--white);
 	padding: 20px;
 	width: 100%;
+	max-height: calc(100dvh - 50px);
 	pointer-events: none;
 }
 
@@ -37,7 +40,8 @@
 
 .export-button-container button {
 	margin: 0;
-	padding: 10px 15px;
+	border-radius: 5px;
+	padding: 10px 20px;
 }
 
 @media (width >= 786px) {

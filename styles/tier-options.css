@@ -1,8 +1,7 @@
 .tier-options {
 	display: flex;
 	align-items: center;
-	border-top: 1px solid var(--option-borders);
-	border-bottom: 1px solid var(--option-borders);
+	border-block: 1px solid var(--option-borders);
 	background-color: var(--black);
 	width: 80px;
 }

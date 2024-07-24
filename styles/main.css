@@ -39,8 +39,7 @@ body {
 
 .tier {
 	flex-grow: 1;
-	border-top: 1px solid var(--black);
-	border-bottom: 1px solid var(--black);
+	border-block: 1px solid var(--black);
 	background-color: var(--tier-bg);
 }
 

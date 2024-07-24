@@ -2,7 +2,8 @@
 	display: flex;
 	position: relative;
 	align-items: center;
-	transition: background-color 300ms;
+	transition-duration: 300ms;
+	transition-property: background-color, color;
 	border: 1px solid var(--black);
 	width: 100px;
 	min-height: 80px;
@@ -13,7 +14,7 @@
 	border: 1px solid var(--white);
 }
 
-p {
+.tier-label p {
 	margin: 6px 2px;
 	width: 96px;
 	text-align: center;
