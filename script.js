@@ -93,81 +93,35 @@ function createColorPicker(colorPicker, tierLabel, defaultColor) {
 function addRow(tierName = "New tier", defaultColor = clearColor) {
 	const newRow = document.createElement("div");
 	newRow.className = "row";
-
-	// Labels and colors (i.e. left)
-	const tierLabelDiv = document.createElement("div");
-	tierLabelDiv.className = "tier-label";
-	tierLabelDiv.style.backgroundColor = defaultColor;
-	tierLabelDiv.contentEditable = "true";
-
-	const paragraph = document.createElement("p");
-	paragraph.textContent = tierName;
-	paragraph.spellcheck = false;
-
-	const tooltip = document.createElement("div");
-	tooltip.className = "tooltip";
-	tooltip.contentEditable = "false";
-
-	const colorPicker = document.createElement("div");
-	colorPicker.className = "color-picker";
-
-	// Tiers (i.e. center)
-	const tierDiv = document.createElement("div");
-	tierDiv.className = "tier sort";
-
-	// Options (i.e. right)
-	const optionsDiv = document.createElement("div");
-	optionsDiv.className = "tier-options";
-	optionsDiv.dataset.html2canvasIgnore = "";
-
-	const optionsContainer = document.createElement("div");
-	optionsContainer.className = "options-container";
-
-	const deleteButton = document.createElement("div");
-	deleteButton.className = "option delete";
-
-	const deleteImage = document.createElement("img");
-	deleteImage.src = "assets/trash.svg";
-	deleteImage.alt = "Delete";
-
-	const upButton = document.createElement("div");
-	upButton.className = "option up";
-
-	const upImage = document.createElement("img");
-	upImage.src = "assets/chevron-up.svg";
-	upImage.alt = "Up";
-
-	const downButton = document.createElement("div");
-	downButton.className = "option down";
-
-	const downImage = document.createElement("img");
-	downImage.src = "assets/chevron-down.svg";
-	downImage.alt = "Down";
-
-	// Add divs to the row / main container
-	tooltip.appendChild(colorPicker);
-
-	tierLabelDiv.appendChild(paragraph);
-	tierLabelDiv.appendChild(tooltip);
-
-	deleteButton.appendChild(deleteImage);
-	upButton.appendChild(upImage);
-	downButton.appendChild(downImage);
-
-	optionsContainer.appendChild(deleteButton);
-	optionsContainer.appendChild(upButton);
-	optionsContainer.appendChild(downButton);
-
-	optionsDiv.appendChild(optionsContainer);
-
-	newRow.appendChild(tierLabelDiv);
-	newRow.appendChild(tierDiv);
-	newRow.appendChild(optionsDiv);
+	newRow.innerHTML = `
+		<div
+			class="tier-label"
+			contenteditable="true"
+			style="background-color: ${defaultColor}"
+		>
+			<p spellcheck="false">${tierName}</p>
+			<div class="tooltip" contenteditable="false">
+				<div class="color-picker"></div>
+			</div>
+		</div>
+		<div class="tier sort"></div>
+		<div class="tier-options" data-html2canvas-ignore>
+			<div class="options-container">
+				<div class="option delete">
+					<img src="./assets/trash.svg" alt="Delete" />
+				</div>
+				<div class="option up">
+					<img src="./assets/chevron-up.svg" alt="Up" />
+				</div>
+				<div class="option down">
+					<img src="./assets/chevron-down.svg" alt="Down" />
+				</div>
+			</div>
+		</div>
+	`;
 
 	mainContainer.appendChild(newRow);
-
 	addRowListeners(newRow, defaultColor);
-
 	initializeDragula();
 }
 
