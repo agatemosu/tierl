@@ -56,9 +56,11 @@ document.addEventListener("dragover", (e) => {
 });
 
 document.addEventListener("mousedown", (e) => {
-	const pickrApp = e.target.closest(".pcr-app");
+	if (e.target.closest(".pcr-app")) {
+		return;
+	}
 
-	if (pickrApp) {
+	if (e.target.closest(".export-container")) {
 		return;
 	}
 
