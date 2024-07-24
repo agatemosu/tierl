@@ -61,3 +61,7 @@ body {
 	background-repeat: no-repeat;
 	max-height: 80px;
 }
+
+.tier-element.sortable-ghost {
+	opacity: 0.2;
+}

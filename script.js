@@ -10,15 +10,15 @@ const defaultColors = [
 ];
 const clearColor = "#778899";
 
-let scrollable = true;
-let drake;
-
 const mainContainer = document.querySelector("main");
 const imagesBar = document.querySelector("#images-bar");
 const dynamicStyles = document.querySelector("#dynamic-styles");
 const exportContainer = document.querySelector("#export-container");
 const exportedImage = document.querySelector("#exported-image");
 const blackout = document.querySelector("#blackout");
+
+const draggables = [];
+addContainerDrag(imagesBar);
 
 document.querySelector("#new-tier").onclick = () => addRow();
 document.querySelector("#select-images").onclick = () => selectImages();
@@ -33,18 +33,6 @@ document.querySelectorAll(".row").forEach((row, index) => {
 for (const checkbox of document.querySelectorAll(".dynamic-style")) {
 	checkbox.addEventListener("change", () => dynamicStyle(checkbox));
 }
-
-document.addEventListener(
-	"touchmove",
-	(e) => {
-		if (!scrollable) {
-			e.preventDefault();
-		}
-	},
-	{
-		passive: false,
-	},
-);
 
 document.addEventListener("drop", (e) => {
 	e.preventDefault();
@@ -151,22 +139,31 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 
 	mainContainer.appendChild(newRow);
 	addRowListeners(newRow, defaultColor);
-	initializeDragula();
 }
 
 function addRowListeners(row, defaultColor) {
 	const colorPicker = row.querySelector(".color-picker");
 	const tierLabel = row.querySelector(".tier-label");
 
+	const tierSort = row.querySelector(".sort");
+
 	const deleteButton = row.querySelector(".option.delete img");
 	const upButton = row.querySelector(".option.up img");
 	const downButton = row.querySelector(".option.down img");
 
 	const pickr = createColorPicker(colorPicker, tierLabel, defaultColor);
+	const dragInstance = addContainerDrag(tierSort);
 
 	deleteButton.onclick = () => {
 		pickr.destroyAndRemove();
 		row.remove();
+
+		const dragIndex = draggables.indexOf(dragInstance);
+
+		draggables[dragIndex].destroy();
+		draggables.splice(dragIndex, 1);
+
+		console.log(draggables);
 	};
 	upButton.onclick = () => {
 		moveRow(row, -1);
@@ -220,29 +217,13 @@ function uploadImages(files) {
 			imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
 		};
 	}
-
-	initializeDragula();
 }
 
-function initializeDragula() {
-	const containers = Array.from(document.querySelectorAll(".sort"));
+function addContainerDrag(container) {
+	const dragInstance = new Sortable(container, { group: "tiers" });
+	draggables.push(dragInstance);
 
-	if (drake) {
-		drake.containers.push(...containers);
-	} else {
-		drake = dragula(containers);
-	}
-
-	drake
-		.on("drag", () => {
-			scrollable = false;
-		})
-		.on("drop", () => {
-			scrollable = true;
-		})
-		.on("cancel", () => {
-			scrollable = true;
-		});
+	return dragInstance;
 }
 
 function dynamicStyle(checkbox) {
