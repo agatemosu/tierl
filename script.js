@@ -75,7 +75,7 @@ document.addEventListener("mousedown", (e) => {
 });
 
 function createColorPicker(colorPicker, tierLabel, defaultColor) {
-	const pickr = Pickr.create({
+	const pickr = new Pickr({
 		el: colorPicker,
 		theme: "monolith",
 		default: defaultColor,
