@@ -12,7 +12,6 @@ const clearColor = "#778899";
 
 const mainContainer = document.querySelector("main");
 const imagesBar = document.querySelector("#images-bar");
-const dynamicStyles = document.querySelector("#dynamic-styles");
 const exportContainer = document.querySelector("#export-container");
 const exportedImage = document.querySelector("#exported-image");
 const blackout = document.querySelector("#blackout");
@@ -227,13 +226,7 @@ function addContainerDrag(container) {
 }
 
 function dynamicStyle(checkbox) {
-	const importText = `@import "./styles/${checkbox.id}.css";`;
-
-	if (checkbox.checked) {
-		dynamicStyles.innerHTML += importText;
-	} else {
-		dynamicStyles.innerHTML = dynamicStyles.innerHTML.replace(importText, "");
-	}
+	document.body.classList.toggle(checkbox.id, checkbox.checked);
 }
 
 async function exportImage() {
