@@ -1,4 +1,7 @@
-const hash = location.hash.substring(1);
+import Pickr from "https://esm.run/@simonwep/pickr@1.9.1";
+import html2canvas from "https://esm.run/html2canvas@1.4.1";
+import { Sortable } from "https://esm.run/sortablejs@1.15.2";
+
 const defaultColors = [
 	"#ff7f7e",
 	"#ffbf7f",
