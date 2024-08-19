@@ -19,7 +19,6 @@ const exportContainer = document.querySelector("#export-container");
 const exportedImage = document.querySelector("#exported-image");
 const blackout = document.querySelector("#blackout");
 
-const draggables = [];
 addContainerDrag(imagesBar);
 
 document.querySelector("#new-tier").onclick = () => addRow();
@@ -161,14 +160,8 @@ function addRowListeners(row, defaultColor) {
 
 	deleteButton.onclick = () => {
 		pickr.destroyAndRemove();
+		dragInstance.destroy();
 		row.remove();
-
-		const dragIndex = draggables.indexOf(dragInstance);
-
-		draggables[dragIndex].destroy();
-		draggables.splice(dragIndex, 1);
-
-		console.log(draggables);
 	};
 	upButton.onclick = () => {
 		moveRow(row, -1);
@@ -218,10 +211,7 @@ function uploadImages(files) {
 }
 
 function addContainerDrag(container) {
-	const dragInstance = new Sortable(container, { group: "tiers" });
-	draggables.push(dragInstance);
-
-	return dragInstance;
+	return new Sortable(container, { group: "tiers" });
 }
 
 function dynamicStyle(checkbox) {
