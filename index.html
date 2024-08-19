@@ -168,19 +168,30 @@
 			</div>
 		</main>
 
-		<div class="buttons-container">
-			<button type="button" class="button" id="new-tier">New tier</button>
+		<div class="list-options">
+			<div class="list-options-container">
+				<button type="button" class="button" id="new-tier">New tier</button>
 
-			<button type="button" class="button" id="select-images">
-				Select images
-			</button>
+				<label class="button">
+					<span>Select images</span>
+					<input
+						type="file"
+						accept="image/*"
+						multiple=""
+						hidden=""
+						id="select-images"
+					/>
+				</label>
 
-			<input type="checkbox" class="dynamic-style" id="square-img" />
-			<label for="square-img">Square images</label>
+				<label class="checkbox">
+					<input type="checkbox" class="dynamic-style" id="square-img" />
+					<span>Square images</span>
+				</label>
 
-			<button type="button" class="button" id="export-image">
-				Export image
-			</button>
+				<button type="button" class="button" id="export-image">
+					Export image
+				</button>
+			</div>
 		</div>
 
 		<div class="images-bar sort" id="images-bar"></div>

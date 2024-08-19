@@ -1,0 +1,11 @@
+.list-options {
+	display: flex;
+	justify-content: center;
+	border-bottom: 1px solid var(--buttons-color);
+	background-color: var(--buttons-bg);
+}
+
+.list-options-container {
+	display: flex;
+	overflow-y: auto;
+}

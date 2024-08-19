@@ -23,10 +23,13 @@ const draggables = [];
 addContainerDrag(imagesBar);
 
 document.querySelector("#new-tier").onclick = () => addRow();
-document.querySelector("#select-images").onclick = () => selectImages();
 document.querySelector("#export-image").onclick = () => exportImage();
 document.querySelector("#save-image").onclick = () => saveImage();
 blackout.onclick = () => hideBlackout();
+
+document.querySelector("#select-images").onchange = (e) => {
+	uploadImages(e.target.files);
+};
 
 document.querySelectorAll(".row").forEach((row, index) => {
 	addRowListeners(row, defaultColors[index]);
@@ -46,7 +49,7 @@ document.addEventListener("dragover", (e) => {
 });
 
 document.addEventListener("mousedown", (e) => {
-	const ignoreSelectors = [".pcr-app", ".export-container", "#blackout"];
+	const ignoreSelectors = [".pcr-app", ".export-container"];
 	const ignoreClick = ignoreSelectors.some((selector) =>
 		e.target.closest(selector),
 	);
@@ -189,18 +192,11 @@ function moveRow(row, direction) {
 	mainContainer.insertBefore(row, rowBefore);
 }
 
-function selectImages() {
-	const input = document.createElement("input");
-	input.type = "file";
-	input.accept = "image/*";
-	input.multiple = true;
-
-	input.click();
-
-	input.addEventListener("change", () => uploadImages(input.files));
-}
-
 function uploadImages(files) {
+	if (!files) {
+		return;
+	}
+
 	for (const file of files) {
 		if (file.type.split("/")[0] !== "image") {
 			continue;

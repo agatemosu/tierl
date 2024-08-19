@@ -1,18 +1,16 @@
-.buttons-container {
-	border-bottom: 1px solid var(--buttons-color);
-	background-color: var(--buttons-bg);
-	text-align: center;
-}
-
 .button {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 	transition: background-color 300ms;
 	margin: 10px;
 	border: none;
 	border-radius: 3px;
 	background-color: var(--buttons-color);
-	padding-block: 7px;
+	padding: 7px;
 	min-width: 100px;
 	color: var(--button-text);
+	font-size: 13px;
 }
 
 .button:hover {
@@ -27,21 +25,30 @@ label {
 	color: var(--button-text);
 }
 
-label::before {
-	display: inline-block;
-	margin-right: 5px;
-	border-radius: 1px;
-	background-color: var(--button-text);
-	width: 11.6px;
-	height: 11.6px;
-	content: "";
+.checkbox {
+	display: inline-flex;
+	align-items: center;
+	cursor: pointer;
+	margin: 4px;
+	padding-block: 6px;
+	text-wrap: nowrap;
+}
+
+.checkbox span {
+	color: var(--button-text);
+	font-size: 15px;
 }
 
 input[type="checkbox"] {
-	display: none;
+	appearance: none;
+	margin: 0 5px 0 0;
+	border-radius: 1px;
+	background-color: var(--button-text);
+	width: 12px;
+	height: 12px;
 }
 
-input[type="checkbox"]:checked + label::before {
+input[type="checkbox"]:checked {
 	background-image: url("../assets/check.svg");
 	background-color: var(--button-hover);
 }
