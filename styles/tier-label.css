@@ -7,10 +7,6 @@
 	min-height: 80px;
 }
 
-.tier-label:focus-within {
-	border-color: var(--white);
-}
-
 .label-text {
 	display: flex;
 	align-items: center;
@@ -18,8 +14,8 @@
 	height: 100%;
 }
 
-.tier-label:focus-within .label-text {
-	outline: none;
+.label-text:focus {
+	outline: 1px solid var(--white);
 }
 
 .label-text span {
