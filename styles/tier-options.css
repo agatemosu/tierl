@@ -1,15 +1,13 @@
 .tier-options {
 	display: flex;
 	align-items: center;
-	border-block: 1px solid var(--option-borders);
+	border: 1px solid var(--tier-border);
 	background-color: var(--black);
-	width: 80px;
 }
 
 .options-container {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	width: 80px;
 	height: 80px;
 }
 

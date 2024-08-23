@@ -14,7 +14,7 @@
 	--background: #231f20;
 	--tooltip: #f0f8ff;
 	--tier-bg: #2d292a;
-	--option-borders: #111;
+	--tier-border: #111;
 	--button-text: #ebe0e3;
 	--buttons-color: #4e3239;
 	--button-hover: #9c5e6d;
@@ -47,7 +47,7 @@ body {
 
 .tier {
 	flex-grow: 1;
-	border-block: 1px solid var(--black);
+	border-block: 1px solid var(--tier-border);
 	background-color: var(--tier-bg);
 }
 
