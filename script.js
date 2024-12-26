@@ -113,13 +113,13 @@ function createColorPicker(colorPicker, tierLabel, defaultColor) {
 	return pickr;
 }
 
-function addRow(tierName = "New tier", defaultColor = clearColor) {
+function addRow() {
 	const newRow = document.createElement("div");
 	newRow.className = "row";
 	newRow.innerHTML = `
-		<div class="tier-label" style="background-color: ${defaultColor}">
+		<div class="tier-label" style="background-color: ${clearColor}">
 			<div class="label-text" contenteditable="true">
-				<span>${tierName}</span>
+				<span>New tier</span>
 			</div>
 			<div class="tooltip" data-visibility="hidden">
 				<div class="color-picker"></div>
@@ -142,7 +142,7 @@ function addRow(tierName = "New tier", defaultColor = clearColor) {
 	`;
 
 	mainContainer.appendChild(newRow);
-	addRowListeners(newRow, defaultColor);
+	addRowListeners(newRow, clearColor);
 }
 
 function addRowListeners(row, defaultColor) {
