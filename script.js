@@ -1,5 +1,4 @@
 import Pickr from "https://esm.run/@simonwep/pickr@1.9.1";
-import html2canvas from "https://esm.run/html2canvas@1.4.1";
 import Sortable from "https://esm.run/sortablejs@1.15.2";
 
 const defaultColors = [
@@ -16,21 +15,9 @@ const clearColor = "#778899";
 const mainContainer = document.querySelector("main");
 const imagesBar = document.querySelector("#images-bar");
 
-/** @type {HTMLElement} */
-const blackout = document.querySelector("#blackout");
-
-/** @type {HTMLElement} */
-const exportContainer = document.querySelector("#export-container");
-
-/** @type {HTMLImageElement} */
-const exportedImage = document.querySelector("#exported-image");
-
 addContainerDrag(imagesBar);
 
 document.querySelector("#new-tier").addEventListener("click", addRow);
-document.querySelector("#export-image").addEventListener("click", exportImage);
-document.querySelector("#save-image").addEventListener("click", saveImage);
-blackout.addEventListener("click", hideBlackout);
 
 document.querySelector("#select-images").addEventListener("change", (e) => {
 	const input = /** @type {HTMLInputElement} */ (e.target);
@@ -57,7 +44,7 @@ document.addEventListener("dragover", (e) => {
 document.addEventListener("mousedown", (e) => {
 	const target = /** @type {Element} */ (e.target);
 
-	const ignoreSelectors = [".pcr-app", ".export-container"];
+	const ignoreSelectors = [".pcr-app"];
 	const ignoreClick = ignoreSelectors.some((selector) =>
 		target.closest(selector),
 	);
@@ -68,25 +55,18 @@ document.addEventListener("mousedown", (e) => {
 
 	/** @type {NodeListOf<HTMLElement>} */
 	const visibleMenus = document.querySelectorAll('[data-visibility="visible"]');
+	
+	for (const menu of visibleMenus) {
+		menu.dataset.visibility = "hidden";
+	}
+	
 	const menuClicked = target.closest(".tier-label");
-
 	if (menuClicked) {
 		const tooltip = /** @type {HTMLElement} */ (
 			menuClicked.querySelector(".tooltip")
 		);
 
-		for (const menu of visibleMenus) {
-			if (menu !== tooltip) {
-				menu.dataset.visibility = "hidden";
-			}
-		}
-
 		tooltip.dataset.visibility = "visible";
-		return;
-	}
-
-	for (const menu of visibleMenus) {
-		menu.dataset.visibility = "hidden";
 	}
 });
 
@@ -138,7 +118,7 @@ function addRow() {
 			</div>
 		</div>
 		<div class="tier sort"></div>
-		<div class="tier-options" data-html2canvas-ignore>
+		<div class="tier-options">
 			<div class="options-container">
 				<div class="option delete"><i></i></div>
 				<div class="option up"><i></i></div>
@@ -212,28 +192,4 @@ function addContainerDrag(container) {
 
 function dynamicStyle(checkbox) {
 	document.body.classList.toggle(checkbox.id, checkbox.checked);
-}
-
-async function exportImage() {
-	const canvas = await html2canvas(mainContainer, {
-		scale: 1.5,
-		windowWidth: 1080,
-	});
-	exportedImage.src = canvas.toDataURL();
-
-	exportContainer.dataset.visibility = "visible";
-	blackout.dataset.visibility = "visible";
-}
-
-function saveImage() {
-	const downloadLink = document.createElement("a");
-	downloadLink.href = exportedImage.src;
-	downloadLink.download = "image.png";
-
-	downloadLink.click();
-}
-
-function hideBlackout() {
-	blackout.dataset.visibility = "hidden";
-	exportContainer.dataset.visibility = "hidden";
 }
