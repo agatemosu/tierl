@@ -170,25 +170,15 @@ function addRowListeners(row, defaultColor) {
 		row.remove();
 	};
 	upButton.onclick = () => {
-		moveRow(row, -1);
+		if (row.previousElementSibling) {
+			row.parentElement.insertBefore(row, row.previousElementSibling);
+		}
 	};
 	downButton.onclick = () => {
-		moveRow(row, 1);
+		if (row.nextElementSibling) {
+			row.parentElement.insertBefore(row.nextElementSibling, row);
+		}
 	};
-}
-
-function moveRow(row, direction) {
-	const rows = Array.from(mainContainer.children);
-	const currentIndex = rows.indexOf(row);
-	const newIndex = currentIndex + direction;
-
-	if (newIndex < 0 || newIndex >= rows.length) {
-		return;
-	}
-
-	const rowBefore = direction === -1 ? rows[newIndex] : rows[newIndex + 1];
-
-	mainContainer.insertBefore(row, rowBefore);
 }
 
 function uploadImages(files) {
