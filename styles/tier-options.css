@@ -24,11 +24,25 @@
 	justify-content: right;
 }
 
-.option img {
+.option i {
+	width: 32px;
+	height: 32px;
 	transition: filter 200ms;
 	cursor: pointer;
 }
 
-.option img:hover {
+.option i:hover {
 	filter: contrast(0%);
+}
+
+.option.delete i {
+	background-image: url("../assets/trash.svg");
+}
+
+.option.up i {
+	background-image: url("../assets/chevron-up.svg");
+}
+
+.option.down i {
+	background-image: url("../assets/chevron-down.svg");
 }

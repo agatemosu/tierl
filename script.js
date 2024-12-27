@@ -140,15 +140,9 @@ function addRow() {
 		<div class="tier sort"></div>
 		<div class="tier-options" data-html2canvas-ignore>
 			<div class="options-container">
-				<div class="option delete">
-					<img src="./assets/trash.svg" alt="Delete" />
-				</div>
-				<div class="option up">
-					<img src="./assets/chevron-up.svg" alt="Up" />
-				</div>
-				<div class="option down">
-					<img src="./assets/chevron-down.svg" alt="Down" />
-				</div>
+				<div class="option delete"><i></i></div>
+				<div class="option up"><i></i></div>
+				<div class="option down"><i></i></div>
 			</div>
 		</div>
 	`;
@@ -163,9 +157,9 @@ function addRowListeners(row, defaultColor) {
 
 	const tierSort = row.querySelector(".sort");
 
-	const deleteButton = row.querySelector(".option.delete img");
-	const upButton = row.querySelector(".option.up img");
-	const downButton = row.querySelector(".option.down img");
+	const deleteButton = row.querySelector(".option.delete i");
+	const upButton = row.querySelector(".option.up i");
+	const downButton = row.querySelector(".option.down i");
 
 	const pickr = createColorPicker(colorPicker, tierLabel, defaultColor);
 	const dragInstance = addContainerDrag(tierSort);
