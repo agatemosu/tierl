@@ -15,20 +15,27 @@ const clearColor = "#778899";
 
 const mainContainer = document.querySelector("main");
 const imagesBar = document.querySelector("#images-bar");
-const exportContainer = document.querySelector("#export-container");
-const exportedImage = document.querySelector("#exported-image");
+
+/** @type {HTMLElement} */
 const blackout = document.querySelector("#blackout");
+
+/** @type {HTMLElement} */
+const exportContainer = document.querySelector("#export-container");
+
+/** @type {HTMLImageElement} */
+const exportedImage = document.querySelector("#exported-image");
 
 addContainerDrag(imagesBar);
 
-document.querySelector("#new-tier").onclick = () => addRow();
-document.querySelector("#export-image").onclick = () => exportImage();
-document.querySelector("#save-image").onclick = () => saveImage();
-blackout.onclick = () => hideBlackout();
+document.querySelector("#new-tier").addEventListener("click", addRow);
+document.querySelector("#export-image").addEventListener("click", exportImage);
+document.querySelector("#save-image").addEventListener("click", saveImage);
+blackout.addEventListener("click", hideBlackout);
 
-document.querySelector("#select-images").onchange = (e) => {
-	uploadImages(e.target.files);
-};
+document.querySelector("#select-images").addEventListener("change", (e) => {
+	const input = /** @type {HTMLInputElement} */ (e.target);
+	uploadImages(input.files);
+});
 
 document.querySelectorAll(".row").forEach((row, index) => {
 	addRowListeners(row, defaultColors[index]);
@@ -48,20 +55,25 @@ document.addEventListener("dragover", (e) => {
 });
 
 document.addEventListener("mousedown", (e) => {
+	const target = /** @type {Element} */ (e.target);
+
 	const ignoreSelectors = [".pcr-app", ".export-container"];
 	const ignoreClick = ignoreSelectors.some((selector) =>
-		e.target.closest(selector),
+		target.closest(selector),
 	);
 
 	if (ignoreClick) {
 		return;
 	}
 
-	const menuClicked = e.target.closest(".tier-label");
+	/** @type {NodeListOf<HTMLElement>} */
 	const visibleMenus = document.querySelectorAll('[data-visibility="visible"]');
+	const menuClicked = target.closest(".tier-label");
 
 	if (menuClicked) {
-		const tooltip = menuClicked.querySelector(".tooltip");
+		const tooltip = /** @type {HTMLElement} */ (
+			menuClicked.querySelector(".tooltip")
+		);
 
 		for (const menu of visibleMenus) {
 			if (menu !== tooltip) {
@@ -116,7 +128,7 @@ function createColorPicker(colorPicker, tierLabel, defaultColor) {
 function addRow() {
 	const newRow = document.createElement("div");
 	newRow.className = "row";
-	newRow.innerHTML = `
+	newRow.innerHTML = /* HTML */ `
 		<div class="tier-label" style="background-color: ${clearColor}">
 			<div class="label-text" contenteditable="true">
 				<span>New tier</span>
