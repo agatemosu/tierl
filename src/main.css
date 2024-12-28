@@ -34,7 +34,7 @@ body {
 	user-select: none;
 }
 
-.row {
+tier-row {
 	display: flex;
 }
 

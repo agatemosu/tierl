@@ -1,36 +1,7 @@
-import Pickr from "@simonwep/pickr";
 import Sortable from "sortablejs";
+import TierRow from "./tier-row.js";
 
-const defaultColors = [
-	"#ff7f7e",
-	"#ffbf7f",
-	"#feff7f",
-	"#7eff80",
-	"#7fffff",
-	"#807fff",
-	"#ff7ffe",
-];
-const clearColor = "#778899";
-
-const mainContainer = document.querySelector("main");
-const imagesBar = document.querySelector("#images-bar");
-
-addContainerDrag(imagesBar);
-
-document.querySelector("#new-tier").addEventListener("click", addRow);
-
-document.querySelector("#select-images").addEventListener("change", (e) => {
-	const input = /** @type {HTMLInputElement} */ (e.target);
-	uploadImages(input.files);
-});
-
-document.querySelectorAll(".row").forEach((row, index) => {
-	addRowListeners(row, defaultColors[index]);
-});
-
-for (const checkbox of document.querySelectorAll(".dynamic-style")) {
-	checkbox.addEventListener("change", () => dynamicStyle(checkbox));
-}
+// #region Document events
 
 document.addEventListener("drop", (e) => {
 	e.preventDefault();
@@ -70,126 +41,78 @@ document.addEventListener("mousedown", (e) => {
 	}
 });
 
-function createColorPicker(colorPicker, tierLabel, defaultColor) {
-	const pickr = new Pickr({
-		el: colorPicker,
-		theme: "monolith",
-		default: defaultColor,
-		swatches: defaultColors,
-		components: {
-			preview: true,
-			hue: true,
-			interaction: {
-				input: true,
-				clear: true,
-				save: true,
-			},
-		},
-	});
+// #endregion
 
-	pickr.on("save", (color) => {
-		if (color === null) {
-			pickr.setColor(clearColor);
-			return;
-		}
+// #region Specific handlers
 
-		const hsl = color.toHSLA();
-		const lightness = hsl[2];
+function addNewTier() {
+	const mainContainer = document.querySelector("main");
+	const newTier = new TierRow();
 
-		tierLabel.style.backgroundColor = color.toHEXA().toString();
-		tierLabel.style.color = lightness < 50 ? "white" : "black";
-
-		pickr.hide();
-	});
-
-	return pickr;
+	mainContainer.appendChild(newTier);
 }
 
-function addRow() {
-	const newRow = document.createElement("div");
-	newRow.className = "row";
-	newRow.innerHTML = /* HTML */ `
-		<div class="tier-label" style="background-color: ${clearColor}">
-			<div class="label-text" contenteditable="true">
-				<span>New tier</span>
-			</div>
-			<div class="tooltip" data-visibility="hidden">
-				<div class="color-picker"></div>
-			</div>
-		</div>
-		<div class="tier sort"></div>
-		<div class="tier-options">
-			<div class="options-container">
-				<div class="option delete"><i></i></div>
-				<div class="option up"><i></i></div>
-				<div class="option down"><i></i></div>
-			</div>
-		</div>
-	`;
-
-	mainContainer.appendChild(newRow);
-	addRowListeners(newRow, clearColor);
+/**
+ * @param {Event} e
+ */
+function selectImages(e) {
+	const input = /** @type {HTMLInputElement} */ (e.target);
+	uploadImages(input.files);
 }
 
-function addRowListeners(row, defaultColor) {
-	const colorPicker = row.querySelector(".color-picker");
-	const tierLabel = row.querySelector(".tier-label");
-
-	const tierSort = row.querySelector(".sort");
-
-	const deleteButton = row.querySelector(".option.delete i");
-	const upButton = row.querySelector(".option.up i");
-	const downButton = row.querySelector(".option.down i");
-
-	const pickr = createColorPicker(colorPicker, tierLabel, defaultColor);
-	const dragInstance = addContainerDrag(tierSort);
-
-	deleteButton.onclick = () => {
-		pickr.destroyAndRemove();
-		dragInstance.destroy();
-		row.remove();
-	};
-	upButton.onclick = () => {
-		if (row.previousElementSibling) {
-			row.parentElement.insertBefore(row, row.previousElementSibling);
-		}
-	};
-	downButton.onclick = () => {
-		if (row.nextElementSibling) {
-			row.parentElement.insertBefore(row.nextElementSibling, row);
-		}
-	};
-}
-
+/**
+ * @param {FileList} files
+ */
 function uploadImages(files) {
-	if (!files) {
-		return;
-	}
+	const imagesBar = document.querySelector("#images-bar");
 
 	for (const file of files) {
 		if (file.type.split("/")[0] !== "image") {
 			continue;
 		}
 
-		const image = new Image();
-		image.src = URL.createObjectURL(file);
-
 		const imageEl = document.createElement("div");
 		imageEl.classList.add("tier-element");
 		imagesBar.appendChild(imageEl);
 
+		const image = new Image();
 		image.onload = () => {
 			imageEl.style.aspectRatio = `${image.width} / ${image.height}`;
 			imageEl.style.backgroundImage = `url("${image.src}")`;
 			imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
 		};
+		image.src = URL.createObjectURL(file);
 	}
 }
 
-function addContainerDrag(container) {
-	return new Sortable(container, { group: "tiers" });
-}
-
-function dynamicStyle(checkbox) {
+/**
+ * @param {Event} e
+ */
+function dynamicStyle(e) {
+	const checkbox = /** @type {HTMLInputElement} */ (e.target);
 	document.body.classList.toggle(checkbox.id, checkbox.checked);
 }
+
+// #endregion
+
+// #region Setup
+
+function main() {
+	const newTierButton = document.querySelector("#new-tier");
+	const selectImagesButton = document.querySelector("#select-images");
+	const imagesBar = document.querySelector("#images-bar");
+	const checkboxes = document.querySelectorAll(".dynamic-style");
+
+	newTierButton.addEventListener("click", addNewTier);
+	selectImagesButton.addEventListener("change", selectImages);
+
+	Sortable.create(imagesBar, { group: TierRow.sortableGroup });
+
+	for (const checkbox of checkboxes) {
+		checkbox.addEventListener("change", dynamicStyle);
+	}
+}
+
+main();
+
+// #endregion
