@@ -20,17 +20,17 @@
 }
 
 .option.delete {
-	--option-img: url("/trash.svg");
+	--option-img: url("../assets/trash.svg");
 	grid-row: span 2;
 	justify-content: right;
 }
 
 .option.up i {
-	--option-img: url("/chevron-up.svg");
+	--option-img: url("../assets/chevron-up.svg");
 }
 
 .option.down i {
-	--option-img: url("/chevron-down.svg");
+	--option-img: url("../assets/chevron-down.svg");
 }
 
 .option i {
