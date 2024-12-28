@@ -5,13 +5,13 @@
 	background-color: var(--black);
 }
 
-.options-container {
+.tier-options-container {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
 	height: 80px;
 }
 
-.option {
+.tier-option {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -19,21 +19,21 @@
 	height: auto;
 }
 
-.option.delete {
+.tier-option.delete {
 	--option-img: url("../assets/trash.svg");
 	grid-row: span 2;
 	justify-content: right;
 }
 
-.option.up i {
+.tier-option.up i {
 	--option-img: url("../assets/chevron-up.svg");
 }
 
-.option.down i {
+.tier-option.down i {
 	--option-img: url("../assets/chevron-down.svg");
 }
 
-.option i {
+.tier-option i {
 	-webkit-mask-image: var(--option-img);
 	mask-image: var(--option-img);
 	transition: background-color 200ms;
@@ -43,6 +43,6 @@
 	height: 32px;
 }
 
-.option i:hover {
+.tier-option i:hover {
 	background-color: #7f7f7f;
 }

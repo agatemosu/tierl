@@ -32,17 +32,17 @@ export default class TierRow extends HTMLElement {
 
 		this.innerHTML = /* HTML */ `
 			<div class="tier-label" style="background-color: ${this.color};">
-				<div class="label-text" contenteditable="true">
-					<span class="tier-name">${this.name}</span>
+				<div class="tier-label-text" contenteditable="true">
+					<span class="tier-label-content">${this.name}</span>
 				</div>
-				<div class="tooltip" data-visibility="hidden"></div>
+				<div class="tier-tooltip" data-visibility="hidden"></div>
 			</div>
-			<div class="tier sort"></div>
+			<div class="tier-content sort"></div>
 			<div class="tier-options">
-				<div class="options-container">
-					<div class="option delete"><i></i></div>
-					<div class="option up"><i></i></div>
-					<div class="option down"><i></i></div>
+				<div class="tier-options-container">
+					<div class="tier-option delete"><i></i></div>
+					<div class="tier-option up"><i></i></div>
+					<div class="tier-option down"><i></i></div>
 				</div>
 			</div>
 		`;
@@ -59,16 +59,16 @@ export default class TierRow extends HTMLElement {
 		this.sort = new Sortable(tierSort, { group: TierRow.sortableGroup });
 
 		// Options
-		const deleteButton = this.querySelector(".option.delete i");
-		const upButton = this.querySelector(".option.up i");
-		const downButton = this.querySelector(".option.down i");
+		const deleteButton = this.querySelector(".tier-option.delete i");
+		const upButton = this.querySelector(".tier-option.up i");
+		const downButton = this.querySelector(".tier-option.down i");
 
 		deleteButton.addEventListener("click", this.deleteRow);
 		upButton.addEventListener("click", this.moveUp);
 		downButton.addEventListener("click", this.moveDown);
 
 		// Update tier name
-		const tierName = this.querySelector(".label-text");
+		const tierName = this.querySelector(".tier-label-text");
 		tierName.addEventListener("blur", this.nameChanged);
 	}
 
@@ -84,9 +84,8 @@ export default class TierRow extends HTMLElement {
 	createColorPicker = () => {
 		// It needs to be created as it's deleted when the row is disconnected
 		const colorPicker = document.createElement("div");
-		colorPicker.classList.add("color-picker");
 
-		const tooltip = this.querySelector(".tooltip");
+		const tooltip = this.querySelector(".tier-tooltip");
 		tooltip.appendChild(colorPicker);
 
 		this.pickr = new Pickr({
@@ -129,8 +128,8 @@ export default class TierRow extends HTMLElement {
 	};
 
 	nameChanged = () => {
-		const tierName = this.querySelector(".label-text");
-		this.setAttribute("name", tierName.firstElementChild.textContent);
+		const tierName = this.querySelector(".tier-label-content");
+		this.setAttribute("name", tierName.textContent);
 	};
 
 	deleteRow = () => {

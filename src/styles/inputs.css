@@ -18,16 +18,10 @@
 	background-color: var(--button-hover);
 }
 
-label {
-	display: inline-block;
-	cursor: pointer;
-	padding-block: 6px;
-	color: var(--button-text);
-}
-
 .checkbox {
 	display: inline-flex;
 	align-items: center;
+	gap: 5px;
 	cursor: pointer;
 	margin: 4px;
 	padding-block: 6px;
@@ -41,11 +35,12 @@ label {
 
 input[type="checkbox"] {
 	appearance: none;
-	margin: 0 5px 0 0;
+	margin: 0;
 	border-radius: 1px;
 	background-color: var(--button-text);
 	width: 12px;
 	height: 12px;
+	pointer-events: none;
 }
 
 input[type="checkbox"]:checked {

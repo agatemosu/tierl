@@ -1,8 +1,8 @@
-.tooltip {
+.tier-tooltip {
 	position: absolute;
 	top: 50%;
 	left: 110%;
-	transform: translate(0, -50%);
+	translate: 0 -50%;
 	visibility: hidden;
 	opacity: 0;
 	transition: opacity 300ms, visibility 0s 300ms;
@@ -12,7 +12,7 @@
 	height: 50px;
 }
 
-.tooltip::before {
+.tier-tooltip::before {
 	position: absolute;
 	top: 50%;
 	right: 100%;
@@ -23,7 +23,7 @@
 	content: "";
 }
 
-.tooltip[data-visibility="visible"] {
+.tier-tooltip[data-visibility="visible"] {
 	visibility: visible;
 	opacity: 1;
 	transition: opacity 300ms;

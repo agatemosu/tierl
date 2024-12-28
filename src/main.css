@@ -1,68 +1,10 @@
-@import "@simonwep/pickr/dist/themes/monolith.min.css";
-@import "./styles/buttons.css";
-@import "./styles/dynamic-styles.css";
+@import "./styles/_base.css";
+
+@import "./styles/inputs.css";
 @import "./styles/list-options.css";
 @import "./styles/pickr.css";
+@import "./styles/sort.css";
+@import "./styles/tier-element.css";
 @import "./styles/tier-label.css";
 @import "./styles/tier-options.css";
-@import "./styles/tooltip.css";
-
-:root {
-	--black: #000;
-	--white: #fff;
-	--background: #231f20;
-	--tooltip: #f0f8ff;
-	--tier-bg: #2d292a;
-	--tier-border: #111;
-	--button-text: #ebe0e3;
-	--buttons-color: #4e3239;
-	--button-hover: #9c5e6d;
-	--buttons-bg: #20181a;
-}
-
-*,
-::before,
-::after {
-	box-sizing: border-box;
-}
-
-body {
-	margin: 0;
-	background-color: var(--background);
-	font-family: Arial, Helvetica, sans-serif;
-	-webkit-user-select: none;
-	user-select: none;
-}
-
-tier-row {
-	display: flex;
-}
-
-.sort {
-	display: flex;
-	flex-flow: row wrap;
-	gap: 2px;
-}
-
-.tier {
-	flex-grow: 1;
-	border-block: 1px solid var(--tier-border);
-	background-color: var(--tier-bg);
-}
-
-.images-bar {
-	padding: 10px;
-}
-
-.tier-element {
-	display: inline-flex;
-	vertical-align: top;
-	cursor: pointer;
-	background-size: contain;
-	background-repeat: no-repeat;
-	max-height: 80px;
-}
-
-.tier-element.sortable-ghost {
-	opacity: 0.2;
-}
+@import "./styles/tier-tooltip.css";

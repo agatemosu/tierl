@@ -8,18 +8,18 @@
 	min-height: 80px;
 }
 
-.label-text {
+.tier-label-text {
 	display: flex;
 	align-items: center;
 	padding: 6px 2px;
 	height: 100%;
 }
 
-.label-text:focus {
+.tier-label-text:focus {
 	outline: 1px solid var(--white);
 }
 
-.label-text span {
+.tier-label-content {
 	width: 100%;
 	text-align: center;
 }

@@ -34,7 +34,7 @@ document.addEventListener("mousedown", (e) => {
 	const menuClicked = target.closest(".tier-label");
 	if (menuClicked) {
 		const tooltip = /** @type {HTMLElement} */ (
-			menuClicked.querySelector(".tooltip")
+			menuClicked.querySelector(".tier-tooltip")
 		);
 
 		tooltip.dataset.visibility = "visible";

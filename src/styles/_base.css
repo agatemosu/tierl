@@ -1,0 +1,26 @@
+:root {
+	--black: #000;
+	--white: #fff;
+	--background: #231f20;
+	--tooltip: #f0f8ff;
+	--tier-bg: #2d292a;
+	--tier-border: #111;
+	--button-text: #ebe0e3;
+	--buttons-color: #4e3239;
+	--button-hover: #9c5e6d;
+	--buttons-bg: #20181a;
+}
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background-color: var(--background);
+	font-family: Arial, Helvetica, sans-serif;
+	-webkit-user-select: none;
+	user-select: none;
+}

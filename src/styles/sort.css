@@ -1,0 +1,19 @@
+tier-row {
+	display: flex;
+}
+
+.tier-content {
+	flex-grow: 1;
+	border-block: 1px solid var(--tier-border);
+	background-color: var(--tier-bg);
+}
+
+.sort {
+	display: flex;
+	flex-flow: row wrap;
+	gap: 2px;
+}
+
+.images-bar {
+	padding: 10px;
+}
