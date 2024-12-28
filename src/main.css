@@ -1,10 +1,11 @@
-@import "./buttons.css";
-@import "./dynamic-styles.css";
-@import "./list-options.css";
-@import "./pickr.css";
-@import "./tier-label.css";
-@import "./tier-options.css";
-@import "./tooltip.css";
+@import "@simonwep/pickr/dist/themes/monolith.min.css";
+@import "./styles/buttons.css";
+@import "./styles/dynamic-styles.css";
+@import "./styles/list-options.css";
+@import "./styles/pickr.css";
+@import "./styles/tier-label.css";
+@import "./styles/tier-options.css";
+@import "./styles/tooltip.css";
 
 :root {
 	--black: #000;

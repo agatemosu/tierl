@@ -1,5 +1,5 @@
-import Pickr from "https://esm.run/@simonwep/pickr@1.9.1";
-import Sortable from "https://esm.run/sortablejs@1.15.2";
+import Pickr from "@simonwep/pickr";
+import Sortable from "sortablejs";
 
 const defaultColors = [
 	"#ff7f7e",
@@ -55,11 +55,11 @@ document.addEventListener("mousedown", (e) => {
 
 	/** @type {NodeListOf<HTMLElement>} */
 	const visibleMenus = document.querySelectorAll('[data-visibility="visible"]');
-	
+
 	for (const menu of visibleMenus) {
 		menu.dataset.visibility = "hidden";
 	}
-	
+
 	const menuClicked = target.closest(".tier-label");
 	if (menuClicked) {
 		const tooltip = /** @type {HTMLElement} */ (

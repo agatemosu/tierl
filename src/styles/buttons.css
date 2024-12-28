@@ -49,6 +49,6 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-	background-image: url("../assets/check.svg");
+	background-image: url("/check.svg");
 	background-color: var(--button-hover);
 }

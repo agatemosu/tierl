@@ -1,0 +1,18 @@
+{
+	"name": "tierl",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@simonwep/pickr": "1.9.1",
+		"sortablejs": "1.15.6"
+	},
+	"devDependencies": {
+		"@types/sortablejs": "1.15.8",
+		"vite": "6.0.6"
+	}
+}
