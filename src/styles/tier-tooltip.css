@@ -3,13 +3,13 @@
 	top: 50%;
 	left: 110%;
 	translate: 0 -50%;
-	visibility: hidden;
 	opacity: 0;
-	transition: opacity 300ms, visibility 0s 300ms;
+	transition: opacity 300ms;
 	border-radius: 6px;
 	background-color: var(--tooltip);
 	width: 80px;
 	height: 50px;
+	pointer-events: none;
 }
 
 .tier-tooltip::before {
@@ -24,7 +24,6 @@
 }
 
 .tier-tooltip[data-visibility="visible"] {
-	visibility: visible;
 	opacity: 1;
-	transition: opacity 300ms;
+	pointer-events: all;
 }

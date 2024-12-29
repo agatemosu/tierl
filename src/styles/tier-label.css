@@ -1,7 +1,6 @@
 .tier-label {
 	position: relative;
-	transition-duration: 300ms;
-	transition-property: background-color, color;
+	transition: background-color 300ms, color 200ms;
 	border: 1px solid var(--tier-border);
 	width: 100px;
 	min-width: 100px;
