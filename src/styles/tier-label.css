@@ -16,7 +16,7 @@
 }
 
 .tier-label-text:focus {
-	outline: 1px solid var(--white);
+	outline: 1px solid white;
 }
 
 .tier-label-content {
