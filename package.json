@@ -9,6 +9,7 @@
 	},
 	"dependencies": {
 		"@simonwep/pickr": "1.9.1",
+		"browser-image-compression": "^2.0.2",
 		"sortablejs": "1.15.6"
 	},
 	"devDependencies": {

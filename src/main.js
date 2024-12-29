@@ -1,5 +1,6 @@
 import Sortable from "sortablejs";
 import TierRow from "./tier-row.js";
+import imageCompression from "browser-image-compression";
 
 // #region Document events
 
@@ -75,13 +76,17 @@ function uploadImages(files) {
 		imageEl.classList.add("tier-element");
 		imagesBar.appendChild(imageEl);
 
-		const image = new Image();
-		image.onload = () => {
-			imageEl.style.aspectRatio = `${image.width} / ${image.height}`;
-			imageEl.style.backgroundImage = `url("${image.src}")`;
-			imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
-		};
-		image.src = URL.createObjectURL(file);
+		imageCompression(file, {
+			maxWidthOrHeight: 480,
+		}).then((compressedFile) => {
+			const image = new Image();
+			image.onload = () => {
+				imageEl.style.aspectRatio = `${image.width} / ${image.height}`;
+				imageEl.style.backgroundImage = `url("${image.src}")`;
+				imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
+			};
+			image.src = URL.createObjectURL(compressedFile);
+		});
 	}
 }
 
