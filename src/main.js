@@ -53,12 +53,15 @@ function addNewTier() {
 	mainContainer.appendChild(newTier);
 }
 
-/**
- * @param {Event} e
- */
-function selectImages(e) {
-	const input = /** @type {HTMLInputElement} */ (e.target);
-	uploadImages(input.files);
+function selectImages() {
+	const input = document.createElement("input");
+
+	input.type = "file";
+	input.accept = "image/*";
+	input.multiple = true;
+
+	input.onchange = () => uploadImages(input.files);
+	input.click();
 }
 
 /**
@@ -109,7 +112,7 @@ function main() {
 	const checkboxes = document.querySelectorAll(".dynamic-style");
 
 	newTierButton.addEventListener("click", addNewTier);
-	selectImagesButton.addEventListener("change", selectImages);
+	selectImagesButton.addEventListener("click", selectImages);
 
 	Sortable.create(imagesBar, { group: TierRow.sortableGroup });
 
