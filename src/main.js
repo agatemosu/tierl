@@ -105,22 +105,26 @@ function dynamicStyle(e) {
 
 // #region Setup
 
-function main() {
+function setUpSortable() {
+	/** @type {HTMLElement} */
+	const imagesBar = document.querySelector("#images-bar");
+	Sortable.create(imagesBar, { group: TierRow.sortableGroup });
+}
+
+function setUpEvents() {
 	const newTierButton = document.querySelector("#new-tier");
 	const selectImagesButton = document.querySelector("#select-images");
-	const imagesBar = document.querySelector("#images-bar");
 	const checkboxes = document.querySelectorAll(".dynamic-style");
 
 	newTierButton.addEventListener("click", addNewTier);
 	selectImagesButton.addEventListener("click", selectImages);
-
-	Sortable.create(imagesBar, { group: TierRow.sortableGroup });
 
 	for (const checkbox of checkboxes) {
 		checkbox.addEventListener("change", dynamicStyle);
 	}
 }
 
-main();
+setUpSortable();
+setUpEvents();
 
 // #endregion

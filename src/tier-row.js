@@ -61,7 +61,7 @@ export default class TierRow extends HTMLElement {
 		this.createColorPicker();
 
 		// Sortable
-		const tierSort = this.querySelector(".sort");
+		const tierSort = /** @type {HTMLElement} */ (this.querySelector(".sort"));
 		this.sort = new Sortable(tierSort, { group: TierRow.sortableGroup });
 
 		// Options
