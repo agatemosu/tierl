@@ -1,6 +1,6 @@
+import imageCompression from "browser-image-compression";
 import Sortable from "sortablejs";
 import TierRow from "./tier-row.js";
-import imageCompression from "browser-image-compression";
 
 // #region Document events
 
