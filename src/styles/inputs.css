@@ -24,7 +24,7 @@
 	cursor: pointer;
 	margin: 4px;
 	padding-block: 6px;
-	text-wrap: nowrap;
+	white-space: nowrap;
 }
 
 .checkbox span {
