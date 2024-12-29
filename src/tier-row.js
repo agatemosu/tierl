@@ -40,9 +40,15 @@ export default class TierRow extends HTMLElement {
 			<div class="tier-content sort"></div>
 			<div class="tier-options">
 				<div class="tier-options-container">
-					<div class="tier-option delete"><i></i></div>
-					<div class="tier-option up"><i></i></div>
-					<div class="tier-option down"><i></i></div>
+					<div class="tier-option-container tier-option-container-span">
+						<button class="tier-option tier-option-delete"></button>
+					</div>
+					<div class="tier-option-container">
+						<button class="tier-option tier-option-up"></button>
+					</div>
+					<div class="tier-option-container">
+						<button class="tier-option tier-option-down"></button>
+					</div>
 				</div>
 			</div>
 		`;
@@ -59,9 +65,9 @@ export default class TierRow extends HTMLElement {
 		this.sort = new Sortable(tierSort, { group: TierRow.sortableGroup });
 
 		// Options
-		const deleteButton = this.querySelector(".tier-option.delete i");
-		const upButton = this.querySelector(".tier-option.up i");
-		const downButton = this.querySelector(".tier-option.down i");
+		const deleteButton = this.querySelector(".tier-option-delete");
+		const upButton = this.querySelector(".tier-option-up");
+		const downButton = this.querySelector(".tier-option-down");
 
 		deleteButton.addEventListener("click", this.deleteRow);
 		upButton.addEventListener("click", this.moveUp);

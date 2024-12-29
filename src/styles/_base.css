@@ -24,3 +24,11 @@ body {
 	-webkit-user-select: none;
 	user-select: none;
 }
+
+input,
+button {
+	appearance: none;
+	margin: 0;
+	border: none;
+	background: none;
+}

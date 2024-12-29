@@ -11,38 +11,43 @@
 	height: 80px;
 }
 
-.tier-option {
+.tier-option-container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 40px;
-	height: auto;
 }
 
-.tier-option.delete {
-	--option-img: url("../assets/trash.svg");
+.tier-option-container-span {
 	grid-row: span 2;
 	justify-content: right;
 }
 
-.tier-option.up i {
-	--option-img: url("../assets/chevron-up.svg");
-}
-
-.tier-option.down i {
-	--option-img: url("../assets/chevron-down.svg");
-}
-
-.tier-option i {
-	-webkit-mask-image: var(--option-img);
-	mask-image: var(--option-img);
-	transition: background-color 200ms;
+.tier-option {
+	transition: filter 200ms;
 	cursor: pointer;
-	background-color: white;
+	background-image: var(--option-img);
 	width: 32px;
 	height: 32px;
 }
 
-.tier-option i:hover {
-	background-color: #7f7f7f;
+.tier-option:hover {
+	filter: brightness(0.6);
+}
+
+.tier-option:focus-visible {
+	outline: 1px solid white;
+	background-color: #fff2;
+}
+
+.tier-option-delete {
+	--option-img: url("../assets/trash.svg");
+}
+
+.tier-option-up {
+	--option-img: url("../assets/chevron-up.svg");
+}
+
+.tier-option-down {
+	--option-img: url("../assets/chevron-down.svg");
 }

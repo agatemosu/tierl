@@ -3,8 +3,8 @@
 	justify-content: center;
 	align-items: center;
 	transition: background-color 300ms;
+	cursor: pointer;
 	margin: 10px;
-	border: none;
 	border-radius: 3px;
 	background-color: var(--buttons-color);
 	padding: 7px;
@@ -14,7 +14,6 @@
 }
 
 .button:hover {
-	cursor: pointer;
 	background-color: var(--button-hover);
 }
 
@@ -34,8 +33,6 @@
 }
 
 input[type="checkbox"] {
-	appearance: none;
-	margin: 0;
 	border-radius: 1px;
 	background-color: var(--button-text);
 	width: 12px;
