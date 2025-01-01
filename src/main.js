@@ -114,20 +114,22 @@ function gatherAll() {
 
 // #region Setup
 
-function setUpSortable() {
+function main() {
 	/** @type {HTMLElement} */
 	const imagesBar = document.querySelector("#images-bar");
 	Sortable.create(imagesBar, { group: TierRow.sortableGroup });
-}
 
-function setUpEvents() {
-	const newTierButton = document.querySelector("#new-tier");
-	const selectImagesButton = document.querySelector("#select-images");
-	const gatherAllButton = document.querySelector("#gather-all");
+	/** @type {[string, EventListener][]} */
+	const eventMap = [
+		["#new-tier", addNewTier],
+		["#select-images", selectImages],
+		["#gather-all", gatherAll],
+	];
 
-	newTierButton.addEventListener("click", addNewTier);
-	selectImagesButton.addEventListener("click", selectImages);
-	gatherAllButton.addEventListener("click", gatherAll);
+	for (const [selector, handler] of eventMap) {
+		const element = document.querySelector(selector);
+		element.addEventListener("click", handler);
+	}
 
 	const checkboxes = document.querySelectorAll(".dynamic-style");
 	for (const checkbox of checkboxes) {
@@ -135,7 +137,6 @@ function setUpEvents() {
 	}
 }
 
-setUpSortable();
-setUpEvents();
+main();
 
 // #endregion
