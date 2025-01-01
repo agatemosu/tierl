@@ -1,5 +1,6 @@
 import imageCompression from "browser-image-compression";
 import Sortable from "sortablejs";
+import TierElement from "./tier-element.js";
 import TierRow from "./tier-row.js";
 
 // #region Document events
@@ -75,21 +76,12 @@ function uploadImages(files) {
 			continue;
 		}
 
-		const imageEl = document.createElement("div");
-		imageEl.classList.add("tier-element");
-		imagesBar.appendChild(imageEl);
+		const tierElement = new TierElement();
+		imagesBar.appendChild(tierElement);
 
 		imageCompression(file, {
 			maxWidthOrHeight: 480,
-		}).then((compressedFile) => {
-			const image = new Image();
-			image.onload = () => {
-				imageEl.style.aspectRatio = `${image.width} / ${image.height}`;
-				imageEl.style.backgroundImage = `url("${image.src}")`;
-				imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
-			};
-			image.src = URL.createObjectURL(compressedFile);
-		});
+		}).then(tierElement.setBlob);
 	}
 }
 
@@ -103,11 +95,84 @@ function dynamicStyle(e) {
 
 function gatherAll() {
 	const imagesBar = document.querySelector("#images-bar");
-	const images = document.querySelectorAll(".tier-content .tier-element");
+	const images = document.querySelectorAll(".tier-content tier-element");
 
 	for (const image of images) {
 		imagesBar.appendChild(image);
 	}
+}
+
+async function exportList() {
+	/** @type {NodeListOf<TierRow>} */
+	const tiers = document.querySelectorAll("tier-row");
+
+	/** @type {ExportData[]} */
+	const list = [];
+
+	for (const tier of tiers) {
+		/** @type {NodeListOf<TierElement>} */
+		const images = tier.querySelectorAll("tier-element");
+
+		/** @type {ExportData} */
+		const tierData = {
+			color: tier.color,
+			name: tier.name,
+			images: [],
+		};
+
+		for (const image of images) {
+			tierData.images.push(await image.getDataUrl());
+		}
+
+		list.push(tierData);
+	}
+
+	const data = JSON.stringify(list);
+	const blob = new Blob([data], { type: "application/json" });
+	const url = URL.createObjectURL(blob);
+
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = "list.json";
+	a.click();
+
+	URL.revokeObjectURL(url);
+}
+
+function importList() {
+	const mainContainer = document.querySelector("main");
+	const input = document.createElement("input");
+
+	input.type = "file";
+	input.accept = ".json";
+
+	input.onchange = async () => {
+		const tiers = document.querySelectorAll("tier-row");
+		for (const tier of tiers) {
+			tier.remove();
+		}
+
+		const file = await input.files[0].text();
+
+		/** @type {ExportData[]} */
+		const data = JSON.parse(file);
+
+		for (const tierData of data) {
+			const tier = new TierRow();
+			const sortContainer = tier.querySelector(".sort");
+			mainContainer.appendChild(tier);
+
+			tier.color = tierData.color;
+			tier.name = tierData.name;
+
+			for (const imageData of tierData.images) {
+				const tierElement = new TierElement();
+				tierElement.setDataUrl(imageData);
+				sortContainer.appendChild(tierElement);
+			}
+		}
+	};
+	input.click();
 }
 
 // #endregion
@@ -124,6 +189,8 @@ function main() {
 		["#new-tier", addNewTier],
 		["#select-images", selectImages],
 		["#gather-all", gatherAll],
+		["#export-list", exportList],
+		["#import-list", importList],
 	];
 
 	for (const [selector, handler] of eventMap) {
