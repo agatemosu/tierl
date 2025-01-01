@@ -101,6 +101,15 @@ function dynamicStyle(e) {
 	document.body.classList.toggle(checkbox.id, checkbox.checked);
 }
 
+function gatherAll() {
+	const imagesBar = document.querySelector("#images-bar");
+	const images = document.querySelectorAll(".tier-content .tier-element");
+
+	for (const image of images) {
+		imagesBar.appendChild(image);
+	}
+}
+
 // #endregion
 
 // #region Setup
@@ -114,11 +123,13 @@ function setUpSortable() {
 function setUpEvents() {
 	const newTierButton = document.querySelector("#new-tier");
 	const selectImagesButton = document.querySelector("#select-images");
-	const checkboxes = document.querySelectorAll(".dynamic-style");
+	const gatherAllButton = document.querySelector("#gather-all");
 
 	newTierButton.addEventListener("click", addNewTier);
 	selectImagesButton.addEventListener("click", selectImages);
+	gatherAllButton.addEventListener("click", gatherAll);
 
+	const checkboxes = document.querySelectorAll(".dynamic-style");
 	for (const checkbox of checkboxes) {
 		checkbox.addEventListener("change", dynamicStyle);
 	}
