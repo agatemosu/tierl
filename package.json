@@ -8,6 +8,7 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@msgpack/msgpack": "3.0.0-beta2",
 		"@simonwep/pickr": "1.9.1",
 		"browser-image-compression": "2.0.2",
 		"sortablejs": "1.15.6"

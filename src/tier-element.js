@@ -2,7 +2,7 @@ export default class TierElement extends HTMLElement {
 	/**
 	 * @param {Blob} blob
 	 */
-	setBlob = (blob) => {
+	setBlob = async (blob) => {
 		const image = new Image();
 		image.onload = () => {
 			this.style.aspectRatio = `${image.width} / ${image.height}`;
@@ -11,26 +11,13 @@ export default class TierElement extends HTMLElement {
 		};
 		image.src = URL.createObjectURL(blob);
 
-		this.blob = blob;
+		this.arrayBuffer = await blob.arrayBuffer();
 	};
 
 	/**
-	 * @param {string} dataUrl
+	 * @param {Uint8Array} arrayBuffer
 	 */
-	setDataUrl = (dataUrl) => {
-		fetch(dataUrl)
-			.then((response) => response.blob())
-			.then((blob) => this.setBlob(blob));
-	};
-
-	getDataUrl = () => {
-		return new Promise((resolve, reject) => {
-			const reader = new FileReader();
-			reader.onload = () => resolve(reader.result);
-			reader.onerror = () => reject(reader.error);
-			reader.readAsDataURL(this.blob);
-		});
-	};
+	setArrayBuffer = (arrayBuffer) => this.setBlob(new Blob([arrayBuffer]));
 }
 
 customElements.define("tier-element", TierElement);

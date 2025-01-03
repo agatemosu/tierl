@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@msgpack/msgpack':
+        specifier: 3.0.0-beta2
+        version: 3.0.0-beta2
       '@simonwep/pickr':
         specifier: 1.9.1
         version: 1.9.1
@@ -182,6 +185,10 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@msgpack/msgpack@3.0.0-beta2':
+    resolution: {integrity: sha512-y+l1PNV0XDyY8sM3YtuMLK5vE3/hkfId+Do8pLo/OPxfxuFAUwcGz3oiiUuV46/aBpwTzZ+mRWVMtlSKbradhw==}
+    engines: {node: '>= 14'}
 
   '@rollup/rollup-android-arm-eabi@4.29.1':
     resolution: {integrity: sha512-ssKhA8RNltTZLpG6/QNkCSge+7mBQGUqJRisZ2MDQcEGaK93QESEgWK2iOpIDZ7k9zPVkG5AS3ksvD5ZWxmItw==}
@@ -478,6 +485,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.24.2':
     optional: true
+
+  '@msgpack/msgpack@3.0.0-beta2': {}
 
   '@rollup/rollup-android-arm-eabi@4.29.1':
     optional: true
