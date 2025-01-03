@@ -1,3 +1,4 @@
+import * as msgpack from "@msgpack/msgpack";
 import imageCompression from "browser-image-compression";
 import Sortable from "sortablejs";
 import TierElement from "./tier-element.js";
@@ -121,19 +122,19 @@ async function exportList() {
 		};
 
 		for (const image of images) {
-			tierData.images.push(await image.getDataUrl());
+			tierData.images.push(new Uint8Array(image.arrayBuffer));
 		}
 
 		list.push(tierData);
 	}
 
-	const data = JSON.stringify(list);
-	const blob = new Blob([data], { type: "application/json" });
+	const data = msgpack.encode(list);
+	const blob = new Blob([data], { type: "application/vnd.msgpack" });
 	const url = URL.createObjectURL(blob);
 
 	const a = document.createElement("a");
 	a.href = url;
-	a.download = "list.json";
+	a.download = "list.msgpack";
 	a.click();
 
 	URL.revokeObjectURL(url);
@@ -144,7 +145,7 @@ function importList() {
 	const input = document.createElement("input");
 
 	input.type = "file";
-	input.accept = ".json";
+	input.accept = ".msgpack";
 
 	input.onchange = async () => {
 		const tiers = document.querySelectorAll("tier-row");
@@ -152,10 +153,8 @@ function importList() {
 			tier.remove();
 		}
 
-		const file = await input.files[0].text();
-
-		/** @type {ExportData[]} */
-		const data = JSON.parse(file);
+		const file = new Uint8Array(await input.files[0].arrayBuffer());
+		const data = /** @type {ExportData[]} */ (msgpack.decode(file));
 
 		for (const tierData of data) {
 			const tier = new TierRow();
@@ -167,7 +166,7 @@ function importList() {
 
 			for (const imageData of tierData.images) {
 				const tierElement = new TierElement();
-				tierElement.setDataUrl(imageData);
+				tierElement.setBytes(imageData);
 				sortContainer.appendChild(tierElement);
 			}
 		}
