@@ -123,7 +123,10 @@ async function exportList() {
 		};
 
 		for (const image of images) {
-			tierData.images.push(new Uint8Array(image.arrayBuffer));
+			tierData.images.push({
+				bytes: new Uint8Array(image.arrayBuffer),
+				mime: image.mime,
+			});
 		}
 
 		list.push(tierData);
@@ -168,7 +171,7 @@ function importList() {
 
 			for (const imageData of tierData.images) {
 				const tierElement = new TierElement();
-				tierElement.setBytes(imageData);
+				tierElement.setImage(imageData);
 				sortContainer.appendChild(tierElement);
 			}
 		}

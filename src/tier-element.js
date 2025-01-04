@@ -12,12 +12,14 @@ export default class TierElement extends HTMLElement {
 		image.src = URL.createObjectURL(blob);
 
 		this.arrayBuffer = await blob.arrayBuffer();
+		this.mime = blob.type;
 	};
 
 	/**
-	 * @param {Uint8Array} bytes
+	 * @param {ExportedImage} image
 	 */
-	setBytes = (bytes) => this.setBlob(new Blob([bytes]));
+	setImage = (image) =>
+		this.setBlob(new Blob([image.bytes], { type: image.mime }));
 }
 
 customElements.define("tier-element", TierElement);
