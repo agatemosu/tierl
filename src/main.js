@@ -1,5 +1,6 @@
 import * as msgpack from "@msgpack/msgpack";
 import imageCompression from "browser-image-compression";
+import dayjs from "dayjs";
 import Sortable from "sortablejs";
 import TierElement from "./tier-element.js";
 import TierRow from "./tier-row.js";
@@ -132,9 +133,10 @@ async function exportList() {
 	const blob = new Blob([data], { type: "application/vnd.msgpack" });
 	const url = URL.createObjectURL(blob);
 
+	const date = dayjs().format("YYYY-MM-DD HH_mm_ss");
 	const a = document.createElement("a");
 	a.href = url;
-	a.download = "list.msgpack";
+	a.download = `Exported tier list ${date}.msgpack`;
 	a.click();
 
 	URL.revokeObjectURL(url);

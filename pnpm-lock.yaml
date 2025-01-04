@@ -17,6 +17,9 @@ importers:
       browser-image-compression:
         specifier: 2.0.2
         version: 2.0.2
+      dayjs:
+        specifier: 1.11.13
+        version: 1.11.13
       sortablejs:
         specifier: 1.15.6
         version: 1.15.6
@@ -306,6 +309,9 @@ packages:
     peerDependencies:
       postcss: ^8.0.9
 
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
+
   esbuild@0.24.2:
     resolution: {integrity: sha512-+9egpBW8I3CD5XPe0n6BfT5fxLzxrlDzqydF3aviG+9ni1lDC/OvMHcxqEFV0+LANZG5R1bFMWfUrjVsdwxJvA==}
     engines: {node: '>=18'}
@@ -563,6 +569,8 @@ snapshots:
   css-declaration-sorter@7.2.0(postcss@8.4.49):
     dependencies:
       postcss: 8.4.49
+
+  dayjs@1.11.13: {}
 
   esbuild@0.24.2:
     optionalDependencies:
