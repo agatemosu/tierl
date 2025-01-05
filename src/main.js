@@ -153,9 +153,10 @@ function importList() {
 	input.accept = ".msgpack";
 
 	input.onchange = async () => {
+		/** @type {NodeListOf<TierRow>} */
 		const tiers = document.querySelectorAll("tier-row");
 		for (const tier of tiers) {
-			tier.remove();
+			tier.deleteRow();
 		}
 
 		const file = new Uint8Array(await input.files[0].arrayBuffer());

@@ -9,7 +9,7 @@ export default class TierElement extends HTMLElement {
 			this.style.backgroundImage = `url("${image.src}")`;
 			this.style.minHeight = `${Math.min(image.height, 80)}px`;
 		};
-		image.src = URL.createObjectURL(blob);
+		image.src = this.objUrl = URL.createObjectURL(blob);
 
 		this.arrayBuffer = await blob.arrayBuffer();
 		this.mime = blob.type;
