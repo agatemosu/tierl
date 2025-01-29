@@ -79,9 +79,13 @@ function uploadImages(files) {
 		const tierElement = new TierElement();
 		imagesBar.appendChild(tierElement);
 
-		imageCompression(file, {
-			maxWidthOrHeight: 480,
-		}).then(tierElement.setBlob);
+		if (file.size > /* 1 MiB */ 1048576) {
+			imageCompression(file, {
+				maxWidthOrHeight: 480,
+			}).then(tierElement.setBlob);
+		} else {
+			tierElement.setBlob(file);
+		}
 	}
 }
 
