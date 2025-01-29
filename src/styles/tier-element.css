@@ -1,4 +1,4 @@
-.tier-element {
+tier-element {
 	display: inline-flex;
 	vertical-align: top;
 	cursor: pointer;
@@ -7,13 +7,13 @@
 	max-height: 80px;
 }
 
-body.square-img .tier-element {
+body.square-img tier-element {
 	background-position: center;
 	background-size: cover;
 	width: 80px;
 	height: 80px;
 }
 
-.tier-element.sortable-ghost {
+tier-element.sortable-ghost {
 	opacity: 0.2;
 }

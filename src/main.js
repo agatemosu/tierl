@@ -1,5 +1,6 @@
 import imageCompression from "browser-image-compression";
 import Sortable from "sortablejs";
+import TierElement from "./tier-element.js";
 import TierRow from "./tier-row.js";
 
 // #region Document events
@@ -75,21 +76,12 @@ function uploadImages(files) {
 			continue;
 		}
 
-		const imageEl = document.createElement("div");
-		imageEl.classList.add("tier-element");
-		imagesBar.appendChild(imageEl);
+		const tierElement = new TierElement();
+		imagesBar.appendChild(tierElement);
 
 		imageCompression(file, {
 			maxWidthOrHeight: 480,
-		}).then((compressedFile) => {
-			const image = new Image();
-			image.onload = () => {
-				imageEl.style.aspectRatio = `${image.width} / ${image.height}`;
-				imageEl.style.backgroundImage = `url("${image.src}")`;
-				imageEl.style.minHeight = `${Math.min(image.height, 80)}px`;
-			};
-			image.src = URL.createObjectURL(compressedFile);
-		});
+		}).then(tierElement.setBlob);
 	}
 }
 
@@ -103,7 +95,7 @@ function dynamicStyle(e) {
 
 function gatherAll() {
 	const imagesBar = document.querySelector("#images-bar");
-	const images = document.querySelectorAll(".tier-content .tier-element");
+	const images = document.querySelectorAll(".tier-content tier-element");
 
 	for (const image of images) {
 		imagesBar.appendChild(image);
