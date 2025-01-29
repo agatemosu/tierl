@@ -1,15 +1,11 @@
-tier-element {
-	display: inline-flex;
+tier-element img {
 	vertical-align: top;
 	cursor: pointer;
-	background-size: contain;
-	background-repeat: no-repeat;
 	max-height: 80px;
+	object-fit: cover;
 }
 
-body.square-img tier-element {
-	background-position: center;
-	background-size: cover;
+body.square-img tier-element img {
 	width: 80px;
 	height: 80px;
 }
