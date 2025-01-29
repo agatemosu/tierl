@@ -1,24 +1,23 @@
 import Pickr from "@simonwep/pickr";
 import Sortable from "sortablejs";
 
-const clearColor = "#778899";
-const defaultColors = [
-	"#ff7f7e",
-	"#ffbf7f",
-	"#feff7f",
-	"#7eff80",
-	"#7fffff",
-	"#807fff",
-	"#ff7ffe",
-];
-
 export default class TierRow extends HTMLElement {
 	static sortableGroup = "tiers";
+	static clearColor = "#778899";
+	static defaultColors = [
+		"#ff7f7e",
+		"#ffbf7f",
+		"#feff7f",
+		"#7eff80",
+		"#7fffff",
+		"#807fff",
+		"#ff7ffe",
+	];
 
 	// #region Properties
 
 	get color() {
-		return this.getAttribute("color") ?? clearColor;
+		return this.getAttribute("color") ?? TierRow.clearColor;
 	}
 
 	get name() {
@@ -98,7 +97,7 @@ export default class TierRow extends HTMLElement {
 			el: colorPicker,
 			theme: "monolith",
 			default: this.color,
-			swatches: defaultColors,
+			swatches: TierRow.defaultColors,
 			components: {
 				preview: true,
 				hue: true,
@@ -118,7 +117,7 @@ export default class TierRow extends HTMLElement {
 	 */
 	colorChanged = (color) => {
 		if (color === null) {
-			this.pickr.setColor(clearColor);
+			this.pickr.setColor(TierRow.clearColor);
 			return;
 		}
 
