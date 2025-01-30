@@ -1,3 +1,5 @@
+/** @import TierElement from "./tier-element.js" */
+
 import Pickr from "@simonwep/pickr";
 import Sortable from "sortablejs";
 
@@ -141,6 +143,12 @@ export default class TierRow extends HTMLElement {
 	};
 
 	deleteRow = () => {
+		/** @type {NodeListOf<TierElement>} */
+		const elements = this.querySelectorAll("tier-element");
+		for (const element of elements) {
+			URL.revokeObjectURL(element.objUrl);
+		}
+
 		this.remove();
 	};
 
