@@ -1,3 +1,7 @@
+tier-element {
+	display: flex;
+}
+
 tier-element img {
 	vertical-align: top;
 	cursor: pointer;
