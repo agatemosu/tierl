@@ -69,7 +69,10 @@ function selectImages() {
  * @param {FileList} files
  */
 function uploadImages(files) {
+	document.body.classList.add("loading");
+
 	const imagesBar = document.querySelector("#images-bar");
+	const imagePromises = [];
 
 	for (const file of files) {
 		if (file.type.split("/")[0] !== "image") {
@@ -79,10 +82,16 @@ function uploadImages(files) {
 		const tierElement = new TierElement();
 		imagesBar.appendChild(tierElement);
 
-		imageCompression(file, {
+		const imagePromise = imageCompression(file, {
 			maxWidthOrHeight: 480,
 		}).then(tierElement.setBlob);
+
+		imagePromises.push(imagePromise);
 	}
+
+	Promise.all(imagePromises).then(() => {
+		document.body.classList.remove("loading");
+	});
 }
 
 /**

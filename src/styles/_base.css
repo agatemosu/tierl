@@ -18,9 +18,18 @@
 body {
 	margin: 0;
 	background-color: var(--background);
+	min-height: 100dvh;
 	font-family: Arial, Helvetica, sans-serif;
 	-webkit-user-select: none;
 	user-select: none;
+}
+
+body.loading {
+	cursor: wait;
+}
+
+body.loading * {
+	pointer-events: none;
 }
 
 input,
