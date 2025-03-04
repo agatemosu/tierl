@@ -8,12 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@msgpack/msgpack':
+        specifier: 3.1.0
+        version: 3.1.0
       '@simonwep/pickr':
         specifier: 1.9.1
         version: 1.9.1
       browser-image-compression:
         specifier: 2.0.2
         version: 2.0.2
+      dayjs:
+        specifier: 1.11.13
+        version: 1.11.13
       sortablejs:
         specifier: 1.15.6
         version: 1.15.6
@@ -183,6 +189,10 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@msgpack/msgpack@3.1.0':
+    resolution: {integrity: sha512-igBxaq5JHWdJ0lDyKkCo00pDu+bNVuBAs/cHra6a3ndCw6vlZK9BGLuG7Fvmar/DXK2uJ25zvgcAZEl+AvLpjQ==}
+    engines: {node: '>= 18'}
+
   '@rollup/rollup-android-arm-eabi@4.29.1':
     resolution: {integrity: sha512-ssKhA8RNltTZLpG6/QNkCSge+7mBQGUqJRisZ2MDQcEGaK93QESEgWK2iOpIDZ7k9zPVkG5AS3ksvD5ZWxmItw==}
     cpu: [arm]
@@ -298,6 +308,9 @@ packages:
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.0.9
+
+  dayjs@1.11.13:
+    resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}
 
   esbuild@0.24.2:
     resolution: {integrity: sha512-+9egpBW8I3CD5XPe0n6BfT5fxLzxrlDzqydF3aviG+9ni1lDC/OvMHcxqEFV0+LANZG5R1bFMWfUrjVsdwxJvA==}
@@ -479,6 +492,8 @@ snapshots:
   '@esbuild/win32-x64@0.24.2':
     optional: true
 
+  '@msgpack/msgpack@3.1.0': {}
+
   '@rollup/rollup-android-arm-eabi@4.29.1':
     optional: true
 
@@ -554,6 +569,8 @@ snapshots:
   css-declaration-sorter@7.2.0(postcss@8.4.49):
     dependencies:
       postcss: 8.4.49
+
+  dayjs@1.11.13: {}
 
   esbuild@0.24.2:
     optionalDependencies:
