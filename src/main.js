@@ -122,7 +122,7 @@ async function exportList() {
 
 	for (const tier of tiers) {
 		/** @type {NodeListOf<TierElement>} */
-		const images = tier.querySelectorAll("tier-element");
+		const tierElements = tier.querySelectorAll("tier-element");
 
 		/** @type {ExportData} */
 		const tierData = {
@@ -131,11 +131,8 @@ async function exportList() {
 			images: [],
 		};
 
-		for (const image of images) {
-			tierData.images.push({
-				bytes: new Uint8Array(image.arrayBuffer),
-				mime: image.mime,
-			});
+		for (const el of tierElements) {
+			tierData.images.push(el.getImage());
 		}
 
 		list.push(tierData);

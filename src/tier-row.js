@@ -160,7 +160,7 @@ export default class TierRow extends HTMLElement {
 		/** @type {NodeListOf<TierElement>} */
 		const elements = this.querySelectorAll("tier-element");
 		for (const element of elements) {
-			URL.revokeObjectURL(element.objUrl);
+			element.revokeImageUrl();
 		}
 
 		this.remove();

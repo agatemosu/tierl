@@ -1,4 +1,11 @@
 export default class TierElement extends HTMLElement {
+	/** @type {string} */
+	#objUrl;
+	/** @type {ArrayBuffer} */
+	#arrayBuffer;
+	/** @type {string} */
+	#mime;
+
 	/**
 	 * @param {Blob} blob
 	 */
@@ -8,9 +15,9 @@ export default class TierElement extends HTMLElement {
 
 		this.appendChild(image);
 
-		this.objUrl = image.src;
-		this.arrayBuffer = await blob.arrayBuffer();
-		this.mime = blob.type;
+		this.#objUrl = image.src;
+		this.#arrayBuffer = await blob.arrayBuffer();
+		this.#mime = blob.type;
 	};
 
 	/**
@@ -18,6 +25,18 @@ export default class TierElement extends HTMLElement {
 	 */
 	setImage = (image) =>
 		this.setBlob(new Blob([image.bytes], { type: image.mime }));
+
+	/**
+	 * @returns {ExportedImage}
+	 */
+	getImage = () => ({
+		bytes: new Uint8Array(this.#arrayBuffer),
+		mime: this.#mime,
+	});
+
+	revokeImageUrl = () => {
+		URL.revokeObjectURL(this.#objUrl);
+	};
 }
 
 customElements.define("tier-element", TierElement);
