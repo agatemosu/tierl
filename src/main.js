@@ -1,4 +1,6 @@
+import * as msgpack from "@msgpack/msgpack";
 import imageCompression from "browser-image-compression";
+import dayjs from "dayjs";
 import Sortable from "sortablejs";
 import TierElement from "./tier-element.js";
 import TierRow from "./tier-row.js";
@@ -111,6 +113,70 @@ function gatherAll() {
 	}
 }
 
+async function exportList() {
+	/** @type {TierRow[]} */
+	const tiers = Array.from(document.querySelectorAll("tier-row"));
+
+	/** @type {ExportData[]} */
+	const list = tiers.map((tier) => {
+		/** @type {TierElement[]} */
+		const tierElements = Array.from(tier.querySelectorAll("tier-element"));
+
+		return {
+			color: tier.color,
+			name: tier.name,
+			images: tierElements.map((el) => el.getImage()),
+		};
+	});
+
+	const data = msgpack.encode(list);
+	const blob = new Blob([data], { type: "application/vnd.msgpack" });
+	const url = URL.createObjectURL(blob);
+
+	const date = dayjs().format("YYYY-MM-DD HH_mm_ss");
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = `Exported tier list ${date}.msgpack`;
+	a.click();
+
+	URL.revokeObjectURL(url);
+}
+
+function importList() {
+	const mainContainer = document.querySelector("main");
+	const input = document.createElement("input");
+
+	input.type = "file";
+	input.accept = ".msgpack";
+
+	input.onchange = async () => {
+		/** @type {NodeListOf<TierRow>} */
+		const tiers = document.querySelectorAll("tier-row");
+		for (const tier of tiers) {
+			tier.deleteRow();
+		}
+
+		const file = new Uint8Array(await input.files[0].arrayBuffer());
+		const data = /** @type {ExportData[]} */ (msgpack.decode(file));
+
+		for (const tierData of data) {
+			const tier = new TierRow();
+			const sortContainer = tier.querySelector(".sort");
+			mainContainer.appendChild(tier);
+
+			tier.color = tierData.color;
+			tier.name = tierData.name;
+
+			for (const imageData of tierData.images) {
+				const tierElement = new TierElement();
+				tierElement.setImage(imageData);
+				sortContainer.appendChild(tierElement);
+			}
+		}
+	};
+	input.click();
+}
+
 // #endregion
 
 // #region Setup
@@ -125,6 +191,8 @@ function main() {
 		["#new-tier", addNewTier],
 		["#select-images", selectImages],
 		["#gather-all", gatherAll],
+		["#export-list", exportList],
+		["#import-list", importList],
 	];
 
 	for (const [selector, handler] of eventMap) {

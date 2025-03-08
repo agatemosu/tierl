@@ -26,6 +26,20 @@ export default class TierRow extends HTMLElement {
 		return this.getAttribute("name") ?? "New tier";
 	}
 
+	set color(value) {
+		this.pickr.setColor(value);
+
+		// If pickr is not initialized, set the color when it is
+		this.pickr.on("init", () => {
+			this.pickr.setColor(value);
+		});
+	}
+
+	set name(value) {
+		this.querySelector(".tier-label-content").textContent = value;
+		this.nameChanged();
+	}
+
 	// #endregion
 
 	constructor() {
@@ -146,7 +160,7 @@ export default class TierRow extends HTMLElement {
 		/** @type {NodeListOf<TierElement>} */
 		const elements = this.querySelectorAll("tier-element");
 		for (const element of elements) {
-			URL.revokeObjectURL(element.objUrl);
+			element.revokeImageUrl();
 		}
 
 		this.remove();
