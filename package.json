@@ -18,6 +18,7 @@
 		"@types/sortablejs": "1.15.8",
 		"prettier": "3.4.2",
 		"prettier-plugin-css-order": "2.1.2",
+		"typescript": "5.8.2",
 		"vite": "6.0.6"
 	}
 }

@@ -1,5 +1,3 @@
-/** @import TierElement from "./tier-element.js" */
-
 import Pickr from "@simonwep/pickr";
 import Sortable from "sortablejs";
 
@@ -15,6 +13,9 @@ export default class TierRow extends HTMLElement {
 		"#807fff",
 		"#ff7ffe",
 	];
+
+	private sort: Sortable;
+	private pickr: Pickr;
 
 	// #region Properties
 
@@ -76,7 +77,7 @@ export default class TierRow extends HTMLElement {
 		this.createColorPicker();
 
 		// Sortable
-		const tierSort = /** @type {HTMLElement} */ (this.querySelector(".sort"));
+		const tierSort = this.querySelector<HTMLElement>(".sort");
 		this.sort = new Sortable(tierSort, { group: TierRow.sortableGroup });
 
 		// Options
@@ -128,10 +129,7 @@ export default class TierRow extends HTMLElement {
 		this.pickr.on("save", this.colorChanged);
 	};
 
-	/**
-	 * @param {Pickr.HSVaColor} color
-	 */
-	colorChanged = (color) => {
+	colorChanged = (color: Pickr.HSVaColor) => {
 		if (color === null) {
 			this.pickr.setColor(TierRow.clearColor);
 			return;
@@ -140,9 +138,7 @@ export default class TierRow extends HTMLElement {
 		const hsl = color.toHSLA();
 		const lightness = hsl[2];
 
-		const tierLabel = /** @type {HTMLElement} */ (
-			this.querySelector(".tier-label")
-		);
+		const tierLabel = this.querySelector<HTMLElement>(".tier-label");
 		this.setAttribute("color", color.toHEXA().toString());
 
 		tierLabel.style.backgroundColor = color.toHEXA().toString();
@@ -157,7 +153,6 @@ export default class TierRow extends HTMLElement {
 	};
 
 	deleteRow = () => {
-		/** @type {NodeListOf<TierElement>} */
 		const elements = this.querySelectorAll("tier-element");
 		for (const element of elements) {
 			element.revokeImageUrl();
@@ -182,3 +177,9 @@ export default class TierRow extends HTMLElement {
 }
 
 customElements.define("tier-row", TierRow);
+
+declare global {
+	interface HTMLElementTagNameMap {
+		"tier-row": TierRow;
+	}
+}

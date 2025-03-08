@@ -1,15 +1,9 @@
 export default class TierElement extends HTMLElement {
-	/** @type {string} */
-	#objUrl;
-	/** @type {ArrayBuffer} */
-	#arrayBuffer;
-	/** @type {string} */
-	#mime;
+	#objUrl: string;
+	#arrayBuffer: ArrayBuffer;
+	#mime: string;
 
-	/**
-	 * @param {Blob} blob
-	 */
-	setBlob = async (blob) => {
+	setBlob = async (blob: Blob) => {
 		const image = new Image();
 		image.src = URL.createObjectURL(blob);
 
@@ -20,16 +14,10 @@ export default class TierElement extends HTMLElement {
 		this.#mime = blob.type;
 	};
 
-	/**
-	 * @param {ExportedImage} image
-	 */
-	setImage = (image) =>
+	setImage = (image: ExportedImage) =>
 		this.setBlob(new Blob([image.bytes], { type: image.mime }));
 
-	/**
-	 * @returns {ExportedImage}
-	 */
-	getImage = () => ({
+	getImage = (): ExportedImage => ({
 		bytes: new Uint8Array(this.#arrayBuffer),
 		mime: this.#mime,
 	});
@@ -40,3 +28,9 @@ export default class TierElement extends HTMLElement {
 }
 
 customElements.define("tier-element", TierElement);
+
+declare global {
+	interface HTMLElementTagNameMap {
+		"tier-element": TierElement;
+	}
+}
