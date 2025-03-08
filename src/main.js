@@ -114,29 +114,20 @@ function gatherAll() {
 }
 
 async function exportList() {
-	/** @type {NodeListOf<TierRow>} */
-	const tiers = document.querySelectorAll("tier-row");
+	/** @type {TierRow[]} */
+	const tiers = Array.from(document.querySelectorAll("tier-row"));
 
 	/** @type {ExportData[]} */
-	const list = [];
+	const list = tiers.map((tier) => {
+		/** @type {TierElement[]} */
+		const tierElements = Array.from(tier.querySelectorAll("tier-element"));
 
-	for (const tier of tiers) {
-		/** @type {NodeListOf<TierElement>} */
-		const tierElements = tier.querySelectorAll("tier-element");
-
-		/** @type {ExportData} */
-		const tierData = {
+		return {
 			color: tier.color,
 			name: tier.name,
-			images: [],
+			images: tierElements.map((el) => el.getImage()),
 		};
-
-		for (const el of tierElements) {
-			tierData.images.push(el.getImage());
-		}
-
-		list.push(tierData);
-	}
+	});
 
 	const data = msgpack.encode(list);
 	const blob = new Blob([data], { type: "application/vnd.msgpack" });
