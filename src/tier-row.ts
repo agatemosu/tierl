@@ -2,9 +2,9 @@ import Pickr from "@simonwep/pickr";
 import Sortable from "sortablejs";
 
 export default class TierRow extends HTMLElement {
-	static sortableGroup = "tiers";
-	static clearColor = "#778899";
-	static defaultColors = [
+	public static sortableGroup = "tiers";
+	private static clearColor = "#778899";
+	private static defaultColors = [
 		"#ff7f7e",
 		"#ffbf7f",
 		"#feff7f",
@@ -19,15 +19,15 @@ export default class TierRow extends HTMLElement {
 
 	// #region Properties
 
-	get color() {
+	public get color() {
 		return this.getAttribute("color") ?? TierRow.clearColor;
 	}
 
-	get name() {
+	public get name() {
 		return this.getAttribute("name") ?? "New tier";
 	}
 
-	set color(value) {
+	public set color(value) {
 		this.pickr.setColor(value);
 
 		// If pickr is not initialized, set the color when it is
@@ -36,14 +36,14 @@ export default class TierRow extends HTMLElement {
 		});
 	}
 
-	set name(value) {
+	public set name(value) {
 		this.querySelector(".tier-label-content").textContent = value;
 		this.nameChanged();
 	}
 
 	// #endregion
 
-	constructor() {
+	public constructor() {
 		super();
 
 		this.innerHTML = /* HTML */ `
@@ -72,7 +72,7 @@ export default class TierRow extends HTMLElement {
 
 	// #region Lifecycle
 
-	connectedCallback() {
+	public connectedCallback() {
 		// Color picker
 		this.createColorPicker();
 
@@ -94,7 +94,7 @@ export default class TierRow extends HTMLElement {
 		tierName.addEventListener("blur", this.nameChanged);
 	}
 
-	disconnectedCallback() {
+	public disconnectedCallback() {
 		this.pickr.destroyAndRemove();
 		this.sort.destroy();
 	}
@@ -103,7 +103,7 @@ export default class TierRow extends HTMLElement {
 
 	// #region Methods
 
-	createColorPicker = () => {
+	private readonly createColorPicker = () => {
 		// It needs to be created as it's deleted when the row is disconnected
 		const colorPicker = document.createElement("div");
 
@@ -129,7 +129,7 @@ export default class TierRow extends HTMLElement {
 		this.pickr.on("save", this.colorChanged);
 	};
 
-	colorChanged = (color: Pickr.HSVaColor) => {
+	private readonly colorChanged = (color: Pickr.HSVaColor) => {
 		if (color === null) {
 			this.pickr.setColor(TierRow.clearColor);
 			return;
@@ -147,12 +147,12 @@ export default class TierRow extends HTMLElement {
 		this.pickr.hide();
 	};
 
-	nameChanged = () => {
+	private readonly nameChanged = () => {
 		const tierName = this.querySelector(".tier-label-content");
 		this.setAttribute("name", tierName.textContent);
 	};
 
-	deleteRow = () => {
+	public readonly deleteRow = () => {
 		const elements = this.querySelectorAll("tier-element");
 		for (const element of elements) {
 			element.revokeImageUrl();
@@ -161,13 +161,13 @@ export default class TierRow extends HTMLElement {
 		this.remove();
 	};
 
-	moveUp = () => {
+	private readonly moveUp = () => {
 		if (this.previousElementSibling) {
 			this.parentElement.insertBefore(this, this.previousElementSibling);
 		}
 	};
 
-	moveDown = () => {
+	private readonly moveDown = () => {
 		if (this.nextElementSibling) {
 			this.parentElement.insertBefore(this.nextElementSibling, this);
 		}
