@@ -152,15 +152,6 @@ export default class TierRow extends HTMLElement {
 		this.setAttribute("name", tierName.textContent);
 	};
 
-	public readonly deleteRow = () => {
-		const elements = this.querySelectorAll("tier-element");
-		for (const element of elements) {
-			element.revokeImageUrl();
-		}
-
-		this.remove();
-	};
-
 	private readonly moveUp = () => {
 		if (this.previousElementSibling) {
 			this.parentElement.insertBefore(this, this.previousElementSibling);
@@ -171,6 +162,15 @@ export default class TierRow extends HTMLElement {
 		if (this.nextElementSibling) {
 			this.parentElement.insertBefore(this.nextElementSibling, this);
 		}
+	};
+
+	public readonly deleteRow = () => {
+		const elements = this.querySelectorAll("tier-element");
+		for (const element of elements) {
+			element.revokeImageUrl();
+		}
+
+		this.remove();
 	};
 
 	// #endregion
