@@ -33,6 +33,9 @@ importers:
       prettier-plugin-css-order:
         specifier: 2.1.2
         version: 2.1.2(postcss@8.4.49)(prettier@3.4.2)
+      typescript:
+        specifier: 5.8.2
+        version: 5.8.2
       vite:
         specifier: 6.0.6
         version: 6.0.6
@@ -372,6 +375,11 @@ packages:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
+  typescript@5.8.2:
+    resolution: {integrity: sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   uzip@0.20201231.0:
     resolution: {integrity: sha512-OZeJfZP+R0z9D6TmBgLq2LHzSSptGMGDGigGiEe0pr8UBe/7fdflgHlHBNDASTXB5jnFuxHpNaJywSg8YFeGng==}
 
@@ -662,6 +670,8 @@ snapshots:
   sortablejs@1.15.6: {}
 
   source-map-js@1.2.1: {}
+
+  typescript@5.8.2: {}
 
   uzip@0.20201231.0: {}
 

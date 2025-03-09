@@ -2,8 +2,8 @@ import * as msgpack from "@msgpack/msgpack";
 import imageCompression from "browser-image-compression";
 import dayjs from "dayjs";
 import Sortable from "sortablejs";
-import TierElement from "./tier-element.js";
-import TierRow from "./tier-row.js";
+import TierElement from "./tier-element.ts";
+import TierRow from "./tier-row.ts";
 
 // #region Document events
 
@@ -17,7 +17,7 @@ document.addEventListener("dragover", (e) => {
 });
 
 document.addEventListener("mousedown", (e) => {
-	const target = /** @type {Element} */ (e.target);
+	const target = e.target as Element;
 
 	const ignoreSelectors = [".pcr-app"];
 	const ignoreClick = ignoreSelectors.some((selector) =>
@@ -28,8 +28,9 @@ document.addEventListener("mousedown", (e) => {
 		return;
 	}
 
-	/** @type {NodeListOf<HTMLElement>} */
-	const visibleMenus = document.querySelectorAll('[data-visibility="visible"]');
+	const visibleMenus = document.querySelectorAll<HTMLElement>(
+		'[data-visibility="visible"]',
+	);
 
 	for (const menu of visibleMenus) {
 		menu.dataset.visibility = "hidden";
@@ -37,9 +38,7 @@ document.addEventListener("mousedown", (e) => {
 
 	const menuClicked = target.closest(".tier-label");
 	if (menuClicked) {
-		const tooltip = /** @type {HTMLElement} */ (
-			menuClicked.querySelector(".tier-tooltip")
-		);
+		const tooltip = menuClicked.querySelector<HTMLElement>(".tier-tooltip");
 
 		tooltip.dataset.visibility = "visible";
 	}
@@ -67,10 +66,7 @@ function selectImages() {
 	input.click();
 }
 
-/**
- * @param {FileList} files
- */
-function uploadImages(files) {
+function uploadImages(files: FileList) {
 	document.body.classList.add("loading");
 
 	const imagesBar = document.querySelector("#images-bar");
@@ -96,11 +92,8 @@ function uploadImages(files) {
 	});
 }
 
-/**
- * @param {Event} e
- */
-function dynamicStyle(e) {
-	const checkbox = /** @type {HTMLInputElement} */ (e.target);
+function dynamicStyle(e: Event) {
+	const checkbox = e.target as HTMLInputElement;
 	document.body.classList.toggle(checkbox.id, checkbox.checked);
 }
 
@@ -114,12 +107,9 @@ function gatherAll() {
 }
 
 async function exportList() {
-	/** @type {TierRow[]} */
 	const tiers = Array.from(document.querySelectorAll("tier-row"));
 
-	/** @type {ExportData[]} */
-	const list = tiers.map((tier) => {
-		/** @type {TierElement[]} */
+	const list: ExportData[] = tiers.map((tier) => {
 		const tierElements = Array.from(tier.querySelectorAll("tier-element"));
 
 		return {
@@ -150,14 +140,13 @@ function importList() {
 	input.accept = ".msgpack";
 
 	input.onchange = async () => {
-		/** @type {NodeListOf<TierRow>} */
 		const tiers = document.querySelectorAll("tier-row");
 		for (const tier of tiers) {
 			tier.deleteRow();
 		}
 
 		const file = new Uint8Array(await input.files[0].arrayBuffer());
-		const data = /** @type {ExportData[]} */ (msgpack.decode(file));
+		const data = msgpack.decode(file) as ExportData[];
 
 		for (const tierData of data) {
 			const tier = new TierRow();
@@ -182,12 +171,10 @@ function importList() {
 // #region Setup
 
 function main() {
-	/** @type {HTMLElement} */
-	const imagesBar = document.querySelector("#images-bar");
+	const imagesBar = document.querySelector<HTMLElement>("#images-bar");
 	Sortable.create(imagesBar, { group: TierRow.sortableGroup });
 
-	/** @type {[string, EventListener][]} */
-	const eventMap = [
+	const eventMap: [string, EventListener][] = [
 		["#new-tier", addNewTier],
 		["#select-images", selectImages],
 		["#gather-all", gatherAll],

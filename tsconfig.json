@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"allowImportingTsExtensions": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"noEmit": true,
+		"strict": true,
+		"strictNullChecks": false,
+		"target": "esnext",
+		"verbatimModuleSyntax": true
+	}
+}
