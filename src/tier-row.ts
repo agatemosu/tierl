@@ -129,7 +129,7 @@ export default class TierRow extends HTMLElement {
 		this.pickr.on("save", this.colorChanged);
 	};
 
-	private readonly colorChanged = (color: Pickr.HSVaColor) => {
+	private readonly colorChanged = (color: Pickr.HSVaColor | null) => {
 		if (color === null) {
 			this.pickr.setColor(TierRow.clearColor);
 			return;
